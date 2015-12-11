@@ -26,7 +26,6 @@ Setting up a virtualenvwrapper for python3
     
     mkvirtualenv -p /usr/local/bin/python3 notifications-python-client
 
-#### Setup
 
 The boostrap script will set the application up. *Ensure you have activated the virtual environment first.*
 
