@@ -1,8 +1,11 @@
 sudo: false
 language: python
 python:
-  - '3.4'
+- '3.4'
 install:
-  - pip install -r requirements_for_test.txt
+- pip install -r requirements_for_test.txt
 script:
-  - ./scripts/run_tests.sh
+- ./scripts/run_tests.sh
+notifications:
+  slack:
+    secure: mwCORQB4wA3kXwcILhWM5GmZrzCYuPPYQdrxPBzYGBqgV2DwoeZhumWh/ndFY9ZRQTjVBM760Sn8fH3fj/ptWR8V307FQ0jAoNkpMB7YvOHeA1ovI4L3gZRShFbGz6diwGIX+K1zG+UBtyoQr5M1TAaAXPU/u6w426foeMk+bNpsLZV06f9JW3P+3cWf3sJwH6KV/eEqFVh2cmo44NbljZVeN9Y0LBKUqYkKGwCsCgViAN6oL1CQngyFqyHdFuSr8veQ7MVlOhrsRQsTsb9T8HorUah/ztMQ3BRUCWOYxxL5YmxdxaPR9Q0aHgjhF+ybw23qx2/qpd4T8duYi5+V8rLfkm/fqAIzisBo7clglHhMM8PY5OYjR/nDiG4SWPdjr61dmZr2ZXBEdDESz03LWI6bb0tQIk09ayLTHIHAhociGOuF15sA9jKSBbuyvB5/ZSj2GYGxVmWtLyIBFElJQ8qp+t8z7NrkZw3vrMnddUqkokeNKjx0+h5Bdi1KiJYIcnVHUtH7xG5jstwBdx7/KmJ+azWWqYVbOwCPGv023bOAIcsd2AZxv6sMjLhpu5dvEkOXfB3HshojodU/5gggCxyWoJicoZMvv/rDKCA6UgoAVtYmTZ5xscxPs86RYQmssXNz4g25b26fAsP63ZtIfTXcgFkRX9UISHGlHiQUStU=
