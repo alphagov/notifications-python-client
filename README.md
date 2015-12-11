@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/alphagov/notify-api.svg?branch=master)](https://api.travis-ci.org/alphagov/notify-api.svg?branch=master)
+[![Build Status](https://api.travis-ci.org/alphagov/notifications-python-client.svg?branch=master)](https://api.travis-ci.org/alphagov/notifications-python-client.svg?branch=master)
 
 
 # GOV.UK Notify - notifications-python-client [BETA]
