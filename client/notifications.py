@@ -1,4 +1,4 @@
-from .base import BaseAPIClient
+from client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):

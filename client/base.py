@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 from monotonic import monotonic
-from .errors import HTTPError, InvalidResponse
-from .jwt import create_jwt_token
-from .version import __version__
+from client.errors import HTTPError, InvalidResponse
+from client.jwt import create_jwt_token
+from client.version import __version__
 import json
 
 try:

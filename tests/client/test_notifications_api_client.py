@@ -1,4 +1,3 @@
-import pytest
 
 
 def test_get_behaves_as_expected(notifications_client, rmock):
@@ -14,7 +13,7 @@ def test_get_behaves_as_expected(notifications_client, rmock):
     assert result == {'result': 'success'}
 
 
-def test_posy_behaves_as_expected(notifications_client, rmock):
+def test_post_behaves_as_expected(notifications_client, rmock):
     rmock.request(
         "POST",
         "http://test-host/",
