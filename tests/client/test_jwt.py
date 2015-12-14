@@ -146,7 +146,7 @@ def test_should_reject_token_with_invalid_key():
     with pytest.raises(TokenDecodeError) as e:
         assert decode_jwt_token(token, "wrong-key", "POST", "/my-resource", "payload")
 
-    assert e.value.token['iss'] == "client_id"
+    assert e.value.message == "Invalid token"
 
 
 def test_should_reject_token_with_invalid_request_method():
@@ -199,3 +199,10 @@ def test_should_reject_token_that_is_in_future():
         assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
 
     assert e.value.token['iss'] == "client_id"
+
+
+def test_should_handle_random_inputs():
+    with pytest.raises(TokenDecodeError) as e:
+        assert decode_jwt_token("token", "key", "POST", "/my-resource", "payload")
+
+    assert e.value.message == "Invalid token"

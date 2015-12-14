@@ -4,7 +4,7 @@ import hmac
 import calendar
 import time
 import base64
-from .errors import TokenDecodeError, TokenExpiredError, TokenRequestError, TokenPayloadError
+from client.errors import TokenDecodeError, TokenExpiredError, TokenRequestError, TokenPayloadError
 
 __algorithm__ = "HS256"
 __type__ = "JWT"
@@ -129,22 +129,22 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         iat = int(decoded_token['iat'])
 
         if now > (iat + __bound__):
-            raise TokenExpiredError(decoded_token)
+            raise TokenExpiredError("Token has expired", decoded_token)
 
         # check request
         if decoded_token['req'] != create_signed_request(request_method, request_path, secret).decode():
-            raise TokenRequestError(decoded_token)
+            raise TokenRequestError("Token has invalid request", decoded_token)
 
         # check request payload
         if request_payload:
             if decoded_token['pay'] != create_signature(request_payload, secret).decode():
-                raise TokenPayloadError(decoded_token)
+                raise TokenPayloadError("Token has an invalid payload", decoded_token)
 
         return True
     except jwt.InvalidIssuedAtError:
-        raise TokenExpiredError(decode_token(token))
+        raise TokenExpiredError("Token has invalid iat field", decode_token(token))
     except jwt.DecodeError:
-        raise TokenDecodeError(decode_token(token))
+        raise TokenDecodeError("Invalid token")
 
 
 def decode_token(token):

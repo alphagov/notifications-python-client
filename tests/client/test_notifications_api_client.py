@@ -1,4 +1,3 @@
-import pytest
 
 
 def test_get_behaves_as_expected(notifications_client, rmock):

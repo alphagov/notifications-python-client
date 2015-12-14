@@ -4,7 +4,8 @@ REQUEST_ERROR_MESSAGE = "Request failed"
 
 class TokenError(Exception):
 
-    def __init__(self, token):
+    def __init__(self, message, token=None):
+        self.message = message
         self.token = token
 
 

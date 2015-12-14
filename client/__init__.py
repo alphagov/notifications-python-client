@@ -1,5 +1,5 @@
-from .errors import APIError, HTTPError, InvalidResponse, TokenError, \
+from client.errors import APIError, HTTPError, InvalidResponse, TokenError, \
     TokenDecodeError, TokenExpiredError, TokenPayloadError, TokenRequestError
-from .errors import REQUEST_ERROR_STATUS_CODE, REQUEST_ERROR_MESSAGE
+from client.errors import REQUEST_ERROR_STATUS_CODE, REQUEST_ERROR_MESSAGE
 
-from .notifications import NotificationsAPIClient
+from client.notifications import NotificationsAPIClient
