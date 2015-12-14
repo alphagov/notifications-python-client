@@ -1,5 +1,5 @@
-from client.jwt import create_jwt_token, decode_jwt_token
-from client.errors import TokenError, TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError
+from client.jwt import create_jwt_token, decode_jwt_token, get_token_issuer
+from client.errors import TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError
 import pytest
 import jwt
 from freezegun import freeze_time
@@ -206,3 +206,18 @@ def test_should_handle_random_inputs():
         assert decode_jwt_token("token", "key", "POST", "/my-resource", "payload")
 
     assert e.value.message == "Invalid token"
+
+
+def test_should_handle_invalid_token_for_issuer_lookup():
+    with pytest.raises(TokenDecodeError) as e:
+        assert get_token_issuer("token")
+
+    assert e.value.message == "Invalid token"
+
+
+def test_should_return_issuer_from_token():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+
+    issuer = get_token_issuer(token)
+
+    assert issuer == "client_id"

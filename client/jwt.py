@@ -90,9 +90,12 @@ def get_token_issuer(token):
     :return issuer: iss field of the JWT token
     :raises AssertionError: is iss field not present
     """
-    unverified = decode_token(token)
-    assert 'iss' in unverified
-    return unverified['iss']
+    try:
+        unverified = decode_token(token)
+        assert 'iss' in unverified
+        return unverified['iss']
+    except jwt.DecodeError:
+        raise TokenDecodeError("Invalid token")
 
 
 def decode_jwt_token(token, secret, request_method, request_path, request_payload=None):
