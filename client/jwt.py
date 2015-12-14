@@ -30,7 +30,7 @@ def create_signature(original, secret_key):
     )
 
 
-def create_jwt_token(request_method, request_path, secret, client_id, request_body):
+def create_jwt_token(request_method, request_path, secret, client_id, request_body=None):
     """
     Create JWT token for GOV.UK Notify
 
