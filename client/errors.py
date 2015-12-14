@@ -2,6 +2,28 @@ REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"
 
 
+class TokenError(Exception):
+
+    def __init__(self, token):
+        self.token = token
+
+
+class TokenDecodeError(TokenError):
+    pass
+
+
+class TokenRequestError(TokenError):
+    pass
+
+
+class TokenExpiredError(TokenError):
+    pass
+
+
+class TokenPayloadError(TokenError):
+    pass
+
+
 class APIError(Exception):
     def __init__(self, response=None, message=None):
         self.response = response

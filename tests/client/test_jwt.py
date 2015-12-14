@@ -1,4 +1,5 @@
-from client.jwt import create_jwt_token
+from client.jwt import create_jwt_token, decode_jwt_token
+from client.errors import TokenError, TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError
 import pytest
 import jwt
 from freezegun import freeze_time
@@ -8,6 +9,12 @@ import base64
 import hmac
 import hashlib
 import json
+from datetime import datetime, timedelta
+
+
+# helper method to directly decode token
+def decode_token(token, secret):
+    return jwt.decode(token, key=secret.encode(), verify=True, algorithms=['HS256'])
 
 
 def test_should_reject_token_request_if_missing_request_method():
@@ -124,5 +131,71 @@ def test_token_should_allow_no_body():
     assert 'pay' not in decoded
 
 
-def decode_token(token, secret):
-    return jwt.decode(token, key=secret.encode(), verify=True, algorithms=['HS256'])
+def test_should_validate_correct_token_with_no_payload():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", None)
+    assert decode_token(token, "key")
+
+
+def test_should_validate_correct_token_with_payload():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
+
+
+def test_should_reject_token_with_invalid_key():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    with pytest.raises(TokenDecodeError) as e:
+        assert decode_jwt_token(token, "wrong-key", "POST", "/my-resource", "payload")
+
+    assert e.value.token['iss'] == "client_id"
+
+
+def test_should_reject_token_with_invalid_request_method():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    with pytest.raises(TokenRequestError) as e:
+        assert decode_jwt_token(token, "key", "GET", "/my-resource", "payload")
+
+    assert e.value.token['iss'] == "client_id"
+
+
+def test_should_reject_token_with_invalid_request_path():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    with pytest.raises(TokenRequestError) as e:
+        assert decode_jwt_token(token, "key", "POST", "/my-other-resource", "payload")
+
+    assert e.value.token['iss'] == "client_id"
+
+
+def test_should_reject_token_with_invalid_request_payload():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    with pytest.raises(TokenPayloadError) as e:
+        assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload123")
+
+    assert e.value.token['iss'] == "client_id"
+
+
+def test_should_reject_token_that_is_old():
+    # make token 5 seconds ago
+    six_seconds_ago = datetime.utcnow() - timedelta(seconds=6)
+    freezer = freeze_time(six_seconds_ago)
+    freezer.start()
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    freezer.stop()
+
+    with pytest.raises(TokenExpiredError) as e:
+        assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
+
+    assert e.value.token['iss'] == "client_id"
+
+
+def test_should_reject_token_that_is_in_future():
+    # make token 5 seconds ago
+    six_seconds_in_future = datetime.utcnow() + timedelta(seconds=6)
+    freezer = freeze_time(six_seconds_in_future)
+    freezer.start()
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    freezer.stop()
+
+    with pytest.raises(TokenExpiredError) as e:
+        assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
+
+    assert e.value.token['iss'] == "client_id"
