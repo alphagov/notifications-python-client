@@ -128,7 +128,7 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         now = epoch_seconds()
         iat = int(decoded_token['iat'])
 
-        if (now < (iat - __bound__)) or ((iat + __bound__) < now):
+        if now > (iat + __bound__):
             raise TokenExpiredError(decoded_token)
 
         # check request
