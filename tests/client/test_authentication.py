@@ -1,4 +1,4 @@
-from client.jwt import create_jwt_token, decode_jwt_token, get_token_issuer
+from client.authentication import create_jwt_token, decode_jwt_token, get_token_issuer
 from client.errors import TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError
 import pytest
 import jwt

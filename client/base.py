@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from monotonic import monotonic
 from client.errors import HTTPError, InvalidResponse
-from client.jwt import create_jwt_token
+from client.authentication import create_jwt_token
 from client.version import __version__
 import json
 
