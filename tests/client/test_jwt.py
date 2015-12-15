@@ -173,6 +173,15 @@ def test_should_reject_token_with_invalid_request_payload():
     assert e.value.token['iss'] == "client_id"
 
 
+def test_should_reject_token_with_invalid_token_payload():
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    with pytest.raises(TokenPayloadError) as e:
+        assert decode_jwt_token(token, "key", "POST", "/my-resource")
+
+    assert e.value.token['iss'] == "client_id"
+    assert e.value.message == "Unexpected payload"
+
+
 def test_should_reject_token_that_is_old():
     # make token 5 seconds ago
     six_seconds_ago = datetime.utcnow() - timedelta(seconds=6)

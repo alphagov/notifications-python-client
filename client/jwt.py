@@ -17,7 +17,7 @@ def create_signature(original, secret_key):
     HMAC signature, using provided key
     SHA256 hashing algorithm
 
-    :param original: String to sign
+    :param original: String to sign as bytes
     :param secret_key: Signing secret
     :return: Base64 representation of signature
     """
@@ -142,6 +142,8 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         if request_payload:
             if decoded_token['pay'] != create_signature(request_payload, secret).decode():
                 raise TokenPayloadError("Token has an invalid payload", decoded_token)
+        elif not request_payload and 'pay' in decoded_token:
+            raise TokenPayloadError("Unexpected payload", decoded_token)
 
         return True
     except jwt.InvalidIssuedAtError:
