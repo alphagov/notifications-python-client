@@ -1,9 +1,10 @@
+from ..conftest import TEST_HOST
 
 
 def test_get_behaves_as_expected(notifications_client, rmock):
     rmock.request(
         "GET",
-        "http://test-host/",
+        TEST_HOST,
         json={"result": "success"},
         status_code=200)
 
@@ -16,7 +17,7 @@ def test_get_behaves_as_expected(notifications_client, rmock):
 def test_post_behaves_as_expected(notifications_client, rmock):
     rmock.request(
         "POST",
-        "http://test-host/",
+        TEST_HOST,
         json={"result": "success"},
         status_code=200)
 
