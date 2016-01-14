@@ -2,7 +2,6 @@ import requests_mock
 import pytest
 from client.base import BaseAPIClient
 from client.notifications import NotificationsAPIClient
-from client.services import ServicesAPIClient
 import mock
 
 
@@ -35,13 +34,6 @@ def notifications_client():
     yield NotificationsAPIClient(base_url=TEST_HOST,
                                  client_id=TEST_CLIENT_ID,
                                  secret=TEST_SECRET)
-
-
-@pytest.yield_fixture
-def services_client():
-    yield ServicesAPIClient(base_url=TEST_HOST,
-                            client_id=TEST_CLIENT_ID,
-                            secret=TEST_SECRET)
 
 
 def gen_service(id_, name, user=1, limit=1000, active=False, restricted=False):
