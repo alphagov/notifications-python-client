@@ -15,7 +15,7 @@ class NotificationsAPIClient(BaseAPIClient):
                 "notification": notification
             })
 
-    def get_notification(self, id):
+    def get_notification_by_id(self, id):
         return self.get('/notifications/{}'.format(id))
 
     def get_service(self, service_id, *params):
