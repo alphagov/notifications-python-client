@@ -2,6 +2,18 @@ from client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
+    def send_sms_notification(self, to, message):
+        notification = {}
+        notification.update({
+            "to": to,
+            "message": message
+        })
+
+        return self.post(
+            '/notifications/sms',
+            data={
+                "notification": notification
+            })
 
     def get_service(self, service_id, *params):
         """

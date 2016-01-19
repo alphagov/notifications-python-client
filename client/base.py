@@ -43,16 +43,16 @@ class BaseAPIClient(object):
 
     def request(self, method, url, data=None, params=None):
 
-        url = urlparse.urljoin(self.base_url, url)
-
         print("API request {} {}".format(method, url))
+
+        payload = json.dumps(data) if data else None
 
         api_token = create_jwt_token(
             method,
             url,
             self.secret,
             self.client_id,
-            json.dumps(data) if data else None
+            payload
         )
 
         headers = {
@@ -61,13 +61,15 @@ class BaseAPIClient(object):
             "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__),
         }
 
+        url = urlparse.urljoin(self.base_url, url)
+
         start_time = monotonic()
         try:
             response = requests.request(
                 method,
                 url,
                 headers=headers,
-                data=data,
+                data=payload,
                 params=params
             )
             response.raise_for_status()
