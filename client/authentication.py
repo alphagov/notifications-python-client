@@ -8,7 +8,7 @@ from client.errors import TokenDecodeError, TokenExpiredError, TokenRequestError
 
 __algorithm__ = "HS256"
 __type__ = "JWT"
-__bound__ = 5
+__bound__ = 30
 
 
 def create_signature(original, secret_key):
