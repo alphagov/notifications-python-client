@@ -15,7 +15,7 @@ class NotificationsAPIClient(BaseAPIClient):
                 "notification": notification
             })
 
-    def send_email_notification(self, to, from_, subject, message):
+    def send_email_notification(self, to, message, from_, subject):
         notification = {}
         notification.update({
             "to": to,
