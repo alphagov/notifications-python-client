@@ -19,7 +19,7 @@ def create_sms_notification(notifications_client):
 
 def get_notification(notifications_client):
     id = input("Notification id: ")
-    print(notifications_client.get_notification(id))
+    print(notifications_client.get_notification_by_id(id))
 
 if __name__ == "__main__":
     arguments = docopt(__doc__)
