@@ -2,11 +2,11 @@ from client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, message):
+    def send_sms_notification(self, to, template_id):
         notification = {}
         notification.update({
             "to": to,
-            "message": message
+            "template": template_id
         })
 
         return self.post(
