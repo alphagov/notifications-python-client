@@ -22,7 +22,7 @@ def test_create_sms_notification(notifications_client, rmock):
         json={"status": "success"},
         status_code=200)
 
-    notifications_client.send_sms_notification("1234", "message")
+    notifications_client.send_sms_notification("1234", "456")
 
     assert rmock.called
 
