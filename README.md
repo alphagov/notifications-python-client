@@ -84,3 +84,12 @@ Checking the status of a text message:
 
 Errors are returned as subclasses of the APIError class.
 
+
+## Testing
+
+A test script is included, it is executed as follows:
+
+    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <service_id> <api_key> [fetch|create]
+    
+This will use the API referred to in the base_api_url argument to send a text message.
+
