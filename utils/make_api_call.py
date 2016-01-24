@@ -13,8 +13,8 @@ from docopt import docopt
 
 def create_sms_notification(notifications_client):
     mobile_number = input("enter number (+441234123123): ")
-    message = input("message: ")
-    print(notifications_client.send_sms_notification(mobile_number, message))
+    template_id = input("template id: ")
+    print(notifications_client.send_sms_notification(mobile_number, template_id))
 
 
 def get_notification(notifications_client):
