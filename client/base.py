@@ -89,6 +89,8 @@ class BaseAPIClient(object):
             print("API {} request on {} finished in {}".format(method, url, elapsed_time))
 
         try:
+            if response.status_code == 204:
+                return
             return response.json()
         except ValueError:
             raise InvalidResponse(
