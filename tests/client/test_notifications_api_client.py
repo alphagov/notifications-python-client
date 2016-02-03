@@ -14,7 +14,7 @@ def test_get_notification_by_id(notifications_client, rmock):
     assert rmock.called
 
 
-def test_create_sms_notification(notifications_client, rmock):
+def test_create_sms_notification_template(notifications_client, rmock):
     endpoint = "{0}/notifications/sms".format(TEST_HOST)
     rmock.request(
         "POST",
@@ -22,7 +22,20 @@ def test_create_sms_notification(notifications_client, rmock):
         json={"status": "success"},
         status_code=200)
 
-    notifications_client.send_sms_notification("1234", "456")
+    notifications_client.send_sms_notification("1234", template_id="456")
+
+    assert rmock.called
+
+
+def test_create_sms_notification_content(notifications_client, rmock):
+    endpoint = "{0}/notifications/sms".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_sms_notification("1234", content="Template content")
 
     assert rmock.called
 
