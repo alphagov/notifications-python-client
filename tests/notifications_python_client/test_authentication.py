@@ -1,5 +1,7 @@
-from client.authentication import create_jwt_token, decode_jwt_token, get_token_issuer
-from client.errors import TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError
+from notifications_python_client.authentication import (
+    create_jwt_token, decode_jwt_token, get_token_issuer)
+from notifications_python_client.errors import (
+    TokenExpiredError, TokenDecodeError, TokenPayloadError, TokenRequestError)
 import pytest
 import jwt
 from freezegun import freeze_time
