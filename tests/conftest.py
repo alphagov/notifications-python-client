@@ -1,7 +1,7 @@
 import requests_mock
 import pytest
-from client.base import BaseAPIClient
-from client.notifications import NotificationsAPIClient
+from notifications_python_client.base import BaseAPIClient
+from notifications_python_client.notifications import NotificationsAPIClient
 import mock
 
 
@@ -18,7 +18,7 @@ def rmock():
 
 @pytest.yield_fixture
 def rmock_patch():
-    with mock.patch('client.base.requests.request') as rmock_patch:
+    with mock.patch('notifications_python_client.base.requests.request') as rmock_patch:
         yield rmock_patch
 
 

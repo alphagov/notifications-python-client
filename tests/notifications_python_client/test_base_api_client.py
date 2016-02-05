@@ -1,5 +1,5 @@
 import pytest
-from client.errors import HTTPError, InvalidResponse
+from notifications_python_client.errors import HTTPError, InvalidResponse
 import requests
 
 

@@ -4,7 +4,8 @@ import hmac
 import calendar
 import time
 import base64
-from client.errors import TokenDecodeError, TokenExpiredError, TokenRequestError, TokenPayloadError
+from notifications_python_client.errors import (
+    TokenDecodeError, TokenExpiredError, TokenRequestError, TokenPayloadError)
 
 __algorithm__ = "HS256"
 __type__ = "JWT"
