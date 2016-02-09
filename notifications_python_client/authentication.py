@@ -132,8 +132,8 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         now = epoch_seconds()
         iat = int(decoded_token['iat'])
 
-        if now > (iat + __bound__):
-            raise TokenExpiredError("Token has expired", decoded_token)
+        # if now > (iat + __bound__):
+        #     raise TokenExpiredError("Token has expired", decoded_token)
 
         # check request
         if decoded_token['req'] != create_signed_request(request_method, request_path, secret).decode():
