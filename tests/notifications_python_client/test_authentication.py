@@ -212,6 +212,28 @@ def test_should_reject_token_that_is_in_future():
     assert e.value.token['iss'] == "client_id"
 
 
+def test_should_reject_token_that_just_within_bounds_old():
+    # make token 31 seconds ago
+    thirty_one_seconds_in_past = datetime.utcnow() - timedelta(seconds=30)
+    freezer = freeze_time(thirty_one_seconds_in_past)
+    freezer.start()
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    freezer.stop()
+
+    assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
+
+
+def test_should_reject_token_that_is_just_within_bounds_future():
+    # make token 31 seconds ago
+    thirty_one_seconds_in_future = datetime.utcnow() + timedelta(seconds=30)
+    freezer = freeze_time(thirty_one_seconds_in_future)
+    freezer.start()
+    token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
+    freezer.stop()
+
+    assert decode_jwt_token(token, "key", "POST", "/my-resource", "payload")
+
+
 def test_should_handle_random_inputs():
     with pytest.raises(TokenDecodeError) as e:
         assert decode_jwt_token("token", "key", "POST", "/my-resource", "payload")
