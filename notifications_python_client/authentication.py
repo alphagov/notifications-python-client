@@ -119,7 +119,13 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
     """
     try:
         # check signature of the token
-        decoded_token = jwt.decode(token, key=secret.encode(), verify=True, algorithms=[__algorithm__])
+        decoded_token = jwt.decode(
+            token,
+            key=secret.encode(),
+            verify=True,
+            algorithms=[__algorithm__],
+            leeway=__bound__
+        )
 
         # token has all the required fields
         assert 'iss' in decoded_token, 'Missing iss field in token'
@@ -132,8 +138,8 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         now = epoch_seconds()
         iat = int(decoded_token['iat'])
 
-        # if now > (iat + __bound__):
-        #     raise TokenExpiredError("Token has expired", decoded_token)
+        if now > (iat + __bound__):
+            raise TokenExpiredError("Token has expired", decoded_token)
 
         # check request
         if decoded_token['req'] != create_signed_request(request_method, request_path, secret).decode():
