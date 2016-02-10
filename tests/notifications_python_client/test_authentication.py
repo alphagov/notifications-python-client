@@ -186,8 +186,8 @@ def test_should_reject_token_with_invalid_token_payload():
 
 def test_should_reject_token_that_is_old():
     # make token 31 seconds ago
-    six_seconds_ago = datetime.utcnow() - timedelta(seconds=31)
-    freezer = freeze_time(six_seconds_ago)
+    thirty_one_seconds_in_past = datetime.utcnow() - timedelta(seconds=31)
+    freezer = freeze_time(thirty_one_seconds_in_past)
     freezer.start()
     token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
     freezer.stop()
@@ -199,9 +199,9 @@ def test_should_reject_token_that_is_old():
 
 
 def test_should_reject_token_that_is_in_future():
-    # make token 5 seconds ago
-    six_seconds_in_future = datetime.utcnow() + timedelta(seconds=6)
-    freezer = freeze_time(six_seconds_in_future)
+    # make token 31 seconds ago
+    thirty_one_seconds_in_future = datetime.utcnow() + timedelta(seconds=31)
+    freezer = freeze_time(thirty_one_seconds_in_future)
     freezer.start()
     token = create_jwt_token("POST", "/my-resource", "key", "client_id", "payload")
     freezer.stop()
