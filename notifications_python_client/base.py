@@ -45,7 +45,7 @@ class BaseAPIClient(object):
 
         print("API request {} {}".format(method, url))
 
-        payload = json.dumps(data) if data else None
+        payload = json.dumps(data)
 
         api_token = create_jwt_token(
             method,
