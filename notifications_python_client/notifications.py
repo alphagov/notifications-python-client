@@ -2,28 +2,20 @@ from notifications_python_client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, template_id=None, content=None):
-        notification = {"to": to}
-        if template_id:
-            notification.update({
-                "template": template_id
-            })
-        if content:
-            notification.update({
-                "content": content
-            })
+    def send_sms_notification(self, to, template_id=None):
+        notification = {
+            "to": to,
+            "template": template_id
+        }
         return self.post(
             '/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, to, message, from_, subject):
-        notification = {}
-        notification.update({
+    def send_email_notification(self, to, template_id=None):
+        notification = {
             "to": to,
-            "from": from_,
-            "subject": subject,
-            "message": message
-        })
+            "template": template_id
+        }
         return self.post(
             '/notifications/email',
             data=notification)
