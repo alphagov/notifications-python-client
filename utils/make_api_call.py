@@ -7,7 +7,7 @@ Example:
     ./make_api_call.py http://api my_service super_secret fetch|create
 """
 
-from client.notifications import NotificationsAPIClient
+from notifications_python_client.notifications import NotificationsAPIClient
 from docopt import docopt
 
 
