@@ -11,7 +11,7 @@ class NotificationsAPIClient(BaseAPIClient):
             '/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, to, template_id=None):
+    def send_email_notification(self, to, template_id):
         notification = {
             "to": to,
             "template": template_id
