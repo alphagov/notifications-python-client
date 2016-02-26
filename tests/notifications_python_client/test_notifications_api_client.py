@@ -36,6 +36,6 @@ def test_create_email_notification(notifications_client, rmock):
         status_code=200)
 
     notifications_client.send_email_notification(
-        "to@notify.com", "from@notify.com", "email subject", "email message")
+        "to@notify.com", template_id="456")
 
     assert rmock.called
