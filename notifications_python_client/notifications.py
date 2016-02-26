@@ -2,7 +2,7 @@ from notifications_python_client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, template_id=None):
+    def send_sms_notification(self, to, template_id):
         notification = {
             "to": to,
             "template": template_id
