@@ -7,6 +7,7 @@ Example:
     ./make_api_call.py http://api my_service super_secret fetch|create email|sms
 """
 
+import json
 from notifications_python_client.notifications import NotificationsAPIClient
 from docopt import docopt
 
@@ -14,13 +15,21 @@ from docopt import docopt
 def create_sms_notification(notifications_client):
     mobile_number = input("enter number (+441234123123): ")
     template_id = input("template id: ")
-    print(notifications_client.send_sms_notification(mobile_number, template_id=template_id))
+    personalisation = input("personalisation (JSON string):")
+    personalisation = personalisation and json.loads(personalisation)
+    print(notifications_client.send_sms_notification(
+        mobile_number, template_id=template_id, personalisation=personalisation
+    ))
 
 
 def create_email_notification(notifications_client):
     mobile_number = input("enter email: ")
     template_id = input("template id: ")
-    print(notifications_client.send_email_notification(mobile_number, template_id=template_id))
+    personalisation = input("personalisation (as JSON):") or None
+    personalisation = personalisation and json.loads(personalisation)
+    print(notifications_client.send_email_notification(
+        mobile_number, template_id=template_id, personalisation=personalisation
+    ))
 
 
 def get_notification(notifications_client):

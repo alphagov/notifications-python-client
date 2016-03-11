@@ -27,14 +27,14 @@ This is done through [pip](pip.readthedocs.org/) and [virtualenv](https://virtua
 [VirtualEnvWrapper](http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html) for our virtual environemnts.
 
 Setting up a virtualenvwrapper for python3
-    
+
     mkvirtualenv -p /usr/local/bin/python3 notifications-python-client
 
 
 Install the dependencies *Ensure you have activated the virtual environment first.*
 
     pip3 install -r requirements_for_test.txt
-    
+
 #### Tests
 
 The `./scripts/run_tests.py` script will run all the tests. [py.test](http://pytest.org/latest/) is used for testing.
@@ -53,7 +53,7 @@ Prior to usage an account must be created through the notify admin console. This
 Once credentials have been obtained the client is initialised as follows:
 
     from client.notifications import NotificationsAPIClient
-    
+
 Then to initialize the client:
 
     client = NotificationsAPIClient(<base_url>, <service_id>, <secret>)
@@ -64,16 +64,19 @@ Creating a text message:
 
 Where:
 
-* "mobile-number" is the mobile phone number to deliver to
+* `mobile-number` is the mobile phone number to deliver to
     * Only UK mobiles are supported
     * Must start with +44
     * Must not have leading zero
     * Must not have any whitespace, punctuation etc.
     * valid format is +447777111222
-    
-* "template_id" is the template to send
+
+* `template_id` is the template to send
     * Must be an integer that identifies a valid template. Templates are created in the admin tools.
-    
+
+* `personalisation` is the template to send
+    * Must be an dictionary, with keys matching the placeholders in the template.
+
 
 Checking the status of a text message:
 
@@ -90,6 +93,5 @@ Errors are returned as subclasses of the APIError class.
 A test script is included, it is executed as follows:
 
     PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <service_id> <api_key> [fetch|create]
-    
-This will use the API referred to in the base_api_url argument to send a text message.
 
+This will use the API referred to in the base_api_url argument to send a text message.
