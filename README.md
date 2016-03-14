@@ -72,10 +72,12 @@ Where:
     * valid format is +447777111222
 
 * `template_id` is the template to send
-    * Must be an integer that identifies a valid template. Templates are created in the admin tools.
+    * Must be an integer that identifies a valid template. Templates are created
+      in the admin tools.
 
 * `personalisation` is the template to send
-    * Must be an dictionary, with keys matching the placeholders in the template.
+    * Must be a JSON string, with keys matching the placeholders in the
+      template, eg `{"name": "Chris"}`
 
 
 Checking the status of a text message:
