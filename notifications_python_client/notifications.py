@@ -26,3 +26,18 @@ class NotificationsAPIClient(BaseAPIClient):
 
     def get_notification_by_id(self, id):
         return self.get('/notifications/{}'.format(id))
+
+    def get_all_notifications(self, status=None, template_type=None):
+        data = {}
+        if status:
+            data.update({
+                'status': status
+            })
+        if template_type:
+            data.update({
+                'template_type': template_type
+            })
+        return self.get(
+            '/notifications'.format(id),
+            params=data
+        )
