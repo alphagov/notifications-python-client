@@ -14,6 +14,58 @@ def test_get_notification_by_id(notifications_client, rmock):
     assert rmock.called
 
 
+def test_get_all_notifications_by_stype_and_status(notifications_client, rmock):
+    endpoint = "{0}/notifications?status={1}&template_type={2}".format(TEST_HOST, "status", "type")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications("status", "type")
+
+    assert rmock.called
+
+
+def test_get_all_notifications_by_type(notifications_client, rmock):
+    endpoint = "{0}/notifications?template_type={1}".format(TEST_HOST, "type")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications(template_type="type")
+
+    assert rmock.called
+
+
+def test_get_all_notifications_by_status(notifications_client, rmock):
+    endpoint = "{0}/notifications?status={1}".format(TEST_HOST, "status")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications(status="status")
+
+    assert rmock.called
+
+
+def test_get_all_notifications(notifications_client, rmock):
+    endpoint = "{0}/notifications".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications()
+
+    assert rmock.called
+
+
 def test_create_sms_notification(notifications_client, rmock):
     endpoint = "{0}/notifications/sms".format(TEST_HOST)
     rmock.request(
