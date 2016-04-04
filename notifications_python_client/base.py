@@ -3,6 +3,7 @@ from monotonic import monotonic
 from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.authentication import create_jwt_token
 from notifications_python_client.version import __version__
+import logging
 import json
 
 try:
@@ -11,6 +12,9 @@ except ImportError:
     import urllib.parse as urlparse
 
 import requests
+
+
+logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient(object):
@@ -43,7 +47,7 @@ class BaseAPIClient(object):
 
     def request(self, method, url, data=None, params=None):
 
-        print("API request {} {}".format(method, url))
+        logger.debug("API request {} {}".format(method, url))
 
         payload = json.dumps(data)
 
@@ -75,7 +79,7 @@ class BaseAPIClient(object):
             response.raise_for_status()
         except requests.RequestException as e:
             api_error = HTTPError.create(e)
-            print(
+            logger.error(
                 "API {} request on {} failed with {} '{}'".format(
                     method,
                     url,
@@ -86,7 +90,7 @@ class BaseAPIClient(object):
             raise api_error
         finally:
             elapsed_time = monotonic() - start_time
-            print("API {} request on {} finished in {}".format(method, url, elapsed_time))
+            logger.debug("API {} request on {} finished in {}".format(method, url, elapsed_time))
 
         try:
             if response.status_code == 204:
