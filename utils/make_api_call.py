@@ -28,9 +28,9 @@ def create_sms_notification(notifications_client):
     template_id = input("template id: ")
     personalisation = input("personalisation (JSON string):")
     personalisation = personalisation and json.loads(personalisation)
-    print(notifications_client.send_sms_notification(
+    return notifications_client.send_sms_notification(
         mobile_number, template_id=template_id, personalisation=personalisation
-    ))
+    )
 
 
 def create_email_notification(notifications_client):
@@ -38,20 +38,20 @@ def create_email_notification(notifications_client):
     template_id = input("template id: ")
     personalisation = input("personalisation (as JSON):") or None
     personalisation = personalisation and json.loads(personalisation)
-    print(notifications_client.send_email_notification(
+    return notifications_client.send_email_notification(
         mobile_number, template_id=template_id, personalisation=personalisation
-    ))
+    )
 
 
 def get_notification(notifications_client):
     id = input("Notification id: ")
-    print(notifications_client.get_notification_by_id(id))
+    return notifications_client.get_notification_by_id(id)
 
 
 def get_all_notifications(notifications_client):
     status = input("Notification status: ")
     template_type = input("Notification template type: ")
-    print(notifications_client.get_all_notifications(status, template_type))
+    return notifications_client.get_all_notifications(status, template_type)
 
 
 if __name__ == "__main__":
@@ -64,16 +64,16 @@ if __name__ == "__main__":
     )
 
     if arguments['<call>'] == 'create':
-        create_notification(
+        print(create_notification(
             notifications_client=client
-        )
+        ))
 
     if arguments['<call>'] == 'fetch':
-        get_notification(
+        print(get_notification(
             notifications_client=client
-        )
+        ))
 
     if arguments['<call>'] == 'fetch-all':
-        get_all_notifications(
+        print(get_all_notifications(
             notifications_client=client
-        )
+        ))
