@@ -1,34 +1,14 @@
-import jwt
-import hashlib
-import hmac
 import calendar
 import time
-import base64
+
+import jwt
+
 from notifications_python_client.errors import (
-    TokenDecodeError, TokenExpiredError, TokenRequestError, TokenPayloadError)
+    TokenDecodeError, TokenExpiredError)
 
 __algorithm__ = "HS256"
 __type__ = "JWT"
 __bound__ = 30
-
-
-def create_signature(original, secret_key):
-    """
-    Perform signing of object
-    HMAC signature, using provided key
-    SHA256 hashing algorithm
-
-    :param original: String to sign as bytes
-    :param secret_key: Signing secret
-    :return: Base64 representation of signature
-    """
-    return base64.b64encode(
-        hmac.new(
-            secret_key.encode(),
-            original.encode(),
-            digestmod=hashlib.sha256
-        ).digest()
-    )
 
 
 def create_jwt_token(request_method, request_path, secret, client_id, request_body=None):
@@ -49,19 +29,13 @@ def create_jwt_token(request_method, request_path, secret, client_id, request_bo
 
     :param request_method: Method of request [GET|POST|etc]
     :param request_path: Path to requested resource
-    :param secret_key: Application signing secret
+    :param secret: Application signing secret
     :param client_id: Identifier for the client
     :param request_body: Serialized request body, not required. If no request body claim is not set
     :return: JWT token for this request
     """
-
-    assert request_method, "Missing request method"
-    assert request_path, "Missing request path"
     assert secret, "Missing secret key"
     assert client_id, "Missing client id"
-
-    # Format request for signing METHOD *space* RESOURCE
-    signed_url = create_signed_request(request_method, request_path, secret)
 
     headers = {
         "typ": __type__,
@@ -70,14 +44,8 @@ def create_jwt_token(request_method, request_path, secret, client_id, request_bo
 
     claims = {
         'iss': client_id,
-        'iat': epoch_seconds(),
-        'req': signed_url.decode()
+        'iat': epoch_seconds()
     }
-
-    if request_body:
-        claims.update({
-            'pay': create_signature(request_body, secret).decode()
-        })
 
     return jwt.encode(payload=claims, key=secret, headers=headers).decode()
 
@@ -105,8 +73,6 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
     Token checked for
         - signature of JWT token
         - token issued date is valid
-        - token request path is valid
-        - token request payload is valid [optional]
 
     :param token: jwt token
     :param secret: client specific secret
@@ -130,9 +96,6 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
         # token has all the required fields
         assert 'iss' in decoded_token, 'Missing iss field in token'
         assert 'iat' in decoded_token, 'Missing iat field in token'
-        assert 'req' in decoded_token, 'Missing req field in token'
-        if request_payload is not None:
-            assert 'pay' in decoded_token, 'Missing pay field in token'
 
         # check iat time is within bounds
         now = epoch_seconds()
@@ -140,17 +103,6 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
 
         if now > (iat + __bound__):
             raise TokenExpiredError("Token has expired", decoded_token)
-
-        # check request
-        if decoded_token['req'] != create_signed_request(request_method, request_path, secret).decode():
-            raise TokenRequestError("Token has invalid request", decoded_token)
-
-        # check request payload
-        if request_payload:
-            if decoded_token['pay'] != create_signature(request_payload, secret).decode():
-                raise TokenPayloadError("Token has an invalid payload", decoded_token)
-        elif not request_payload and 'pay' in decoded_token:
-            raise TokenPayloadError("Unexpected payload", decoded_token)
 
         return True
     except jwt.InvalidIssuedAtError:
@@ -166,13 +118,6 @@ def decode_token(token):
     :return decoded token:
     """
     return jwt.decode(token, verify=False, algorithms=[__algorithm__])
-
-
-def create_signed_request(request_method, request_path, secret):
-    return create_signature(
-        "{} {}".format(request_method, request_path),
-        secret
-    )
 
 
 def epoch_seconds():

@@ -13,15 +13,7 @@ class TokenDecodeError(TokenError):
     pass
 
 
-class TokenRequestError(TokenError):
-    pass
-
-
 class TokenExpiredError(TokenError):
-    pass
-
-
-class TokenPayloadError(TokenError):
     pass
 
 
