@@ -44,7 +44,7 @@ def create_jwt_token(request_method, request_path, secret, client_id, request_bo
 
     claims = {
         'iss': client_id,
-        'iat': epoch_seconds(),
+        'iat': epoch_seconds()
     }
 
     return jwt.encode(payload=claims, key=secret, headers=headers).decode()
