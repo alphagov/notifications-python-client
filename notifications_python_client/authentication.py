@@ -24,8 +24,6 @@ def create_jwt_token(secret, client_id):
     Claims consist of:
     iss: identifier for the client
     iat: issued at in epoch seconds (UTC)
-    req: signed request, of the format METHOD PATH. Example POST /resource
-    pay: signed payload. Must be the exact value as placed in to request, after any serialization.
 
     :param secret: Application signing secret
     :param client_id: Identifier for the client
