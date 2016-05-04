@@ -52,11 +52,8 @@ class BaseAPIClient(object):
         payload = json.dumps(data)
 
         api_token = create_jwt_token(
-            method,
-            url,
             self.secret,
-            self.client_id,
-            payload
+            self.client_id
         )
 
         headers = {
