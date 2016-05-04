@@ -11,7 +11,7 @@ __type__ = "JWT"
 __bound__ = 30
 
 
-def create_jwt_token(request_method, request_path, secret, client_id, request_body=None):
+def create_jwt_token(secret, client_id):
     """
     Create JWT token for GOV.UK Notify
 
@@ -24,14 +24,9 @@ def create_jwt_token(request_method, request_path, secret, client_id, request_bo
     Claims consist of:
     iss: identifier for the client
     iat: issued at in epoch seconds (UTC)
-    req: signed request, of the format METHOD PATH. Example POST /resource
-    pay: signed payload. Must be the exact value as placed in to request, after any serialization.
 
-    :param request_method: Method of request [GET|POST|etc]
-    :param request_path: Path to requested resource
     :param secret: Application signing secret
     :param client_id: Identifier for the client
-    :param request_body: Serialized request body, not required. If no request body claim is not set
     :return: JWT token for this request
     """
     assert secret, "Missing secret key"
@@ -67,7 +62,7 @@ def get_token_issuer(token):
         raise TokenDecodeError("Invalid token")
 
 
-def decode_jwt_token(token, secret, request_method, request_path, request_payload=None):
+def decode_jwt_token(token, secret):
     """
     Validates and decodes the JWT token
     Token checked for
@@ -76,9 +71,6 @@ def decode_jwt_token(token, secret, request_method, request_path, request_payloa
 
     :param token: jwt token
     :param secret: client specific secret
-    :param request_method: HTTP method for the request
-    :param request_path: Resource path for the request
-    :param request_payload: Body of the request
     :return boolean: True if valid token, False otherwise
     :raises AssertionError: If any required fields are not present
     :raises jwt.DecodeError: If signature validation fails

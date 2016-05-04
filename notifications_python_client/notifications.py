@@ -38,6 +38,6 @@ class NotificationsAPIClient(BaseAPIClient):
                 'template_type': template_type
             })
         return self.get(
-            '/notifications'.format(id),
+            '/notifications',
             params=data
         )
