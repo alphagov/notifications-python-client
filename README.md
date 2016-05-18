@@ -56,7 +56,7 @@ Once credentials have been obtained the client is initialised as follows:
 
 Then to initialize the client:
 
-    client = NotificationsAPIClient(<base_url>, <service_id>, <secret>)
+    notifications_client = NotificationsAPIClient(<base_url>, <service_id>, <secret>)
 
 Creating a text message:
 
