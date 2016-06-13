@@ -41,3 +41,12 @@ class NotificationsAPIClient(BaseAPIClient):
             '/notifications',
             params=data
         )
+
+    def get_notification_statistics_for_day(self, day=None):
+        data = {}
+        if day:
+            data.update({'day': day})
+        return self.get(
+            '/notifications/statistics',
+            params=data
+        )

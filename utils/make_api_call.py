@@ -54,6 +54,11 @@ def get_all_notifications(notifications_client):
     return notifications_client.get_all_notifications(status, template_type)
 
 
+def get_notification_statistics_for_day(notifications_client):
+    day = input("Day: ")
+    return notifications_client.get_notification_statistics_for_day(day)
+
+
 if __name__ == "__main__":
     arguments = docopt(__doc__)
 
@@ -75,5 +80,10 @@ if __name__ == "__main__":
 
     if arguments['<call>'] == 'fetch-all':
         print(get_all_notifications(
+            notifications_client=client
+        ))
+
+    if arguments['<call>'] == 'statistics':
+        print(get_notification_statistics_for_day(
             notifications_client=client
         ))
