@@ -1,99 +1,148 @@
 [![Build Status](https://api.travis-ci.org/alphagov/notifications-python-client.svg?branch=master)](https://api.travis-ci.org/alphagov/notifications-python-client.svg?branch=master)
 
-
-# GOV.UK Notify - notifications-python-client [BETA]
-Python client for notifications API
-
-Python API client for the beta for the GOVUK Notify platform.
-
-Provides client calls, response marshalling and authentication for the GOV.UK Notify API.
-
-This project is currently in an early beta phase and this client is presented as a work in progress
-for discussions and conversations. It is not supported and is not to be used in production applications
-at this stage.
-
-## Installing
-
-This is a [python](https://www.python.org/) application.
-
-#### Python version
-This is a python 3 application. It has not been run against any version of python 2.x
-
-    brew install python3
-
-#### Dependency management
-
-This is done through [pip](pip.readthedocs.org/) and [virtualenv](https://virtualenv.readthedocs.org/en/latest/). In practise we have used
-[VirtualEnvWrapper](http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html) for our virtual environemnts.
-
-Setting up a virtualenvwrapper for python3
-
-    mkvirtualenv -p /usr/local/bin/python3 notifications-python-client
+# GOV.UK Notify Python client
 
 
-Install the dependencies *Ensure you have activated the virtual environment first.*
+## Installation
 
-    pip3 install -r requirements_for_test.txt
+```shell
+pip install git+https://github.com/alphagov/notifications-python-client.git@1.0.0#egg=notifications-python-client==1.0.0
+```
 
-#### Tests
+## Getting started
 
-The `./scripts/run_tests.py` script will run all the tests. [py.test](http://pytest.org/latest/) is used for testing.
+```python
+from notifications_python_client.notifications import NotificationsAPIClient
 
-Running tests will also apply syntax checking, using [pep8](https://www.python.org/dev/peps/pep-0008/).
+notifications_client = NotificationsAPIClient(
+    "https://api.notifications.service.gov.uk",
+    <service_id>,
+    <api_key>
+)
+```
 
-Additionally code coverage is checked via pytest-cov:
+Generate an API key by logging in to
+[GOV.UK Notify](https://www.notifications.service.gov.uk) and going to
+the _API integration_ page.
 
-
-## Usage
-
-
-Prior to usage an account must be created through the notify admin console. This will allow access to the API credentials you application.
-
-
-Once credentials have been obtained the client is initialised as follows:
-
-    from client.notifications import NotificationsAPIClient
-
-Then to initialize the client:
-
-    notifications_client = NotificationsAPIClient(<base_url>, <service_id>, <secret>)
-
-Creating a text message:
-
-    notifications_client.send_sms_notification(mobile_number, template_id)
-
-Where:
-
-* `mobile-number` is the mobile phone number to deliver to
-    * Only UK mobiles are supported
-    * Must start with +44
-    * Must not have leading zero
-    * Must not have any whitespace, punctuation etc.
-    * valid format is +447777111222
-
-* `template_id` is the template to send
-    * Must be an integer that identifies a valid template. Templates are created
-      in the admin tools.
-
-* `personalisation` is the template to send
-    * Must be a JSON string, with keys matching the placeholders in the
-      template, eg `{"name": "Chris"}`
+You will also find your service ID on the _API integration_ page.
 
 
-Checking the status of a text message:
+## Send a message
 
-    notifications_client.get_notification_by_id(notification_id)
+```python
+notifications_client.send_sms_notification(mobile_number, template_id)
+```
+
+```python
+notifications_client.send_email_notification(email_address, template_id)
+```
+
+Find `template_id` by clicking _API info_ for the template you want to send.
+
+
+### With personalisation
+
+If a template has placeholders, you need to provide the values with which to fill them.
+
+```python
+notifications_client.send_sms_notification(
+    mobile_number,
+    template_id,
+    personalisation={
+        'name': 'Amala',
+        'reference_number': '300241',
+    }
+)
+```
+
+## Get the status of one message
+
+```python
+notifications_client.get_notification_by_id(notification_id)
+```
+
+## Get the status of all messages
+
+```python
+notifications_client.get_all_notifications()
+```
+
+### Only email or text messages
+```python
+notifications_client.get_all_notifications(template_type=…)
+```
+Where `template_type` is one of:
+
+* `email`
+* `sms`
+
+
+### By status
+```python
+notifications_client.get_all_notifications(status=…)
+```
+
+Where `status` is one of:
+
+* `sending`
+* `delivered`
+* `permanent-failure`
+* `temporary-failure`
+* `technical-failure`
+
+
+## Responses
+
+The client will dump the JSON that it receives from the API, for
+example:
+```python
+notifications_client.send_email_notification(
+  email_address,
+  template_id,
+  personalisation={'name': 'Bill'}
+)
+```
+```json
+{
+  "data":{
+    "notification": {
+      "id":1
+    },
+    "body": "Dear Bill, your licence is due for renewal…",
+    "template_version": 1,
+    "subject": "Licence renewal"
+  }
+}
+```
+
+All of the responses can be found in the
+[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
 
 
 ## Errors
 
-Errors are returned as subclasses of the APIError class.
+The client will raise a `HTTPError` if it gets a non-`200` response from
+the API.
 
+Both the status code and error (dumped from the JSON response) are
+available:
 
-## Testing
+```python
+try:
+  notifications_client.send_email_notification(
+    email_address,
+    template_id
+  )
+except HTTPError as error:
+  error.value.status_code == 400
+  error.value.message == {
+    "result": "error",
+    "message": {
+      "template": ["Missing personalisation: {name}"]
+    }
+  }
+```
 
-A test script is included, it is executed as follows:
-
-    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <service_id> <api_key> [fetch|create]
-
-This will use the API referred to in the base_api_url argument to send a text message.
+For full details of possible errors, see the
+[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
