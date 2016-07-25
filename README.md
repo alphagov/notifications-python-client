@@ -90,3 +90,59 @@ Where `status` is one of:
 * `permanent-failure`
 * `temporary-failure`
 * `technical-failure`
+
+
+## Responses
+
+The client will dump the JSON that it receives from the API, for
+example:
+```python
+notifications_client.send_email_notification(
+  email_address,
+  template_id,
+  personalisation={'name': 'Bill'}
+)
+```
+```json
+{
+  "data":{
+    "notification": {
+      "id":1
+    },
+    "body": "Dear Bill, your licence is due for renewal…",
+    "template_version": 1,
+    "subject": "Licence renewal"
+  }
+}
+```
+
+All of the responses can be found in the
+[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
+
+
+## Errors
+
+The client will raise a `HTTPError` if it gets a non-`200` response from
+the API.
+
+Both the status code and error (dumped from the JSON response) are
+available:
+
+```python
+try:
+  notifications_client.send_email_notification(
+    email_address,
+    template_id
+  )
+except HTTPError as error:
+  error.value.status_code == 400
+  error.value.message == {
+    "result": "error",
+    "message": {
+      "template": ["Missing personalisation: {name}"]
+    }
+  }
+```
+
+For full details of possible errors, see the
+[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
