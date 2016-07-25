@@ -4,7 +4,7 @@ Usage:
     utils/make_api_call.py <base_url> <service_id> <secret> <call>
 
 Example:
-    ./make_api_call.py http://api my_service super_secret fetch|fetch-all|create
+    ./make_api_call.py http://api my_service super_secret fetch|fetch-all|create|preview|template|all_templates|template_version|all_template_versions
 """
 
 import json
@@ -59,6 +59,31 @@ def get_notification_statistics_for_day(notifications_client):
     return notifications_client.get_notification_statistics_for_day(day)
 
 
+def preview_template(notifications_client):
+    template_id = input("Template id: ")
+    return notifications_client.get_template_preview(template_id)
+
+
+def get_template(notifications_client):
+    template_id = input("Template id: ")
+    return notifications_client.get_template(template_id)
+
+
+def get_all_templates(notifications_client):
+    return notifications_client.get_all_templates()
+
+
+def get_all_template_versions(notifications_client):
+    template_id = input("Template id: ")
+    return notifications_client.get_all_template_versions(template_id)
+
+
+def get_template_version(notifications_client):
+    template_id = input("Template id: ")
+    version = input("Version: ")
+    return notifications_client.get_template_version(template_id, version)
+
+
 if __name__ == "__main__":
     arguments = docopt(__doc__)
 
@@ -87,3 +112,18 @@ if __name__ == "__main__":
         print(get_notification_statistics_for_day(
             notifications_client=client
         ))
+
+    if arguments['<call>'] == 'preview':
+        print(preview_template(notifications_client=client))
+
+    if arguments['<call>'] == 'template':
+        print(get_template(notifications_client=client))
+
+    if arguments['<call>'] == 'all_templates':
+        print(get_all_templates(notifications_client=client))
+
+    if arguments['<call>'] == 'template_version':
+        print(get_template_version(notifications_client=client))
+
+    if arguments['<call>'] == 'all_template_versions':
+        print(get_all_template_versions(notifications_client=client))
