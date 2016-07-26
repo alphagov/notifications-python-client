@@ -135,13 +135,8 @@ try:
     template_id
   )
 except HTTPError as error:
-  error.value.status_code == 400
-  error.value.message == {
-    "result": "error",
-    "message": {
-      "template": ["Missing personalisation: {name}"]
-    }
-  }
+  print(error.value.status_code)  # 400
+  print(error.value.message)  # <json>
 ```
 
 For full details of possible errors, see the
