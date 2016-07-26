@@ -11,6 +11,7 @@ def test_connection_error_raises_api_error(base_client, rmock_patch):
     with pytest.raises(HTTPError) as e:
         base_client.request("GET", '/')
 
+    assert str(e.value) == "503 - Request failed"
     assert e.value.message == "Request failed"
     assert e.value.status_code == 503
 
@@ -25,6 +26,7 @@ def test_http_error_raises_api_error(base_client, rmock):
     with pytest.raises(HTTPError) as e:
         base_client.request("GET", '/')
 
+    assert str(e.value) == "500 - Request failed"
     assert e.value.message == "Request failed"
     assert e.value.status_code == 500
 
@@ -39,6 +41,7 @@ def test_non_2xx_response_raises_api_error(base_client, rmock):
     with pytest.raises(HTTPError) as e:
         base_client.request("GET", '/')
 
+    assert str(e.value) == "404 - Not found"
     assert e.value.message == "Not found"
     assert e.value.status_code == 404
 
@@ -53,6 +56,7 @@ def test_invalid_json_raises_api_error(base_client, rmock):
     with pytest.raises(InvalidResponse) as e:
         base_client.request("GET", '/')
 
+    assert str(e.value) == "200 - No JSON response object could be decoded"
     assert e.value.message == "No JSON response object could be decoded"
     assert e.value.status_code == 200
 

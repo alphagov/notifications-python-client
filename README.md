@@ -6,7 +6,7 @@
 ## Installation
 
 ```shell
-pip install git+https://github.com/alphagov/notifications-python-client.git@1.0.0#egg=notifications-python-client==1.0.0
+pip install git+https://github.com/alphagov/notifications-python-client.git
 ```
 
 ## Getting started
@@ -31,11 +31,17 @@ You will also find your service ID on the _API integration_ page.
 ## Send a message
 
 ```python
-notifications_client.send_sms_notification(mobile_number, template_id)
+notifications_client.send_sms_notification(
+    mobile_number,
+    template_id
+)
 ```
 
 ```python
-notifications_client.send_email_notification(email_address, template_id)
+notifications_client.send_email_notification(
+    email_address,
+    template_id
+)
 ```
 
 Find `template_id` by clicking _API info_ for the template you want to send.
@@ -98,9 +104,9 @@ The client will dump the JSON that it receives from the API, for
 example:
 ```python
 notifications_client.send_email_notification(
-  email_address,
-  template_id,
-  personalisation={'name': 'Bill'}
+    email_address,
+    template_id,
+    personalisation={'name': 'Bill'}
 )
 ```
 ```json
@@ -129,14 +135,16 @@ Both the status code and error (dumped from the JSON response) are
 available:
 
 ```python
+from notifications_client.errors import HTTPError
+
 try:
-  notifications_client.send_email_notification(
-    email_address,
-    template_id
-  )
+    notifications_client.send_email_notification(
+        email_address,
+        template_id
+    )
 except HTTPError as error:
-  print(error.value.status_code)  # 400
-  print(error.value.message)  # <json>
+    print(error.value.status_code)  # 400
+    print(error.value.message)  # <json>
 ```
 
 For full details of possible errors, see the
