@@ -22,6 +22,9 @@ class APIError(Exception):
         self.response = response
         self._message = message
 
+    def __str__(self):
+        return "{} - {}".format(self.status_code, self.message)
+
     @property
     def message(self):
         try:
