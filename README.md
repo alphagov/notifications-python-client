@@ -6,7 +6,7 @@
 ## Installation
 
 ```shell
-pip install git+https://github.com/alphagov/notifications-python-client.git@1.0.0#egg=notifications-python-client==1.0.0
+pip install git+https://github.com/alphagov/notifications-python-client.git
 ```
 
 ## Getting started
