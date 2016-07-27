@@ -63,71 +63,61 @@ def test_token_should_contain_correct_issued_at_claim():
 def test_should_reject_token_with_invalid_key():
     token = create_jwt_token("key", "client_id")
     with pytest.raises(TokenDecodeError) as e:
-        assert decode_jwt_token(token=token, secret="wrong-key")
+        decode_jwt_token(token=token, secret="wrong-key")
 
     assert e.value.message == "Invalid token"
 
 
-def test_should_reject_token_that_is_old():
+def test_should_reject_token_that_is_too_old():
     # make token 31 seconds ago
-    thirty_one_seconds_in_past = datetime.utcnow() - timedelta(seconds=31)
-    freezer = freeze_time(thirty_one_seconds_in_past)
-    freezer.start()
-    token = create_jwt_token(secret="key", client_id="client_id")
-    freezer.stop()
+    with freeze_time('2001-01-01T12:00:00'):
+        token = create_jwt_token("key", "client_id")
 
-    with pytest.raises(TokenExpiredError) as e:
-        assert decode_jwt_token(token, "key")
+    with freeze_time('2001-01-01T12:00:31'), pytest.raises(TokenExpiredError) as e:
+        decode_jwt_token(token, "key")
 
     assert e.value.token['iss'] == "client_id"
 
 
-def test_should_reject_token_that_is_in_future():
+def test_should_reject_token_that_is_just_out_of_bounds_future():
     # make token 31 seconds ago
-    thirty_one_seconds_in_future = datetime.utcnow() + timedelta(seconds=31)
-    freezer = freeze_time(thirty_one_seconds_in_future)
-    freezer.start()
-    token = create_jwt_token("key", "client_id")
-    freezer.stop()
+    with freeze_time('2001-01-01T12:00:31'):
+        token = create_jwt_token("key", "client_id")
 
-    with pytest.raises(TokenExpiredError) as e:
-        assert decode_jwt_token(token, "key")
+    with freeze_time('2001-01-01T12:00:00'), pytest.raises(TokenExpiredError) as e:
+        decode_jwt_token(token, "key")
 
     assert e.value.token['iss'] == "client_id"
 
 
-def test_should_reject_token_that_just_within_bounds_old():
+def test_should_accept_token_that_just_within_bounds_old():
     # make token 31 seconds ago
-    thirty_one_seconds_in_past = datetime.utcnow() - timedelta(seconds=30)
-    freezer = freeze_time(thirty_one_seconds_in_past)
-    freezer.start()
-    token = create_jwt_token("key", "client_id")
-    freezer.stop()
+    with freeze_time('2001-01-01T12:00:00'):
+        token = create_jwt_token("key", "client_id")
 
-    assert decode_jwt_token(token, "key")
+    with freeze_time('2001-01-01T12:00:30'):
+        assert decode_jwt_token(token, "key")
 
 
-def test_should_reject_token_that_is_just_within_bounds_future():
-    # make token 31 seconds ago
-    thirty_one_seconds_in_future = datetime.utcnow() + timedelta(seconds=30)
-    freezer = freeze_time(thirty_one_seconds_in_future)
-    freezer.start()
-    token = create_jwt_token("key", "client_id")
-    freezer.stop()
+def test_should_accept_token_that_is_just_within_bounds_future():
+    # make token 30 seconds in the future
+    with freeze_time('2001-01-01T12:00:30'):
+        token = create_jwt_token("key", "client_id")
 
-    assert decode_jwt_token(token, "key")
+    with freeze_time('2001-01-01T12:00:00'):
+        assert decode_jwt_token(token, "key")
 
 
 def test_should_handle_random_inputs():
     with pytest.raises(TokenDecodeError) as e:
-        assert decode_jwt_token("token", "key")
+        decode_jwt_token("token", "key")
 
     assert e.value.message == "Invalid token"
 
 
 def test_should_handle_invalid_token_for_issuer_lookup():
     with pytest.raises(TokenDecodeError) as e:
-        assert get_token_issuer("token")
+        get_token_issuer("token")
 
     assert e.value.message == "Invalid token"
 
