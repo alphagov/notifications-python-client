@@ -135,7 +135,7 @@ Both the status code and error (dumped from the JSON response) are
 available:
 
 ```python
-from notifications_client.errors import HTTPError
+from notifications_python_client.errors import HTTPError
 
 try:
     notifications_client.send_email_notification(
