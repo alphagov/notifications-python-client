@@ -143,8 +143,8 @@ try:
         template_id
     )
 except HTTPError as error:
-    print(error.value.status_code)  # 400
-    print(error.value.message)  # <json>
+    print(error.status_code)  # 400
+    print(error.message)  # <json>
 ```
 
 For full details of possible errors, see the
