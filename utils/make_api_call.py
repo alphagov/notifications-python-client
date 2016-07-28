@@ -4,7 +4,8 @@ Usage:
     utils/make_api_call.py <base_url> <service_id> <secret> <call>
 
 Example:
-    ./make_api_call.py http://api my_service super_secret fetch|fetch-all|create|preview|template|all_templates|template_version|all_template_versions
+    ./make_api_call.py http://api my_service super_secret \
+    fetch|fetch-all|create|preview|template|all_templates|template_version|all_template_versions
 """
 
 import json
