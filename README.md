@@ -68,6 +68,11 @@ notifications_client.send_sms_notification(
 notifications_client.get_notification_by_id(notification_id)
 ```
 
+<details>
+<summary>Response</summary>
+Is this hidden on page load?
+</details>
+
 ## Get the status of all messages
 
 ```python
