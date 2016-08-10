@@ -225,9 +225,6 @@ notifications_client.send_email_notification(
 }
 ```
 
-All of the responses can be found in the
-[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
-
 
 ## Errors
 
@@ -250,5 +247,4 @@ except HTTPError as error:
     print(error.message)  # <json>
 ```
 
-For full details of possible errors, see the
-[API documentation](https://www.notifications.service.gov.uk/documentation#API_endpoints).
+
