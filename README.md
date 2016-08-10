@@ -25,7 +25,7 @@ Generate an API key by logging in to
 [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to
 the **API integration** page.
 
-You will also find your service ID on the **API integration** page.
+You will find your service ID on the **API integration** page.
 
 
 ## Send a message
@@ -49,7 +49,7 @@ Find `template_id` by clicking **API info** for the template you want to send.
 
 ### With personalisation
 
-If a template has placeholders, you need to provide the values with which to fill them.
+If a template has placeholders, you need to provide their values.
 
 ```python
 notifications_client.send_sms_notification(
