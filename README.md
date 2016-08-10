@@ -78,8 +78,6 @@ If a template has placeholders, you need to provide their values.
     <tr>
         <td>Status
         </td>
-    </tr>
-    <tr>
         <td>Body
         </td>
     </tr>
