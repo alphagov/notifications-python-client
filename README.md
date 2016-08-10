@@ -85,6 +85,7 @@ notifications_client.send_sms_notification(
     <summary>
         Response codes:
     </summary>
+    
 Status code | Body | Meaning
 --- | --- | ---
 429 | ??? | ???
