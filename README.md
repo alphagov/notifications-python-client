@@ -192,6 +192,16 @@ notifications_client.get_notification_by_id(notification_id)
 </pre>
         </td>
     </tr>
+        <tr>
+        <td>401?
+        </td>
+        <td>
+<pre>
+???    
+</pre>
+        </td>
+    </tr>
+
   </tbody>
 </table>
 
@@ -286,33 +296,11 @@ Where `status` is optional. It can be `sending`, `delivered`, `permanent-failure
         </td>
     </tr>
     <tr>
-        <td>429
+        <td>???
         </td>
         <td>
 <pre>
-{"result": "error",
-"message": "Exceeded send limits (50) for today"}
-</pre>
-        </td>
-    </tr>
-        <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result":"error",
-"message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
-</pre>
-        </td>
-    </tr>
-        </tr>
-        <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result":"error", 
-"message"={"to": ["Invalid {notification_type} for restricted service")]}
+???
 </pre>
         </td>
     </tr>
