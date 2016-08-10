@@ -138,7 +138,22 @@ notifications_client.get_notification_by_id(notification_id)
     <summary>
         Response:
     </summary>
-```
+<table>
+  <thead>
+    <tr>
+        <td>Status
+        </td>
+        <td>Body
+        </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>201
+        </td>
+        <td>
+
+<pre>
 {
   "notification": {
     "status": "delivered",
@@ -165,24 +180,48 @@ notifications_client.get_notification_by_id(notification_id)
     "date": "3 January 2016"
   }
 }
-```
+</pre> 
+
+        </td>
+    </tr>
+    <tr>
+        <td>429
+        </td>
+        <td>
+<pre>
+{"result": "error",
+"message": "Exceeded send limits (50) for today"}
+</pre>
+        </td>
+    </tr>
+        <tr>
+        <td>400
+        </td>
+        <td>
+<pre>
+{"result":"error",
+"message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
+</pre>
+        </td>
+    </tr>
+        </tr>
+        <tr>
+        <td>400
+        </td>
+        <td>
+<pre>
+{"result":"error", 
+"message"={"to": ["Invalid {notification_type} for restricted service")]}
+</pre>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
 
 </details> 
 
-<details> 
-    <summary>
-        Status codes:
-    </summary>
 
-Status code | Body | Meaning
---- | --- | ---
-200 | ??? | ???
-400 | {"result": "error", <br> "message": "id: required field"} | Post body is badly formed: missing `id` field
-429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"} | You have reached the maximum number of messages you can send per day
-400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} | Post body is badly formed: missing personalisation data
-400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]} | Service is in trial mode; you cannot send messages to email addresses or phone numbers not belonging to team members
-
-</details> 
 
 ## Get the status of all messages
 
