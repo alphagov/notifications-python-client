@@ -76,7 +76,7 @@ If a template has placeholders, you need to provide their values.
         </td>
         <td>
 
-```
+<pre>
 {
   "data":{
     "notification": {
@@ -87,7 +87,7 @@ If a template has placeholders, you need to provide their values.
     "subject": "Licence renewal"
   }
 }
-``` 
+</pre> 
 
         </td>
     </tr>
