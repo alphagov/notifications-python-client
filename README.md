@@ -80,6 +80,21 @@ notifications_client.send_sms_notification(
 ```
 </details> 
 
+
+<details> 
+    <summary>
+        Response codes:
+    </summary>
+Status code | Body | Meaning
+--- | --- | ---
+429 | ??? | ???
+429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"} | You have reached the maximum number of messages you can send per day
+400 | {"result": "error", <br> "message": "id: required field"} | Post body is badly formed: missing `id` field
+400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} | Post body is badly formed: missing personalisation data
+400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]} | Service is in trial mode; you cannot send messages to email addresses or phone numbers not belonging to team members
+
+</details> 
+
 ## Get the status of one message
 
 ```python
