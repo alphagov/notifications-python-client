@@ -56,7 +56,6 @@ Find `template_id` by clicking **API info** for the template you want to send.
 
 If a template has placeholders, you need to provide their values.
 
-
 <details> 
     <summary>
         Response:
@@ -73,22 +72,27 @@ If a template has placeholders, you need to provide their values.
   }
 }
 ```
-</details> 
 
-
-<details> 
-    <summary>
-        Status codes:
-    </summary>
-
-Status code | Body
---- | --- | ---
-201 | ??? | ???
+Status | Body
+--- | --- 
+201 | ```
+{
+  "data":{
+    "notification": {
+      "id":1
+    },
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+    "template_version": 1,
+    "subject": "Licence renewal"
+  }
+}
+``` 
 429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"}
 400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
 400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]}
 
 </details> 
+
 
 ## Get the status of one message
 
