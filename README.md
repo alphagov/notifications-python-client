@@ -90,7 +90,20 @@ If a template has placeholders, you need to provide their values.
         </td>
     </tr>
     <tr>
-        <td>201
+        <td>429
+        </td>
+        <td>{"result": "error", <br> "message": "Exceeded send limits (50) for today"}
+        </td>
+    </tr>
+        <tr>
+        <td>400
+        </td>
+        <td>blabla
+        </td>
+    </tr>
+        </tr>
+        <tr>
+        <td>400
         </td>
         <td>blabla
         </td>
