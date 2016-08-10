@@ -75,7 +75,8 @@ If a template has placeholders, you need to provide their values.
 
 Status | Body
 --- | --- 
-201 | ```
+201 | 
+```
 {
   "data":{
     "notification": {
