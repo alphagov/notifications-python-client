@@ -62,7 +62,10 @@ notifications_client.send_sms_notification(
 )
 ```
 
-The response (status code 201) will be:
+<details> 
+    <summary>
+        Response:
+    </summary>
 ```
 {
   "data":{
@@ -75,7 +78,7 @@ The response (status code 201) will be:
   }
 }
 ```
-
+</details> 
 
 ## Get the status of one message
 
