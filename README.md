@@ -86,7 +86,18 @@ If a template has placeholders, you need to provide their values.
     <tr>
         <td>201
         </td>
-        <td>blabla
+        <td>```
+{
+  "data":{
+    "notification": {
+      "id":1
+    },
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+    "template_version": 1,
+    "subject": "Licence renewal"
+  }
+}
+``` 
         </td>
     </tr>
     <tr>
