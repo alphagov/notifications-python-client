@@ -23,9 +23,9 @@ notifications_client = NotificationsAPIClient(
 
 Generate an API key by logging in to
 [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to
-the _API integration_ page.
+the **API integration** page.
 
-You will also find your service ID on the _API integration_ page.
+You will also find your service ID on the **API integration** page.
 
 
 ## Send a message
@@ -44,7 +44,7 @@ notifications_client.send_email_notification(
 )
 ```
 
-Find `template_id` by clicking _API info_ for the template you want to send.
+Find `template_id` by clicking **API info** for the template you want to send.
 
 
 ### With personalisation
@@ -335,7 +335,7 @@ Status code | Body | Meaning
 
 ## Errors
 
-The client will raise a `HTTPError` if it gets a non-`200` response from
+The client will raise an `HTTPError` if it gets a non-`200` response from
 the API.
 
 Both the status code and error (dumped from the JSON response) are
