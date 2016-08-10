@@ -33,27 +33,6 @@ You will find your service ID on the **API integration** page.
 ```python
 notifications_client.send_sms_notification(
     mobile_number,
-    template_id
-)
-```
-
-```python
-notifications_client.send_email_notification(
-    email_address,
-    template_id
-)
-```
-
-Find `template_id` by clicking **API info** for the template you want to send.
-
-
-### With personalisation
-
-If a template has placeholders, you need to provide their values.
-
-```python
-notifications_client.send_sms_notification(
-    mobile_number,
     template_id,
     personalisation={
         'name': 'Amala',
@@ -61,6 +40,22 @@ notifications_client.send_sms_notification(
     }
 )
 ```
+
+```python
+notifications_client.send_sms_notification(
+    email_address,
+    template_id,
+    personalisation={
+        'name': 'Amala',
+        'reference_number': '300241',
+    }
+)
+```
+
+Find `template_id` by clicking **API info** for the template you want to send.
+
+If a template has placeholders, you need to provide their values.
+
 
 <details> 
     <summary>
@@ -86,12 +81,12 @@ notifications_client.send_sms_notification(
         Status codes:
     </summary>
 
-Status code | Body | Meaning
+Status code | Body
 --- | --- | ---
 201 | ??? | ???
-429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"} | You have reached the maximum number of messages you can send per day
-400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} | Post body is badly formed: missing personalisation data
-400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]} | Service is in trial mode; you cannot send messages to email addresses or phone numbers not belonging to team members
+429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"}
+400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
+400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]}
 
 </details> 
 
