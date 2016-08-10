@@ -86,8 +86,10 @@ notifications_client.send_sms_notification(
 notifications_client.get_notification_by_id(notification_id)
 ```
 
-The response (status code 200) will be:
-
+<details> 
+    <summary>
+        Response:
+    </summary>
 ```
 {
   "notification": {
@@ -116,6 +118,9 @@ The response (status code 200) will be:
   }
 }
 ```
+
+</details> 
+
 
 ## Get the status of all messages
 
@@ -204,29 +209,7 @@ Where `status` is one of:
 * `technical-failure`
 
 
-## Responses
 
-The client will dump the JSON that it receives from the API, for
-example:
-```python
-notifications_client.send_email_notification(
-    email_address,
-    template_id,
-    personalisation={'name': 'Bill'}
-)
-```
-```json
-{
-  "data":{
-    "notification": {
-      "id":1
-    },
-    "body": "Dear Bill, your licence is due for renewal…",
-    "template_version": 1,
-    "subject": "Licence renewal"
-  }
-}
-```
 
 
 ## Errors
