@@ -84,10 +84,12 @@ If a template has placeholders, you need to provide their values.
   </thead>
   <tbody>
     <tr>
-     201
+        <td>201
+        </td>
     </tr>
     <tr>
-     blabla
+        <td>blabla
+        </td>
     </tr>
   </tbody>
 </table>
