@@ -83,7 +83,7 @@ notifications_client.send_sms_notification(
 
 <details> 
     <summary>
-        Response codes:
+        Status codes:
     </summary>
 
 Status code | Body | Meaning
