@@ -42,7 +42,7 @@ notifications_client.send_sms_notification(
 ```
 
 ```python
-notifications_client.send_sms_notification(
+notifications_client.send_email_notification(
     email_address,
     template_id,
     personalisation={
