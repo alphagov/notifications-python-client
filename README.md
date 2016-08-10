@@ -73,6 +73,27 @@ If a template has placeholders, you need to provide their values.
 }
 ```
 
+<table>
+  <thead>
+    <tr>
+    Status
+    </tr>
+    <tr>
+    Body
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     201
+    </tr>
+    <tr>
+     blabla
+    </tr>
+  </tbody>
+</table>
+
+
+
 Status | Body
 --- | --- 
 201 | 
