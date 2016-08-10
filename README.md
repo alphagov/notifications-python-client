@@ -128,8 +128,11 @@ notifications_client.get_notification_by_id(notification_id)
 notifications_client.get_all_notifications()
 ```
 
-The response (status code 200) will be:
 
+<details> 
+    <summary>
+        Response:
+    </summary>
 ```
 {"notifications":
   [{
@@ -184,6 +187,8 @@ The response (status code 200) will be:
   "page_size": 50
 }
 ```
+</details> 
+
 
 ### Only email or text messages
 ```python
