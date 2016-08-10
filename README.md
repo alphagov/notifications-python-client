@@ -85,10 +85,10 @@ notifications_client.send_sms_notification(
     <summary>
         Response codes:
     </summary>
-    
+
 Status code | Body | Meaning
 --- | --- | ---
-429 | ??? | ???
+201 | ??? | ???
 429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"} | You have reached the maximum number of messages you can send per day
 400 | {"result": "error", <br> "message": "id: required field"} | Post body is badly formed: missing `id` field
 400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} | Post body is badly formed: missing personalisation data
