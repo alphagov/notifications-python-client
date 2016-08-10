@@ -197,8 +197,7 @@ notifications_client.get_notification_by_id(notification_id)
         </td>
         <td>
 <pre>
-{"result": "error",    
-'message': 'No result found', 'result': 'error'}    
+{'message': 'No result found', 'result': 'error'}    
 </pre>
         </td>
     </tr>
@@ -301,8 +300,7 @@ Where `status` is optional. It can be `sending`, `delivered`, `permanent-failure
         </td>
         <td>
 <pre>
-{"result": "error",
-'message': {'status': {'0': {'status': ['Not a valid choice.']}}},
+{'message': {'status': {'0': {'status': ['Not a valid choice.']}}},
 'result': 'error'}
 </pre>
         </td>
@@ -311,8 +309,7 @@ Where `status` is optional. It can be `sending`, `delivered`, `permanent-failure
         </td>
         <td>
 <pre>
-{"result": "error",
-'message': {'template_type': {'0': {'template_type': ['Not a valid choice.']}}},
+{'message': {'template_type': {'0': {'template_type': ['Not a valid choice.']}}},
  'result': 'error'}
 </pre>
         </td>
