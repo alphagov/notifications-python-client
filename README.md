@@ -193,11 +193,11 @@ notifications_client.get_notification_by_id(notification_id)
         </td>
     </tr>
         <tr>
-        <td>401?
+        <td>404
         </td>
         <td>
 <pre>
-???    
+{'message': 'No result found', 'result': 'error'}    
 </pre>
         </td>
     </tr>
@@ -296,14 +296,26 @@ Where `status` is optional. It can be `sending`, `delivered`, `permanent-failure
         </td>
     </tr>
     <tr>
-        <td>???
+        <td>400
         </td>
         <td>
 <pre>
-???
+{'message': {'status': {'0': {'status': ['Not a valid choice.']}}},
+'result': 'error'}
+</pre>
+        </td>
+        <tr>
+        <td>400
+        </td>
+        <td>
+<pre>
+{'message': {'template_type': {'0': {'template_type': ['Not a valid choice.']}}},
+ 'result': 'error'}
 </pre>
         </td>
     </tr>
+    </tr>
+
   </tbody>
 </table>
 
