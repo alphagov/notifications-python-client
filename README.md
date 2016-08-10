@@ -54,7 +54,7 @@ notifications_client.send_sms_notification(
 
 Find `template_id` by clicking **API info** for the template you want to send.
 
-If a template has placeholders, you need to provide their values.
+If a template has placeholders, you need to provide their values in `personalisation`.
 
 <details> 
     <summary>
