@@ -62,6 +62,21 @@ notifications_client.send_sms_notification(
 )
 ```
 
+The response (status code 201) will be:
+```
+{
+  "data":{
+    "notification": {
+      "id":1
+    },
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+    "template_version": 1,
+    "subject": "Licence renewal"
+  }
+}
+```
+
+
 ## Get the status of one message
 
 ```python
