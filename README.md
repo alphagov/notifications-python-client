@@ -95,7 +95,7 @@ If a template has placeholders, you need to provide their values.
         <td>429
         </td>
         <td>
-<pre>r
+<pre>
 {"result": "error",
 "message": "Exceeded send limits (50) for today"}
 </pre>
@@ -104,39 +104,26 @@ If a template has placeholders, you need to provide their values.
         <tr>
         <td>400
         </td>
-        <td>blabla
+        <td>
+<pre>
+{"result":"error",
+"message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
+</pre>
         </td>
     </tr>
         </tr>
         <tr>
         <td>400
         </td>
-        <td>blabla
+        <td>
+<pre>
+{"result":"error", 
+"message"={"to": ["Invalid {notification_type} for restricted service")]}
+</pre>
         </td>
     </tr>
   </tbody>
 </table>
-
-
-
-Status | Body
---- | --- 
-201 | 
-```
-{
-  "data":{
-    "notification": {
-      "id":1
-    },
-    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-    "template_version": 1,
-    "subject": "Licence renewal"
-  }
-}
-``` 
-429 | {"result": "error", <br> "message": "Exceeded send limits (50) for today"}
-400 | {"result":"error", <br> "message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
-400 | {"result":"error", <br> "message"={"to": ["Invalid {notification_type} for restricted service")]}
 
 </details> 
 
