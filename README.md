@@ -30,6 +30,8 @@ You will find your service ID on the **API integration** page.
 
 ## Send a message
 
+Text message:
+
 ```python
 notifications_client.send_sms_notification(
     mobile_number,
@@ -40,6 +42,7 @@ notifications_client.send_sms_notification(
     }
 )
 ```
+Email message:
 
 ```python
 notifications_client.send_email_notification(
