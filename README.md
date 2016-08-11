@@ -216,9 +216,7 @@ notifications_client.get_notification_by_id(notification_id)
 ```python
 notifications_client.get_all_notifications(template_type=email, status=sending)
 ```
-###`template_type` (optional)
-
-Can be one of:
+Optional template_type` can be one of:
 
 * `email`
 * `sms`
