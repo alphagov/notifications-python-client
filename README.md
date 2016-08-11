@@ -119,7 +119,8 @@ If a template has placeholders, you need to provide their values in `personalisa
         <td>
 <pre>
 {"result":"error", 
-"message"="Can’t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"]}
+"message"="Can’t send to this recipient when service is in trial 
+mode - see https://www.notifications.service.gov.uk/trial-mode"]}
 </pre>
         </td>
     </tr>
