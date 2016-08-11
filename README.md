@@ -197,7 +197,8 @@ notifications_client.get_notification_by_id(notification_id)
         </td>
         <td>
 <pre>
-{'message': 'No result found', 'result': 'error'}    
+{"result": "error"
+"message": "No result found"}    
 </pre>
         </td>
     </tr>
@@ -309,8 +310,8 @@ notifications_client.get_all_notifications(template_type=email, status=sending)
         </td>
         <td>
 <pre>
-{'message': {'status': {'0': {'status': ['Not a valid choice.']}}},
-'result': 'error'}
+{"result": "error"
+"message": {"status": {"0": {"status": ["Not a valid choice.""]}}},}
 </pre>
         </td>
         <tr>
@@ -318,8 +319,8 @@ notifications_client.get_all_notifications(template_type=email, status=sending)
         </td>
         <td>
 <pre>
-{'message': {'template_type': {'0': {'template_type': ['Not a valid choice.']}}},
- 'result': 'error'}
+{"result": "error"
+"message": {"template_type": {"0": {"template_type": ["Not a valid choice.""]}}},}
 </pre>
         </td>
     </tr>
