@@ -221,7 +221,7 @@ Optional `template_type` can be one of:
 * `email`
 * `sms`
 
-`status` is optional - it can be one of:
+Optional `status` can be one of:
 
 * `sending`
 * `delivered`
