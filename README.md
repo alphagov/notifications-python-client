@@ -42,7 +42,7 @@ notifications_client.send_sms_notification(
     }
 )
 ```
-Email message:
+Email:
 
 ```python
 notifications_client.send_email_notification(
