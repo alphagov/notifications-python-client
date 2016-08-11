@@ -215,9 +215,18 @@ notifications_client.get_notification_by_id(notification_id)
 ```python
 notifications_client.get_all_notifications(template_type=email, status=sending)
 ```
-Where `template_type` is optional. It can be `email` or `sms`
+`template_type` is optional - it can be one of:
 
-Where `status` is optional. It can be `sending`, `delivered`, `permanent-failure`, `temporary-failure` or `technical-failure`
+* `email`
+* `sms`
+
+`status` is optional - it can be one of
+
+* `sending`
+*`delivered`
+* `permanent-failure`
+* `temporary-failure`
+* `technical-failure`
 
 
 
