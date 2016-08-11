@@ -108,7 +108,7 @@ If a template has placeholders, you need to provide their values in `personalisa
         <td>
 <pre>
 {"result":"error",
-"message":{"template": ["Missing personalisation: {template_placeholder_name}"]} 
+"message":{"template": ["Can’t send to this recipient using a team-only API key"]} 
 </pre>
         </td>
     </tr>
@@ -119,7 +119,7 @@ If a template has placeholders, you need to provide their values in `personalisa
         <td>
 <pre>
 {"result":"error", 
-"message"={"to": ["Invalid {notification_type} for restricted service")]}
+"message"={"to": ["Can’t send to this recipient when service is in trial mode - see <https://www.notifications.service.gov.uk/trial-mode>")]}
 </pre>
         </td>
     </tr>
