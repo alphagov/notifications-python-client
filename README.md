@@ -223,7 +223,7 @@ notifications_client.get_all_notifications(template_type=email, status=sending)
 `status` is optional - it can be one of:
 
 * `sending`
-*`delivered`
+* `delivered`
 * `permanent-failure`
 * `temporary-failure`
 * `technical-failure`
