@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient(object):
-    def __init__(self, base_url=None, client_id=None, secret=None):
+    def __init__(self, base_url=None, service_id=None, api_key=None):
         """
         Initialise the client
         Error if either of base_url or secret missing
@@ -27,11 +27,11 @@ class BaseAPIClient(object):
         :return:
         """
         assert base_url, "Missing base url"
-        assert client_id, "Missing client id"
-        assert secret, "Missing secret"
+        assert service_id, "Missing service ID"
+        assert api_key, "Missing API key"
         self.base_url = base_url
-        self.client_id = client_id
-        self.secret = secret
+        self.service_id = service_id
+        self.api_key = api_key
 
     def put(self, url, data):
         return self.request("PUT", url, data=data)
@@ -52,8 +52,8 @@ class BaseAPIClient(object):
         payload = json.dumps(data)
 
         api_token = create_jwt_token(
-            self.secret,
-            self.client_id
+            self.api_key,
+            self.service_id
         )
 
         headers = {
