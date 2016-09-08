@@ -25,12 +25,12 @@ def rmock_patch():
 @pytest.yield_fixture
 def base_client():
     yield BaseAPIClient(base_url=TEST_HOST,
-                        client_id=TEST_CLIENT_ID,
-                        secret=TEST_SECRET)
+                        service_id=TEST_CLIENT_ID,
+                        api_key=TEST_SECRET)
 
 
 @pytest.yield_fixture
 def notifications_client():
     yield NotificationsAPIClient(base_url=TEST_HOST,
-                                 client_id=TEST_CLIENT_ID,
-                                 secret=TEST_SECRET)
+                                 service_id=TEST_CLIENT_ID,
+                                 api_key=TEST_SECRET)
