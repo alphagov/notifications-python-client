@@ -15,4 +15,4 @@ if [ -d venv ]; then
   source ./venv/bin/activate
 fi
 
-PYTHONPATH=. python integration_tests/integration_tests.py
+PYTHONPATH=. python integration_test/integration_tests.py

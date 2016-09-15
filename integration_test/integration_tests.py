@@ -1,8 +1,7 @@
 import os
 import uuid
-from retry import retry
 
-from integration_tests import validate
+from integration_test import validate
 from notifications_python_client.errors import HTTPError
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -41,7 +40,6 @@ class RetryException(Exception):
     pass
 
 
-@retry(RetryException, tries=15, delay=5)
 def get_notification_by_id(python_client, id, notification_type):
     try:
         response = python_client.get_notification_by_id(id)
