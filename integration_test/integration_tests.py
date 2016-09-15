@@ -36,15 +36,8 @@ def send_email_notification_test_response(python_client):
     return response['data']['notification']['id']
 
 
-class RetryException(Exception):
-    pass
-
-
 def get_notification_by_id(python_client, id, notification_type):
-    try:
-        response = python_client.get_notification_by_id(id)
-    except HTTPError as e:
-        raise RetryException(e)
+    response = python_client.get_notification_by_id(id)
 
     if notification_type == 'email':
         validate(response, 'GET_notification_return_email.json')
