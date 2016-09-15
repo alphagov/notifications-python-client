@@ -1,11 +1,10 @@
 import os
 import uuid
-
 from retry import retry
 
+from integration_tests import validate
 from notifications_python_client.errors import HTTPError
 from notifications_python_client.notifications import NotificationsAPIClient
-from utils import validate
 
 
 def send_sms_notification_test_response(python_client):
@@ -15,9 +14,10 @@ def send_sms_notification_test_response(python_client):
     personalisation = {'name': unique_name}
     response = python_client.send_sms_notification(to=mobile_number,
                                                    template_id=template_id,
-                                                   personalisation= personalisation)
+                                                   personalisation=personalisation)
     # do we want to test content of message? guess not
-    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(unique_name)
+    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(
+        unique_name)
     validate(response, 'POST_notification_return_sms.json')
     return response['data']['notification']['id']
 
@@ -31,7 +31,8 @@ def send_email_notification_test_response(python_client):
                                                      template_id=template_id,
                                                      personalisation=personalisation)
     # do we want to test
-    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(unique_name)
+    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(
+        unique_name)
     validate(response, 'POST_notification_return_email.json')
     return response['data']['notification']['id']
 
@@ -56,7 +57,7 @@ def get_notification_by_id(python_client, id, notification_type):
 
 
 def get_all_notifications(client):
-    response = client.get_all_notifications();
+    response = client.get_all_notifications()
     validate(response, 'GET_notifications_return.json')
 
 

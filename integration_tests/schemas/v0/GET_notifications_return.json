@@ -13,8 +13,7 @@
       }
     },
     "links": {
-      "type": "object",
-      "additionalProperties": false
+      "type": "object"
     },
     "page_size": {"type": "number"},
     "total": {"type": "number"}

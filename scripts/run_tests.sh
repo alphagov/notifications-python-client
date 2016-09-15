@@ -9,6 +9,8 @@
 
 set -o pipefail
 
+[ "$IGNORE_ENVIRONMENT_SH" = "1" ] || source environment.sh 2> /dev/null
+
 function display_result {
   RESULT=$1
   EXIT_STATUS=$2
@@ -22,12 +24,17 @@ function display_result {
   fi
 }
 
-pep8 .
+if [ -d venv ]; then
+  source ./venv/bin/activate
+fi
+
+pep8 --exclude=venv .
+
 display_result $? 1 "Code style check"
 
 ## Code coverage
 #py.test --cov=client tests/
 #display_result $? 2 "Code coverage"
 
-py.test -v
+py.test -v -x tests/
 display_result $? 3 "Unit tests"

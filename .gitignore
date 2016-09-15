@@ -42,6 +42,8 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+cache
+venv
 
 # Translations
 *.mo
@@ -59,3 +61,4 @@ target/
 .idea/
 
 environment.sh
+docker.env
