@@ -2,7 +2,6 @@ import os
 import uuid
 
 from integration_test import validate
-from notifications_python_client.errors import HTTPError
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
@@ -14,9 +13,6 @@ def send_sms_notification_test_response(python_client):
     response = python_client.send_sms_notification(to=mobile_number,
                                                    template_id=template_id,
                                                    personalisation=personalisation)
-    # do we want to test content of message? guess not
-    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(
-        unique_name)
     validate(response, 'POST_notification_return_sms.json')
     return response['data']['notification']['id']
 
@@ -29,9 +25,6 @@ def send_email_notification_test_response(python_client):
     response = python_client.send_email_notification(to=email_address,
                                                      template_id=template_id,
                                                      personalisation=personalisation)
-    # do we want to test
-    assert response['data']['body'] == 'Hello {},\nFunctional test help make our world a better place'.format(
-        unique_name)
     validate(response, 'POST_notification_return_email.json')
     return response['data']['notification']['id']
 
