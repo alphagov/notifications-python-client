@@ -52,7 +52,8 @@ def get_notification(notifications_client):
 def get_all_notifications(notifications_client):
     status = input("Notification status: ")
     template_type = input("Notification template type: ")
-    return notifications_client.get_all_notifications(status, template_type)
+    include_jobs = input("Include jobs: ")
+    return notifications_client.get_all_notifications(status, template_type, include_jobs)
 
 
 def get_notification_statistics_for_day(notifications_client):
