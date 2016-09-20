@@ -16,8 +16,8 @@ from notifications_python_client.notifications import NotificationsAPIClient
 
 notifications_client = NotificationsAPIClient(
     "https://api.notifications.service.gov.uk",
-    service_id=<service_id>,
-    api_key=<api_key>
+    service_id=service_id,
+    api_key=api_key
 )
 ```
 
@@ -35,11 +35,7 @@ Text message:
 ```python
 notifications_client.send_sms_notification(
     mobile_number,
-    template_id,
-    personalisation={
-        'name': 'Amala',
-        'reference_number': '300241',
-    }
+    template_id
 )
 ```
 Email:
@@ -47,17 +43,25 @@ Email:
 ```python
 notifications_client.send_email_notification(
     email_address,
-    template_id,
-    personalisation={
-        'name': 'Amala',
-        'reference_number': '300241',
-    }
+    template_id
 )
 ```
 
 Find `template_id` by clicking **API info** for the template you want to send.
 
-If a template has placeholders, you need to provide their values in `personalisation`.
+If a template has placeholders, you need to provide their values in `personalisation`,
+for example:
+
+```python
+notifications_client.send_email_notification(
+    email_address,
+    template_id,
+    personalisation={
+        'first_name': 'Amala',
+        'reference_number': '300241',
+    }
+)
+```
 
 <details> 
     <summary>
