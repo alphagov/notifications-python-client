@@ -7,12 +7,10 @@ import requests
 
 @pytest.mark.parametrize('client', [
     BaseAPIClient(
-        'http://test-host',
         service_id='c745a8d8-b48a-4b0d-96e5-dbea0165ebd1',
         api_key='8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
     ),
     BaseAPIClient(
-        'http://test-host',
         api_key=(
             'name_of_key'
             '-'
@@ -35,7 +33,6 @@ def test_passes_through_service_id_and_key(mock_create_token, rmock, client):
 def test_fails_if_client_id_missing():
     with pytest.raises(AssertionError) as err:
         BaseAPIClient(
-            base_url=True,
             api_key='8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
         )
     assert str(err.value) == "Missing service ID"

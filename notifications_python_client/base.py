@@ -18,7 +18,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient(object):
-    def __init__(self, base_url=None, service_id=None, api_key=None):
+    def __init__(
+        self,
+        base_url='https://api.notifications.service.gov.uk',
+        service_id=None,
+        api_key=None
+    ):
         """
         Initialise the client
         Error if either of base_url or secret missing
