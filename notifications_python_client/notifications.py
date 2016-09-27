@@ -27,7 +27,7 @@ class NotificationsAPIClient(BaseAPIClient):
     def get_notification_by_id(self, id):
         return self.get('/notifications/{}'.format(id))
 
-    def get_all_notifications(self, status=None, template_type=None):
+    def get_all_notifications(self, status=None, template_type=None, include_jobs=False):
         data = {}
         if status:
             data.update({
@@ -36,6 +36,10 @@ class NotificationsAPIClient(BaseAPIClient):
         if template_type:
             data.update({
                 'template_type': template_type
+            })
+        if include_jobs:
+            data.update({
+                'include_jobs': include_jobs
             })
         return self.get(
             '/notifications',
