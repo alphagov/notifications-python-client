@@ -1,5 +1,3 @@
-[![Build Status](https://api.travis-ci.org/alphagov/notifications-python-client.svg?branch=master)](https://travis-ci.org/alphagov/notifications-python-client)
-
 # GOV.UK Notify Python client
 
 
