@@ -18,6 +18,16 @@ import requests
             '-'
             '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'  # secret
         )
+    ),
+    BaseAPIClient(
+        service_id='c745a8d8-b48a-4b0d-96e5-dbea0165ebd1',
+        api_key=(
+            'name_of_key'
+            '-'
+            'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'  # service ID
+            '-'
+            '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'  # secret
+        )
     )
 ])
 @mock.patch('notifications_python_client.base.create_jwt_token')

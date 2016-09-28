@@ -34,7 +34,8 @@ class BaseAPIClient(object):
 
         if service_id is None and len(api_key) > 74:
             service_id = api_key[-73:-37]
-            api_key = api_key[-36:]
+
+        api_key = api_key[-36:]
 
         assert base_url, "Missing base url"
         assert service_id, "Missing service ID"
