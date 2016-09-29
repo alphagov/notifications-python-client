@@ -7,4 +7,4 @@ help:
 
 .PHONY: build
 build:
-	docker build -f Dockerfile -t govuk/notify-python-client-runner .
+	docker build --pull -f Dockerfile -t govuk/notify-python-client-runner .
