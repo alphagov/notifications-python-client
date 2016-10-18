@@ -12,11 +12,7 @@ pip install git+https://github.com/alphagov/notifications-python-client.git
 ```python
 from notifications_python_client.notifications import NotificationsAPIClient
 
-notifications_client = NotificationsAPIClient(
-    "https://api.notifications.service.gov.uk",
-    service_id=service_id,
-    api_key=api_key
-)
+notifications_client = NotificationsAPIClient(api_key)
 ```
 
 Generate an API key by logging in to
