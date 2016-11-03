@@ -14,7 +14,6 @@ class TokenDecodeError(TokenError):
         super().__init__(message or 'Invalid token: signature')
 
 
-
 class TokenExpiredError(TokenError):
     pass
 

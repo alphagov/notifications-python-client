@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from notifications_python_client.authentication import (
     create_jwt_token, decode_jwt_token, get_token_issuer)
 from notifications_python_client.errors import (
-    TokenExpiredError, TokenDecodeError)
+    TokenExpiredError, TokenDecodeError, TokenIssuerError)
 
 
 # helper method to directly decode token
@@ -65,7 +65,7 @@ def test_should_reject_token_with_invalid_key():
     with pytest.raises(TokenDecodeError) as e:
         decode_jwt_token(token=token, secret="wrong-key")
 
-    assert e.value.message == "Invalid token"
+    assert e.value.message == "Invalid token: signature"
 
 
 def test_should_reject_token_that_is_too_old():
@@ -112,14 +112,26 @@ def test_should_handle_random_inputs():
     with pytest.raises(TokenDecodeError) as e:
         decode_jwt_token("token", "key")
 
-    assert e.value.message == "Invalid token"
+    assert e.value.message == "Invalid token: signature"
 
 
 def test_should_handle_invalid_token_for_issuer_lookup():
     with pytest.raises(TokenDecodeError) as e:
         get_token_issuer("token")
 
-    assert e.value.message == "Invalid token"
+    assert e.value.message == "Invalid token: signature"
+
+
+def test_should_handle_invalid_token_with_no_iss():
+    token = create_jwt_token("key", "client_id")
+    token = jwt.encode(
+        payload={'iat': 1234},
+        key='1234',
+        headers={'typ': 'JWT', 'alg': 'HS256'}
+    ).decode()
+
+    with pytest.raises(TokenIssuerError):
+        get_token_issuer(token)
 
 
 def test_should_return_issuer_from_token():
