@@ -4,7 +4,11 @@ import time
 import jwt
 
 from notifications_python_client.errors import (
-    TokenDecodeError, TokenExpiredError)
+    TokenDecodeError,
+    TokenExpiredError,
+    TokenIssuerError,
+    TokenIssuedAtError
+)
 
 __algorithm__ = "HS256"
 __type__ = "JWT"
@@ -52,14 +56,18 @@ def get_token_issuer(token):
     Does not check validity of the token
     :param token: signed JWT token
     :return issuer: iss field of the JWT token
-    :raises AssertionError: is iss field not present
+    :raises TokenIssuerError: if iss field not present
+    :raises TokenDecodeError: if token does not conform to JWT spec
     """
     try:
         unverified = decode_token(token)
-        assert 'iss' in unverified
-        return unverified['iss']
+
+        if 'iss' not in unverified:
+            raise TokenIssuerError
+
+        return unverified.get('iss')
     except jwt.DecodeError:
-        raise TokenDecodeError("Invalid token")
+        raise TokenDecodeError
 
 
 def decode_jwt_token(token, secret):
@@ -72,7 +80,8 @@ def decode_jwt_token(token, secret):
     :param token: jwt token
     :param secret: client specific secret
     :return boolean: True if valid token, False otherwise
-    :raises AssertionError: If any required fields are not present
+    :raises TokenIssuerError: if iss field not present
+    :raises TokenIssuedAtError: if iat field not present
     :raises jwt.DecodeError: If signature validation fails
     """
     try:
@@ -86,8 +95,10 @@ def decode_jwt_token(token, secret):
         )
 
         # token has all the required fields
-        assert 'iss' in decoded_token, 'Missing iss field in token'
-        assert 'iat' in decoded_token, 'Missing iat field in token'
+        if 'iss' not in decoded_token:
+            raise TokenIssuerError('Invalid token: iss field not provided')
+        if 'iat' not in decoded_token:
+            raise TokenIssuedAtError
 
         # check iat time is within bounds
         now = epoch_seconds()
@@ -100,7 +111,7 @@ def decode_jwt_token(token, secret):
     except jwt.InvalidIssuedAtError:
         raise TokenExpiredError("Token has invalid iat field", decode_token(token))
     except jwt.DecodeError:
-        raise TokenDecodeError("Invalid token")
+        raise TokenDecodeError
 
 
 def decode_token(token):

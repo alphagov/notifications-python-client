@@ -10,11 +10,23 @@ class TokenError(Exception):
 
 
 class TokenDecodeError(TokenError):
-    pass
+    def __init__(self, message=None):
+        super().__init__(message or 'Invalid token: signature')
+
 
 
 class TokenExpiredError(TokenError):
     pass
+
+
+class TokenIssuerError(TokenDecodeError):
+    def __init__(self):
+        super().__init__('Invalid token: iss field not provided')
+
+
+class TokenIssuedAtError(TokenDecodeError):
+    def __init__(self):
+        super().__init__('Invalid token: iat field not provided')
 
 
 class APIError(Exception):
