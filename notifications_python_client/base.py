@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from monotonic import monotonic
+from time import monotonic
 from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.authentication import create_jwt_token
 from notifications_python_client.version import __version__
