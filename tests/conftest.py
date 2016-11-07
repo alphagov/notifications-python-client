@@ -1,13 +1,15 @@
+from unittest import mock
+
 import requests_mock
 import pytest
+
 from notifications_python_client.base import BaseAPIClient
 from notifications_python_client.notifications import NotificationsAPIClient
-import mock
 
 
 TEST_HOST = 'http://test-host'
-TEST_CLIENT_ID = "tests"
-TEST_SECRET = 'very'
+SERVICE_ID = 'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'
+API_KEY_ID = '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
 
 
 @pytest.yield_fixture
@@ -25,12 +27,12 @@ def rmock_patch():
 @pytest.yield_fixture
 def base_client():
     yield BaseAPIClient(base_url=TEST_HOST,
-                        service_id=TEST_CLIENT_ID,
-                        api_key=TEST_SECRET)
+                        service_id=SERVICE_ID,
+                        api_key=API_KEY_ID)
 
 
 @pytest.yield_fixture
 def notifications_client():
     yield NotificationsAPIClient(base_url=TEST_HOST,
-                                 service_id=TEST_CLIENT_ID,
-                                 api_key=TEST_SECRET)
+                                 service_id=SERVICE_ID,
+                                 api_key=API_KEY_ID)
