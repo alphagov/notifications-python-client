@@ -7,17 +7,29 @@ from notifications_python_client.base import BaseAPIClient
 from tests.conftest import API_KEY_ID, SERVICE_ID
 
 
+COMBINED_API_KEY = '-'.join(['name_of_key', SERVICE_ID, API_KEY_ID])
+EMOJI_API_KEY = '😬'.join(['name_of_key', SERVICE_ID, API_KEY_ID])
+
+
 @pytest.mark.parametrize('client', [
     BaseAPIClient(service_id=SERVICE_ID, api_key=API_KEY_ID),
-    BaseAPIClient(api_key='-'.join(['name_of_key', SERVICE_ID, API_KEY_ID])),
-    BaseAPIClient(api_key='😬'.join(['name_of_key', SERVICE_ID, API_KEY_ID])),
-    BaseAPIClient(service_id=SERVICE_ID, api_key='-'.join(['name_of_key', SERVICE_ID, API_KEY_ID]))
+    BaseAPIClient(api_key=COMBINED_API_KEY),
+    BaseAPIClient(api_key=EMOJI_API_KEY),
+    BaseAPIClient(service_id=SERVICE_ID, api_key=COMBINED_API_KEY),
+    BaseAPIClient(COMBINED_API_KEY),
+], ids=[
+    'service and api as kwargs',
+    'combined api key',
+    'key with emoji',
+    'service id and combined api key',
+    'positional api key'
 ])
 def test_passes_through_service_id_and_key(rmock, client):
     with mock.patch('notifications_python_client.base.create_jwt_token') as mock_create_token:
         rmock.request("GET", "/", status_code=204)
         client.request("GET", '/')
     mock_create_token.assert_called_once_with(API_KEY_ID, SERVICE_ID)
+    assert client.base_url == 'https://api.notifications.service.gov.uk'
 
 
 def test_fails_if_client_id_missing():
