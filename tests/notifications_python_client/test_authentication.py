@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from notifications_python_client.authentication import (
     create_jwt_token, decode_jwt_token, get_token_issuer)
 from notifications_python_client.errors import (
-    TokenExpiredError, TokenDecodeError, TokenIssuerError)
+    TokenExpiredError, TokenDecodeError, TokenIssuerError, TokenIssuedAtError)
 
 
 # helper method to directly decode token
@@ -122,7 +122,7 @@ def test_should_handle_invalid_token_for_issuer_lookup():
     assert e.value.message == "Invalid token: signature"
 
 
-def test_should_handle_invalid_token_with_no_iss():
+def test_get_token_issuer_should_handle_invalid_token_with_no_iss():
     token = create_jwt_token("key", "client_id")
     token = jwt.encode(
         payload={'iat': 1234},
@@ -132,6 +132,23 @@ def test_should_handle_invalid_token_with_no_iss():
 
     with pytest.raises(TokenIssuerError):
         get_token_issuer(token)
+
+
+@pytest.mark.parametrize('missing_field,exc_class', [
+    ('iss', TokenIssuerError),
+    ('iat', TokenIssuedAtError),
+])
+def test_decode_should_handle_invalid_token_with_missing_field(missing_field, exc_class):
+    payload = {'iss': '1234', 'iat': '1234'}
+    payload.pop(missing_field)
+    token = jwt.encode(
+        payload=payload,
+        key='bar',
+        headers={'typ': 'JWT', 'alg': 'HS256'}
+    )
+
+    with pytest.raises(exc_class):
+        decode_jwt_token(token, 'bar')
 
 
 def test_should_return_issuer_from_token():

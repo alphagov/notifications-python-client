@@ -93,10 +93,9 @@ def decode_jwt_token(token, secret):
             algorithms=[__algorithm__],
             leeway=__bound__
         )
-
         # token has all the required fields
         if 'iss' not in decoded_token:
-            raise TokenIssuerError('Invalid token: iss field not provided')
+            raise TokenIssuerError
         if 'iat' not in decoded_token:
             raise TokenIssuedAtError
 
