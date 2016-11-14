@@ -89,9 +89,9 @@ if __name__ == "__main__":
     arguments = docopt(__doc__)
 
     client = NotificationsAPIClient(
-        arguments['<base_url>'],
-        arguments['<service_id>'],
-        arguments['<secret>']
+        base_url=arguments['<base_url>'],
+        service_id=arguments['<service_id>'],
+        api_key=arguments['<secret>']
     )
 
     if arguments['<call>'] == 'create':

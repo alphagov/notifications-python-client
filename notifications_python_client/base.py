@@ -1,10 +1,11 @@
 from __future__ import absolute_import
-from time import monotonic
-from notifications_python_client.errors import HTTPError, InvalidResponse
-from notifications_python_client.authentication import create_jwt_token
-from notifications_python_client.version import __version__
 import logging
 import json
+from time import monotonic
+
+from notifications_python_client.version import __version__
+from notifications_python_client.errors import HTTPError, InvalidResponse
+from notifications_python_client.authentication import create_jwt_token
 
 try:
     import urlparse
@@ -20,9 +21,9 @@ logger = logging.getLogger(__name__)
 class BaseAPIClient(object):
     def __init__(
         self,
+        api_key,
         base_url='https://api.notifications.service.gov.uk',
         service_id=None,
-        api_key=None
     ):
         """
         Initialise the client

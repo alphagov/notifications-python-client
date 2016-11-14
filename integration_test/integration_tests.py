@@ -47,9 +47,9 @@ def get_all_notifications(client):
 
 if __name__ == "__main__":
     client = NotificationsAPIClient(
-        os.environ['NOTIFY_API_URL'],
-        os.environ['SERVICE_ID'],
-        os.environ['API_KEY']
+        base_url=os.environ['NOTIFY_API_URL'],
+        service_id=os.environ['SERVICE_ID'],
+        api_key=os.environ['API_KEY']
     )
 
     sms_id = send_sms_notification_test_response(client)

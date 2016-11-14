@@ -1,66 +1,50 @@
+import requests
+from unittest import mock
+
 import pytest
-import mock
 from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.base import BaseAPIClient
-import requests
+from tests.conftest import API_KEY_ID, SERVICE_ID
+
+
+COMBINED_API_KEY = '-'.join(['name_of_key', SERVICE_ID, API_KEY_ID])
+EMOJI_API_KEY = '😬'.join(['name_of_key', SERVICE_ID, API_KEY_ID])
 
 
 @pytest.mark.parametrize('client', [
-    BaseAPIClient(
-        service_id='c745a8d8-b48a-4b0d-96e5-dbea0165ebd1',
-        api_key='8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
-    ),
-    BaseAPIClient(
-        api_key=(
-            'name_of_key'
-            '-'
-            'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'  # service ID
-            '-'
-            '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'  # secret
-        )
-    ),
-    BaseAPIClient(
-        api_key=(
-            'name_of_key'
-            '😬'
-            'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'  # service ID
-            '😬'
-            '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'  # secret
-        )
-    ),
-    BaseAPIClient(
-        service_id='c745a8d8-b48a-4b0d-96e5-dbea0165ebd1',
-        api_key=(
-            'name_of_key'
-            '-'
-            'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'  # service ID
-            '-'
-            '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'  # secret
-        )
-    )
+    BaseAPIClient(service_id=SERVICE_ID, api_key=API_KEY_ID),
+    BaseAPIClient(api_key=COMBINED_API_KEY),
+    BaseAPIClient(api_key=EMOJI_API_KEY),
+    BaseAPIClient(service_id=SERVICE_ID, api_key=COMBINED_API_KEY),
+    BaseAPIClient(COMBINED_API_KEY),
+], ids=[
+    'service and api as kwargs',
+    'combined api key',
+    'key with emoji',
+    'service id and combined api key',
+    'positional api key'
 ])
-@mock.patch('notifications_python_client.base.create_jwt_token')
-def test_passes_through_service_id_and_key(mock_create_token, rmock, client):
-    rmock.request("GET", "/", status_code=204)
-    client.request("GET", '/')
-    mock_create_token.assert_called_once_with(
-        '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3',
-        'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'
-    )
+def test_passes_through_service_id_and_key(rmock, client):
+    with mock.patch('notifications_python_client.base.create_jwt_token') as mock_create_token:
+        rmock.request("GET", "/", status_code=204)
+        client.request("GET", '/')
+    mock_create_token.assert_called_once_with(API_KEY_ID, SERVICE_ID)
+    assert client.base_url == 'https://api.notifications.service.gov.uk'
+
+
+def test_can_set_base_url():
+    client = BaseAPIClient(base_url='foo', service_id=SERVICE_ID, api_key=COMBINED_API_KEY)
+    assert client.base_url == 'foo'
 
 
 def test_fails_if_client_id_missing():
     with pytest.raises(AssertionError) as err:
-        BaseAPIClient(
-            api_key='8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
-        )
+        BaseAPIClient(api_key=API_KEY_ID)
     assert str(err.value) == "Missing service ID"
 
 
 def test_connection_error_raises_api_error(base_client, rmock_patch):
-    rmock_patch.side_effect = requests.exceptions.ConnectionError(
-        None
-    )
+    rmock_patch.side_effect = requests.exceptions.ConnectionError(None)
 
     with pytest.raises(HTTPError) as e:
         base_client.request("GET", '/')
