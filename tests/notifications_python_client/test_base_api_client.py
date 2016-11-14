@@ -32,6 +32,11 @@ def test_passes_through_service_id_and_key(rmock, client):
     assert client.base_url == 'https://api.notifications.service.gov.uk'
 
 
+def test_can_set_base_url():
+    client = BaseAPIClient(base_url='foo', service_id=SERVICE_ID, api_key=COMBINED_API_KEY)
+    assert client.base_url == 'foo'
+
+
 def test_fails_if_client_id_missing():
     with pytest.raises(AssertionError) as err:
         BaseAPIClient(api_key=API_KEY_ID)
