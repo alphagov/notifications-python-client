@@ -1,7 +1,7 @@
 """
 
 Usage:
-    utils/make_api_call.py <base_url> <service_id> <secret> <call>
+    utils/make_api_call.py <base_url> <secret> <call>
 
 Example:
     ./make_api_call.py http://api my_service super_secret \
@@ -90,7 +90,6 @@ if __name__ == "__main__":
 
     client = NotificationsAPIClient(
         base_url=arguments['<base_url>'],
-        service_id=arguments['<service_id>'],
         api_key=arguments['<secret>']
     )
 

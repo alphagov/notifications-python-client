@@ -2,26 +2,30 @@ from notifications_python_client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, template_id, personalisation=None):
+    def send_sms_notification(self, to, template_id, personalisation=None, reference=None):
         notification = {
-            "to": to,
-            "template": template_id
+            "phone_number": to,
+            "template_id": template_id
         }
         if personalisation:
             notification.update({'personalisation': personalisation})
+        if reference:
+            notification.update({'reference': reference})
         return self.post(
-            '/notifications/sms',
+            '/v2/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, to, template_id, personalisation=None):
+    def send_email_notification(self, to, template_id, personalisation=None, reference=None):
         notification = {
-            "to": to,
-            "template": template_id
+            "email_address": to,
+            "template_id": template_id
         }
         if personalisation:
             notification.update({'personalisation': personalisation})
+        if reference:
+            notification.update({'reference': reference})
         return self.post(
-            '/notifications/email',
+            '/v2/notifications/email',
             data=notification)
 
     def get_notification_by_id(self, id):

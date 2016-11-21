@@ -1,7 +1,8 @@
 import os
 import uuid
 
-from integration_test import validate
+from integration_test import (validate, validate_v0)
+from integration_test.schemas.v2.notification_schemas import (post_sms_response, post_email_response)
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
@@ -13,8 +14,8 @@ def send_sms_notification_test_response(python_client):
     response = python_client.send_sms_notification(to=mobile_number,
                                                    template_id=template_id,
                                                    personalisation=personalisation)
-    validate(response, 'POST_notification_return_sms.json')
-    return response['data']['notification']['id']
+    validate(response, post_sms_response)
+    return response['id']
 
 
 def send_email_notification_test_response(python_client):
@@ -25,24 +26,24 @@ def send_email_notification_test_response(python_client):
     response = python_client.send_email_notification(to=email_address,
                                                      template_id=template_id,
                                                      personalisation=personalisation)
-    validate(response, 'POST_notification_return_email.json')
-    return response['data']['notification']['id']
+    validate(response, post_email_response)
+    return response['id']
 
 
 def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
 
     if notification_type == 'email':
-        validate(response, 'GET_notification_return_email.json')
+        validate_v0(response, 'GET_notification_return_email.json')
     elif notification_type == 'sms':
-        validate(response, 'GET_notification_return_sms.json')
+        validate_v0(response, 'GET_notification_return_sms.json')
     else:
         raise KeyError("notification type should be email|sms")
 
 
 def get_all_notifications(client):
     response = client.get_all_notifications()
-    validate(response, 'GET_notifications_return.json')
+    validate_v0(response, 'GET_notifications_return.json')
 
 
 if __name__ == "__main__":
