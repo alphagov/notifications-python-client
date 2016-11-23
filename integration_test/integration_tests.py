@@ -2,7 +2,9 @@ import os
 import uuid
 
 from integration_test import (validate, validate_v0)
-from integration_test.schemas.v2.notification_schemas import (post_sms_response, post_email_response)
+from integration_test.schemas.v2.notification_schemas import (
+    get_notification_response, post_sms_response, post_email_response
+)
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
@@ -34,9 +36,9 @@ def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
 
     if notification_type == 'email':
-        validate_v0(response, 'GET_notification_return_email.json')
+        validate(response, get_notification_response)
     elif notification_type == 'sms':
-        validate_v0(response, 'GET_notification_return_sms.json')
+        validate(response, get_notification_response)
     else:
         raise KeyError("notification type should be email|sms")
 

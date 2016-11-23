@@ -1,5 +1,77 @@
 from integration_test.schemas.v2.definitions import uuid, personalisation
 
+
+template = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "template schema",
+    "type": "object",
+    "title": "notification content",
+    "properties": {
+        "id": uuid,
+        "version": {"type": "integer"},
+        "uri": {"type": "string"}
+    },
+    "required": ["id", "version", "uri"]
+}
+
+get_notification_response = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "GET notification response schema",
+    "type": "object",
+    "title": "response v2/notification",
+    "oneOf": [
+        {"properties": {
+            "email_address": {"type": "string", "format": "email_address"},
+            "type": {"enum": ["email"]},
+
+            "phone_number": {"type": "null"},
+            "line_1": {"type": "null"},
+            "postcode": {"type": "null"}
+        }},
+        {"properties": {
+            "phone_number": {"type": "string", "format": "phone_number"},
+            "type": {"enum": ["sms"]},
+
+            "email_address": {"type": "null"},
+            "line_1": {"type": "null"},
+            "postcode": {"type": "null"}
+        }},
+        {"properties": {
+            "line_1": {"type": "string", "minLength": 1},
+            "postcode": {"type": "string", "minLength": 1},
+            "type": {"enum": ["letter"]},
+
+            "email_address": {"type": "null"},
+            "phone_number": {"type": "null"}
+        }}
+    ],
+    "properties": {
+        "id": uuid,
+        "reference": {"type": ["string", "null"]},
+        "email_address": {"type": ["string", "null"]},
+        "phone_number": {"type": ["string", "null"]},
+        "line_1": {"type": ["string", "null"]},
+        "line_2": {"type": ["string", "null"]},
+        "line_3": {"type": ["string", "null"]},
+        "line_4": {"type": ["string", "null"]},
+        "line_5": {"type": ["string", "null"]},
+        "line_6": {"type": ["string", "null"]},
+        "postcode": {"type": ["string", "null"]},
+        "type": {"enum": ["sms", "letter", "email"]},
+        "status": {"type": "string"},
+        "template": template,
+        "created_at": {"type": "string"},
+        "sent_at": {"type": ["string", "null"]},
+        "completed_at": {"type": ["string", "null"]}
+    },
+    "required": [
+        # technically, all keys are required since we always have all of them
+        "id", "reference", "email_address", "phone_number",
+        "line_1", "line_2", "line_3", "line_4", "line_5", "line_6", "postcode",
+        "type", "status", "template", "created_at", "sent_at", "completed_at"
+    ]
+}
+
 post_sms_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "POST sms notification schema",
@@ -26,20 +98,6 @@ sms_content = {
     "required": ["body"]
 }
 
-# this may belong in a templates module
-template = {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "template schema",
-    "type": "object",
-    "title": "notification content",
-    "properties": {
-        "id": uuid,
-        "version": {"type": "integer"},
-        "uri": {"type": "string"}
-    },
-    "required": ["id", "version", "uri"]
-}
-
 post_sms_response = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "POST sms notification response schema",
@@ -54,7 +112,6 @@ post_sms_response = {
     },
     "required": ["id", "content", "uri", "template"]
 }
-
 
 post_email_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",
