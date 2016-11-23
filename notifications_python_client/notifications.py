@@ -29,7 +29,7 @@ class NotificationsAPIClient(BaseAPIClient):
             data=notification)
 
     def get_notification_by_id(self, id):
-        return self.get('/notifications/{}'.format(id))
+        return self.get('/v2/notifications/{}'.format(id))
 
     def get_all_notifications(self, status=None, template_type=None):
         data = {}
