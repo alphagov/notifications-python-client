@@ -11,7 +11,7 @@ def send_sms_notification_test_response(python_client):
     template_id = os.environ['SMS_TEMPLATE_ID']
     unique_name = str(uuid.uuid4())
     personalisation = {'name': unique_name}
-    response = python_client.send_sms_notification(to=mobile_number,
+    response = python_client.send_sms_notification(phone_number=mobile_number,
                                                    template_id=template_id,
                                                    personalisation=personalisation)
     validate(response, post_sms_response)
@@ -23,7 +23,7 @@ def send_email_notification_test_response(python_client):
     template_id = os.environ['EMAIL_TEMPLATE_ID']
     unique_name = str(uuid.uuid4())
     personalisation = {'name': unique_name}
-    response = python_client.send_email_notification(to=email_address,
+    response = python_client.send_email_notification(email_address=email_address,
                                                      template_id=template_id,
                                                      personalisation=personalisation)
     validate(response, post_email_response)

@@ -25,20 +25,26 @@ Text message:
 
 ```python
 notifications_client.send_sms_notification(
-    mobile_number,
-    template_id
+    phone_number='the_phone_number', 
+    template_id='the_template_id', 
+    personalisation=None, 
+    reference=None
 )
 ```
 Email:
 
 ```python
 notifications_client.send_email_notification(
-    email_address,
-    template_id
+    email_address='the_email_address',
+    template_id='the_template_id'
+    personalisation=None, 
+    reference=None
 )
 ```
 
 Find `template_id` by clicking **API info** for the template you want to send.
+
+The `reference` is an identifier that you want to use to identify the notification, rather that use our id of the notification.
 
 If a template has placeholders, you need to provide their values in `personalisation`,
 for example:
@@ -75,13 +81,19 @@ notifications_client.send_email_notification(
         <td>
 <pre>
 {
-  "data":{
-    "notification": {
-      "id":1
-    },
-    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-    "template_version": 1,
-    "subject": "Licence renewal"
+  "id":"unique_id"
+  "reference": None or "the reference you gave"
+  "content": {
+        "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+        "from_email": "your from email address",
+        "subject": "Licence renewal"
+        }
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/unique_id"
+  "template": {
+        "id": "unique_id_of_template",
+        "version": 1,
+        "uri": "https://api.notificaitons.service.gov.uk/service/your_service_id/templates/unique_id_of_template"
+        }
   }
 }
 </pre> 
@@ -92,8 +104,14 @@ notifications_client.send_email_notification(
         </td>
         <td>
 <pre>
-{"result": "error",
-"message": "Exceeded send limits (50) for today"}
+{
+    "status_code": "429",
+    "errors":[{
+                 "error": "TooManyRequestsError",
+                 "message": "Exceeded send limits (50) for today"
+              }
+             ]
+ }
 </pre>
         </td>
     </tr>
@@ -102,8 +120,13 @@ notifications_client.send_email_notification(
         </td>
         <td>
 <pre>
-{"result":"error",
-"message": "Can’t send to this recipient using a team-only API key"]} 
+{
+    "status_code":"400",
+    "errors":[{
+                 "error": "BadRequestError",
+                 "message": "Can’t send to this recipient using a team-only API key"
+              ]}
+}
 </pre>
         </td>
     </tr>
@@ -113,9 +136,12 @@ notifications_client.send_email_notification(
         </td>
         <td>
 <pre>
-{"result":"error", 
-"message"="Can’t send to this recipient when service is in trial 
-mode - see https://www.notifications.service.gov.uk/trial-mode"]}
+{   
+    "status_code":"400",
+    "errors":[{
+                 "error": "BadRequestError",
+                 "message": "Can’t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+             ]}
 </pre>
         </td>
     </tr>

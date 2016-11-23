@@ -2,9 +2,9 @@ from notifications_python_client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, template_id, personalisation=None, reference=None):
+    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None):
         notification = {
-            "phone_number": to,
+            "phone_number": phone_number,
             "template_id": template_id
         }
         if personalisation:
@@ -15,9 +15,9 @@ class NotificationsAPIClient(BaseAPIClient):
             '/v2/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, to, template_id, personalisation=None, reference=None):
+    def send_email_notification(self, email_address, template_id, personalisation=None, reference=None):
         notification = {
-            "email_address": to,
+            "email_address": email_address,
             "template_id": template_id
         }
         if personalisation:
