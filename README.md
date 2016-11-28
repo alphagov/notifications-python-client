@@ -1,5 +1,6 @@
 # GOV.UK Notify Python client
-
+This client provides an interface to version 2 of the notifications-api. If this is your first time using the client continue using this version to integrate with Notify. 
+If you have used the client before and your version of notification-python-client is less than 4.0.0, then you will need to read this document to see the changes to the api requests and responses.
 
 ## Installation
 
@@ -44,7 +45,7 @@ notifications_client.send_email_notification(
 
 Find `template_id` by clicking **API info** for the template you want to send.
 
-The `reference` is an identifier that you want to use to identify the notification, rather that use our id of the notification.
+The `reference` is option, it is an identifier that you want to use to identify the notification, rather than use our id of the notification.
 
 If a template has placeholders, you need to provide their values in `personalisation`,
 for example:
@@ -124,7 +125,7 @@ notifications_client.send_email_notification(
     "status_code":"400",
     "errors":[{
                  "error": "BadRequestError",
-                 "message": "Can’t send to this recipient using a team-only API key"
+                 "message": "Can"t send to this recipient using a team-only API key"
               ]}
 }
 </pre>
@@ -140,7 +141,7 @@ notifications_client.send_email_notification(
     "status_code":"400",
     "errors":[{
                  "error": "BadRequestError",
-                 "message": "Can’t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+                 "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
              ]}
 </pre>
         </td>
@@ -172,50 +173,50 @@ notifications_client.get_notification_by_id(notification_id)
   </thead>
   <tbody>
     <tr>
-        <td>201
+        <td>200
         </td>
         <td>
 
 <pre>
 {
-  "data": {
-    "notification": {
-      "status": "delivered",
-      "to": "07515 987 456",
-      "template": {
-        "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-        "name": "First template",
-        "template_type": "sms"
-      },
-      "created_at": "2016-04-26T15:29:36.891512+00:00",
-      "updated_at": "2016-04-26T15:29:38.724808+00:00",
-      "sent_at": "2016-04-26T15:29:37.230976+00:00",
-      "job": {
-        "id": "f9043884-acac-46db-b2ea-f08cd8ec6d67",
-        "original_file_name": "Test run"
-      },
-      "sent_at": "2016-04-26T15:29:37.230976+00:00",
-      "id": "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-      "content_char_count": 490,
-      "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-      "reference": None,
-      "sent_by": "mmg",
-      "body": "Dear Bill, your licence is due for renewal on 3 January 2016."
-      "date": "3 January 2016"
-    }
-  }
+    "id": "notify_id", # required
+    "reference": "client reference", # optional
+    "email_address": "email address",  # required for emails
+    "phone_number": "phone number",  # required for sms
+    "line_1": "full name of a person or company", # required for letter
+    "line_2": "123 The Street", # optional
+    "line_3": "Some Area", # optional
+    "line_4": "Some Town", # optional
+    "line_5": "Some county", # optional
+    "line_6": "Something else", # optional
+    "postcode": "postcode", # required for letter
+    "type": "sms|letter|email", # required
+    "status": "current status", # required
+    "template": {
+                    "version": 1 # template version num # required
+                    "id": 1 # template id # required
+                    "uri": "/template/{id}/{version}", # required
+                },
+	"created_at": "created at", # required
+	"sent_at": " sent to provider at", # optional
 }
 </pre> 
 
-        </td>
-    </tr>
-    <tr>
-        <td>400
-        </td>
-        <td>
+ </td>
+ </tr>
+ <tr>
+   <td>400</td>
+    <td>
 <pre>
-{"result": "error", 
-"message": "id: required field"}    
+{
+   "status_code":"400",
+    "errors":[
+        {
+            "error": "ValidationError",
+            "message": "id is a required"
+         }
+    ]
+}    
 </pre>
         </td>
     </tr>
@@ -224,8 +225,15 @@ notifications_client.get_notification_by_id(notification_id)
         </td>
         <td>
 <pre>
-{"result": "error"
-"message": "No result found"}    
+{
+  "status_code": 404
+  "errors": [
+    {
+      "error": "NoResultFound",
+      "message": "No result found"
+    }
+  ]
+}
 </pre>
         </td>
     </tr>
@@ -243,18 +251,17 @@ notifications_client.get_notification_by_id(notification_id)
 ```python
 notifications_client.get_all_notifications(template_type="email", status="sending")
 ```
-Optional `template_type` can be one of:
+Optional `template_type` can be one of, if left empty all template_types are returned:
 
 * `email`
 * `sms`
+* `letter`
 
-Optional `status` can be one of:
+Optional `status` can be one of, if not included then all status types are returned:
 
 * `sending`
 * `delivered`
-* `permanent-failure`
-* `temporary-failure`
-* `technical-failure`
+* `failed`
 
 
 
@@ -279,55 +286,33 @@ Optional `status` can be one of:
 <pre>
 {"notifications":
   [{
-    "status": "delivered",
-    "to": "07515 987 456",
+    "id": "notify_id", # required
+    "reference": "client reference", # optional
+    "email_address": "email address",  # required for emails
+    "phone_number": "phone number",  # required for sms
+    "line_1": "full name of a person or company", # required for letter
+    "line_2": "123 The Street", # optional
+    "line_3": "Some Area", # optional
+    "line_4": "Some Town", # optional
+    "line_5": "Some county", # optional
+    "line_6": "Something else", # optional
+    "postcode": "postcode", # required for letter
+    "type": "sms | letter | email", # required
+    "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
     "template": {
-      "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-      "name": "First template",
-      "template_type": "sms"
-    },
-    "job": {
-      "id": "5cc9d7ae-ceb7-4565-8345-4931d71f8c2e",
-      "original_file_name": "Test run"
-    },
-    "created_at": "2016-04-26T15:30:49.968969+00:00",
-    "updated_at": "2016-04-26T15:30:50.853844+00:00",
-    "sent_at": "2016-04-26T15:30:50.383634+00:00",
-    "id": "04ae9bdc-92aa-4d6c-a0da-48587c03d4c7",
-    "content_char_count": 446,
-    "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-    "reference": None,
-    "sent_by": "mmg"
-    },
-    {
-    "status": "delivered",
-    "to": "07515 987 456",
-    "template": {
-      "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-      "name": "First template",
-      "template_type": "sms"
-    },
-    "job": {
-      "id": "f9043884-acac-46db-b2ea-f08cd8ec6d67",
-      "original_file_name": "Test run"
-    },
-    "created_at": "2016-04-26T15:29:36.891512+00:00",
-    "updated_at": "2016-04-26T15:29:38.724808+00:00",
-    "sent_at": "2016-04-26T15:29:37.230976+00:00",
-    "id": "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-    "content_char_count": 490,
-    "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-    "reference": None,
-    "sent_by": "mmg"
+                    "version": 1 # template version num # required
+                    "id": 1 # template id # required
+                    "uri": "/template/{id}/{version}", # required
+                },
+	"created_at": "created at", # required
+	"sent_at": " sent to provider at", # optional
     },
     …
   ],
   "links": {
-    "last": "/notifications?page=3&template_type=sms&status=delivered",
-    "next": "/notifications?page=2&template_type=sms&status=delivered"
-  },
-  "total": 162,
-  "page_size": 50
+    "current": "/notifications?template_type=sms&status=delivered",
+    "next": "/notifications?other_than=last_id_in_list&template_type=sms&status=delivered"
+  }
 }
 </pre> 
         </td>
@@ -337,8 +322,15 @@ Optional `status` can be one of:
         </td>
         <td>
 <pre>
-{"result": "error"
-"message": {"status": {"0": {"status": ["Not a valid choice.""]}}},}
+{
+  "status_code": 404
+  "errors": [
+    {
+      "error": "NoResultFound",
+      "message": "No result found"
+    }
+  ],
+}
 </pre>
         </td>
         <tr>

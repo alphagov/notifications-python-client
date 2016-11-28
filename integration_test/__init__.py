@@ -3,7 +3,7 @@ import os
 import json
 
 import jsonschema
-from jsonschema import (Draft4Validator, ValidationError)
+from jsonschema import (Draft4Validator)
 
 
 def validate_v0(json_string, schema_filename):
