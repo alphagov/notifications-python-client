@@ -3,7 +3,10 @@ import uuid
 
 from integration_test import (validate, validate_v0)
 from integration_test.schemas.v2.notification_schemas import (
-    get_notification_response, post_sms_response, post_email_response
+    get_notifications_response,
+    get_notification_response,
+    post_sms_response,
+    post_email_response
 )
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -45,7 +48,7 @@ def get_notification_by_id(python_client, id, notification_type):
 
 def get_all_notifications(client):
     response = client.get_all_notifications()
-    validate_v0(response, 'GET_notifications_return.json')
+    validate(response, get_notifications_response)
 
 
 if __name__ == "__main__":
