@@ -20,6 +20,7 @@ def send_sms_notification_test_response(python_client):
                                                    template_id=template_id,
                                                    personalisation=personalisation)
     validate(response, post_sms_response)
+    assert unique_name in response['content']['body']  # check placeholders are resplaced
     return response['id']
 
 
@@ -32,6 +33,7 @@ def send_email_notification_test_response(python_client):
                                                      template_id=template_id,
                                                      personalisation=personalisation)
     validate(response, post_email_response)
+    assert unique_name in response['content']['body']  # check placeholders are resplaced
     return response['id']
 
 
