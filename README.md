@@ -101,48 +101,68 @@ notifications_client.send_email_notification(
         </td>
     </tr>
     <tr>
-        <td>429
+        <td>HTTPError 
         </td>
         <td>
 <pre>
-{
-    "status_code": "429",
-    "errors":[{
-                 "error": "TooManyRequestsError",
-                 "message": "Exceeded send limits (50) for today"
+    Attributes available on exception class:
+    status_code: 429
+    message: [{
+                "error": "TooManyRequestsError",
+                "message": "Exceeded send limits (50) for today"
+               }
+              ]
+    response: {
+                "status_code": 429,
+                "errors": [{
+                            "error": "TooManyRequestsError",
+                            "message": "Exceeded send limits (50) for today"
+                           }
+                         ]
               }
-             ]
- }
 </pre>
         </td>
     </tr>
         <tr>
-        <td>400
+        <td>HTTPError
         </td>
         <td>
 <pre>
-{
-    "status_code":"400",
-    "errors":[{
+    Attributes available on exception class:
+    status_code: 400
+    message: [{
                  "error": "BadRequestError",
                  "message": "Can"t send to this recipient using a team-only API key"
               ]}
-}
+    response: {
+                "status_code":"400",
+                "errors":[{
+                             "error": "BadRequestError",
+                             "message": "Can"t send to this recipient using a team-only API key"
+                          ]}
+               }
 </pre>
         </td>
     </tr>
         </tr>
         <tr>
-        <td>400
+        <td>HTTPError
         </td>
         <td>
 <pre>
-{   
-    "status_code":"400",
-    "errors":[{
+    Attributes available on exception class:
+    status_code: 400
+    message: [{
                  "error": "BadRequestError",
                  "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
-             ]}
+             ]
+    response: {   
+                "status_code":"400",
+                "errors":[{
+                             "error": "BadRequestError",
+                             "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+                         ]
+              }
 </pre>
         </td>
     </tr>
@@ -205,35 +225,51 @@ notifications_client.get_notification_by_id(notification_id)
  </td>
  </tr>
  <tr>
-   <td>400</td>
+   <td>HTTPError</td>
     <td>
 <pre>
-{
-   "status_code":"400",
-    "errors":[
+    Attributes available on exception class:
+    status_code: 400
+    message: [
         {
             "error": "ValidationError",
             "message": "id is a required"
          }
     ]
-}    
+    response: {
+                   "status_code":"400",
+                    "errors":[
+                        {
+                            "error": "ValidationError",
+                            "message": "id is a required"
+                         }
+                    ]
+                }    
 </pre>
         </td>
     </tr>
         <tr>
-        <td>404
+        <td>HTTPError
         </td>
         <td>
 <pre>
-{
-  "status_code": 404
-  "errors": [
-    {
-      "error": "NoResultFound",
-      "message": "No result found"
-    }
-  ]
-}
+    Attributes available on exception class:
+    status_code: 400
+    message: [
+                {
+                  "error": "NoResultFound",
+                  "message": "No result found"
+                }
+             ]
+    response: {
+                  "status_code": 404
+                  "errors": [
+                    {
+                      "error": "NoResultFound",
+                      "message": "No result found"
+                    }
+                  ]
+                }
 </pre>
         </td>
     </tr>
@@ -259,9 +295,12 @@ Optional `template_type` can be one of, if left empty all template_types are ret
 
 Optional `status` can be one of, if not included then all status types are returned:
 
-* `sending`
-* `delivered`
-* `failed`
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
+* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
 
 
 
@@ -286,26 +325,26 @@ Optional `status` can be one of, if not included then all status types are retur
 <pre>
 {"notifications":
   [{
-    "id": "notify_id", # required
-    "reference": "client reference", # optional
-    "email_address": "email address",  # required for emails
-    "phone_number": "phone number",  # required for sms
-    "line_1": "full name of a person or company", # required for letter
-    "line_2": "123 The Street", # optional
-    "line_3": "Some Area", # optional
-    "line_4": "Some Town", # optional
-    "line_5": "Some county", # optional
-    "line_6": "Something else", # optional
-    "postcode": "postcode", # required for letter
-    "type": "sms | letter | email", # required
-    "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
-    "template": {
-                    "version": 1 # template version num # required
-                    "id": 1 # template id # required
-                    "uri": "/template/{id}/{version}", # required
-                },
-	"created_at": "created at", # required
-	"sent_at": " sent to provider at", # optional
+         "id": "notify_id", # required
+         "reference": "client reference", # optional
+         "email_address": "email address",  # required for emails
+         "phone_number": "phone number",  # required for sms
+         "line_1": "full name of a person or company", # required for letter
+         "line_2": "123 The Street", # optional
+         "line_3": "Some Area", # optional
+         "line_4": "Some Town", # optional
+         "line_5": "Some county", # optional
+         "line_6": "Something else", # optional
+         "postcode": "postcode", # required for letter
+         "type": "sms | letter | email", # required
+         "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+         "template": {
+                         "version": 1 # template version num # required
+                         "id": 1 # template id # required
+                         "uri": "/template/{id}/{version}", # required
+                     },
+         "created_at": "created at", # required
+         "sent_at": " sent to provider at", # optional
     },
     …
   ],
@@ -318,28 +357,49 @@ Optional `status` can be one of, if not included then all status types are retur
         </td>
     </tr>
     <tr>
-        <td>400
+        <td>HTTPError
         </td>
         <td>
 <pre>
-{
-  "status_code": 404
-  "errors": [
-    {
-      "error": "NoResultFound",
-      "message": "No result found"
-    }
-  ],
-}
+    Attributes available on exception class:
+    status_code: 404
+    message: [
+                {
+                  "error": "NoResultFound",
+                  "message": "No result found"
+                }
+              ]
+    response: {
+                  "status_code": 404
+                  "errors": [
+                    {
+                      "error": "NoResultFound",
+                      "message": "No result found"
+                    }
+                  ]
+               }
 </pre>
         </td>
         <tr>
-        <td>400
+        <td>HTTPError
         </td>
         <td>
 <pre>
-{"result": "error"
-"message": {"template_type": {"0": {"template_type": ["Not a valid choice.""]}}},}
+    Attributes available on exception class:
+    status_code: 400
+    message: [
+                {'error': 'ValidationError',
+                 'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+                 }
+              ]
+    response: {
+                    "status_code": 400,
+                    "errors": [
+                                {'error': 'ValidationError',
+                                 'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+                                 }
+                                 ]
+               }
 </pre>
         </td>
     </tr>
@@ -349,6 +409,3 @@ Optional `status` can be one of, if not included then all status types are retur
 </table>
 
 </details> 
-
-
-
