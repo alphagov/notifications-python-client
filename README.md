@@ -100,12 +100,22 @@ notifications_client.send_email_notification(
 </pre> 
         </td>
     </tr>
+  </tbody>
+<thead>
+    <tr>
+        <td>Exception
+        </td>
+        <td>Attributes available on the exception
+        </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
     <tr>
         <td>HTTPError 
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 429
 message: [{
             "error": "TooManyRequestsError",
@@ -128,7 +138,6 @@ response: {
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 400
 message: [{
              "error": "BadRequestError",
@@ -150,7 +159,6 @@ response: {
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 400
 message: [{
              "error": "BadRequestError",
