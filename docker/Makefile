@@ -7,4 +7,4 @@ help:
 
 .PHONY: build
 build:
-	docker build --pull -f Dockerfile -t govuk/notify-python-client-runner .
+	docker build --pull -f Dockerfile -t govuk/notify-python-client-runner --build-arg APT_HTTP_PROXY="${HTTP_PROXY}" .
