@@ -151,6 +151,18 @@ response: {
                       ]}
            }
 </pre>
+</td>
+    </tr>
+  </tbody>
+<thead>
+    <tr>
+        <td>Exception
+        </td>
+        <td>Attributes available on the exception
+        </td>
+    </tr>
+  </thead>
+  <tbody>
         </td>
     </tr>
         </tr>
@@ -229,14 +241,24 @@ notifications_client.get_notification_by_id(notification_id)
 	"sent_at": " sent to provider at", # optional
 }
 </pre> 
-
+</td>
+    </tr>
+  </tbody>
+<thead>
+    <tr>
+        <td>Exception
+        </td>
+        <td>Attributes available on the exception
+        </td>
+    </tr>
+  </thead>
+  <tbody>
  </td>
  </tr>
  <tr>
    <td>HTTPError</td>
     <td>
 <pre>
-Attributes available on exception class:
 status_code: 400
 message: [
     {
@@ -261,7 +283,6 @@ response: {
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 400
 message: [
             {
@@ -364,12 +385,23 @@ Optional `status` can be one of, if not included then all status types are retur
 </pre> 
         </td>
     </tr>
+ </td>
+    </tr>
+  </tbody>
+<thead>
     <tr>
+        <td>Exception
+        </td>
+        <td>Attributes available on the exception
+        </td>
+    </tr>
+  </thead>
+  <tbody>
+     <tr>
         <td>HTTPError
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 404
 message: [
             {
@@ -393,7 +425,6 @@ response: {
         </td>
         <td>
 <pre>
-Attributes available on exception class:
 status_code: 400
 message: [
             {'error': 'ValidationError',
