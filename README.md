@@ -1,6 +1,4 @@
 # GOV.UK Notify Python client
-This client provides an interface to version 2 of the notifications-api. If this is your first time using the client continue using this version to integrate with Notify. 
-If you have used the client before and your version of notification-python-client is less than 4.0.0, then you will need to read this document to see the changes to the api requests and responses.
 
 ## Installation
 
@@ -39,7 +37,7 @@ Response
 
 If the request is successful, `response` will be a `dict`:
 
-```json
+```python
 {
         "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
         "reference": None,
@@ -127,7 +125,7 @@ Response
 
 If the request is successful, `response` will be a `dict`:
 
-```json
+```python
 {
         "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
         "reference": None,
@@ -187,7 +185,8 @@ Otherwise the client will raise a `HTTPError`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+    "message": "Can"t send to this recipient when service is in trial mode 
+                - see https://www.notifications.service.gov.uk/trial-mode"
 }]
 </pre>
 </td>
@@ -233,7 +232,7 @@ Response
 
 If the request is successful, `response` will be a `dict`:
 
-```json
+```python
 {
     "id": "notify_id", # required
     "reference": "client reference", # optional
@@ -300,7 +299,7 @@ Otherwise the client will raise a `HTTPError`:
 ## Get the status of all messages
 
 ```python
-notifications_client.get_all_notifications(template_type="email", status="sending")
+response = notifications_client.get_all_notifications(template_type="email", status="sending")
 ```
 <details>
 <summary>
@@ -309,7 +308,7 @@ Response
 
 If the request is successful, `response` will be a `dict`:
 
-```json
+```python
 {"notifications":
   [{
          "id": "notify_id", # required
