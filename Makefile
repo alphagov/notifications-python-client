@@ -17,7 +17,7 @@ help:
 venv: venv/bin/activate ## Create virtualenv if it does not exist
 
 venv/bin/activate:
-	test -d venv || virtualenv venv
+	test -d venv || virtualenv venv -p python3
 	./venv/bin/pip install pip-accel
 
 .PHONY: dependencies
