@@ -97,7 +97,8 @@ Otherwise the client will raise a `HTTPError`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+    "message": "Can"t send to this recipient when service is in trial mode 
+                - see https://www.notifications.service.gov.uk/trial-mode"
 }]
 </pre>
 </td>
