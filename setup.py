@@ -52,7 +52,8 @@ setup(
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        # TODO: Get tests running for other versions of python
+        'Development Status :: 4 - Beta',
+        # TODO: Get tests running for other versions of python - using tox?
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
     ],
