@@ -45,7 +45,7 @@ notifications_client.send_email_notification(
 
 Find `template_id` by clicking **API info** for the template you want to send.
 
-The `reference` is option, it is an identifier that you want to use to identify the notification, rather than use our id of the notification.
+The `reference` is optional, it is an identifier that you want to use to identify the notification, rather than use our id of the notification.
 
 If a template has placeholders, you need to provide their values in `personalisation`,
 for example:
@@ -61,27 +61,10 @@ notifications_client.send_email_notification(
 )
 ```
 
-<details> 
-    <summary>
-        Response (expand this section for more details):
-    </summary>
-
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>201
-        </td>
-        <td>
+### Successful response:
+Status code: 201
 <pre>
-{
+```{
   "id":"unique_id"
   "reference": None or "the reference you gave"
   "content": {
@@ -97,99 +80,9 @@ notifications_client.send_email_notification(
         }
   }
 }
-</pre> 
-        </td>
-    </tr>
-  </tbody>
-<thead>
-    <tr>
-        <td>Exception
-        </td>
-        <td>Attributes available on the exception
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    <tr>
-        <td>HTTPError 
-        </td>
-        <td>
-<pre>
-status_code: 429
-message: [{
-            "error": "TooManyRequestsError",
-            "message": "Exceeded send limits (50) for today"
-           }
-          ]
-response: {
-            "status_code": 429,
-            "errors": [{
-                        "error": "TooManyRequestsError",
-                        "message": "Exceeded send limits (50) for today"
-                       }
-                     ]
-          }
+```
 </pre>
-        </td>
-    </tr>
-        <tr>
-        <td>HTTPError
-        </td>
-        <td>
-<pre>
-status_code: 400
-message: [{
-             "error": "BadRequestError",
-             "message": "Can"t send to this recipient using a team-only API key"
-          ]}
-response: {
-            "status_code":"400",
-            "errors":[{
-                         "error": "BadRequestError",
-                         "message": "Can"t send to this recipient using a team-only API key"
-                      ]}
-           }
-</pre>
-</td>
-    </tr>
-  </tbody>
-<thead>
-    <tr>
-        <td>Exception
-        </td>
-        <td>Attributes available on the exception
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-        </td>
-    </tr>
-        </tr>
-        <tr>
-        <td>HTTPError
-        </td>
-        <td>
-<pre>
-status_code: 400
-message: [{
-             "error": "BadRequestError",
-             "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
-         ]
-response: {   
-            "status_code":"400",
-            "errors":[{
-                         "error": "BadRequestError",
-                         "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
-                     ]
-          }
-</pre>
-        </td>
-    </tr>
-  </tbody>
-</table>
-
-</details> 
+        
 
 
 ## Get the status of one message
@@ -198,25 +91,8 @@ response: {
 notifications_client.get_notification_by_id(notification_id)
 ```
 
-<details> 
-    <summary>
-        Response (expand this section for more details):
-    </summary>
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>200
-        </td>
-        <td>
-
+### Successful response:
+Status code: 200
 <pre>
 {
     "id": "notify_id", # required
@@ -241,73 +117,6 @@ notifications_client.get_notification_by_id(notification_id)
 	"sent_at": " sent to provider at", # optional
 }
 </pre> 
-</td>
-    </tr>
-  </tbody>
-<thead>
-    <tr>
-        <td>Exception
-        </td>
-        <td>Attributes available on the exception
-        </td>
-    </tr>
-  </thead>
-  <tbody>
- </td>
- </tr>
- <tr>
-   <td>HTTPError</td>
-    <td>
-<pre>
-status_code: 400
-message: [
-    {
-        "error": "ValidationError",
-        "message": "id is a required"
-     }
-]
-response: {
-               "status_code":"400",
-                "errors":[
-                    {
-                        "error": "ValidationError",
-                        "message": "id is a required"
-                     }
-                ]
-            }    
-</pre>
-        </td>
-    </tr>
-        <tr>
-        <td>HTTPError
-        </td>
-        <td>
-<pre>
-status_code: 400
-message: [
-            {
-              "error": "NoResultFound",
-              "message": "No result found"
-            }
-         ]
-response: {
-              "status_code": 404
-              "errors": [
-                {
-                  "error": "NoResultFound",
-                  "message": "No result found"
-                }
-              ]
-            }
-</pre>
-        </td>
-    </tr>
-
-  </tbody>
-</table>
-
-
-</details> 
 
 
 
@@ -333,24 +142,8 @@ Optional `status` can be one of, if not included then all status types are retur
 
 
 
-<details> 
-    <summary>
-        Response (expand this section for more details):
-    </summary>
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>201
-        </td>
-        <td>
+### Successful Response:
+Status code: 200
 <pre>
 {"notifications":
   [{
@@ -382,25 +175,74 @@ Optional `status` can be one of, if not included then all status types are retur
     "next": "/notifications?other_than=last_id_in_list&template_type=sms&status=delivered"
   }
 }
-</pre> 
-        </td>
-    </tr>
- </td>
-    </tr>
-  </tbody>
-<thead>
-    <tr>
-        <td>Exception
-        </td>
-        <td>Attributes available on the exception
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-     <tr>
-        <td>HTTPError
-        </td>
-        <td>
+
+
+
+### Possible exceptions thrown:
+
+<pre>
+status code: 429
+message: [{
+            "error": "TooManyRequestsError",
+            "message": "Exceeded send limits (50) for today"
+           }
+          ]
+response: {
+            "status_code": 429,
+            "errors": [{
+                        "error": "TooManyRequestsError",
+                        "message": "Exceeded send limits (50) for today"
+                       }
+                     ]
+          }
+          
+</pre>
+
+<pre>
+status_code: 400
+message: [{
+             "error": "BadRequestError",
+             "message": "Can"t send to this recipient using a team-only API key"
+          ]}
+response: {
+            "status_code":"400",
+            "errors":[{
+                         "error": "BadRequestError",
+                         "message": "Can"t send to this recipient using a team-only API key"
+                      ]}
+           }
+</pre>
+
+<pre>
+status_code: 400
+message: [{
+             "error": "BadRequestError",
+             "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+         ]
+response: {   
+            "status_code":"400",
+            "errors":[{
+                         "error": "BadRequestError",
+                         "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+                     ]
+          }
+</pre>
+ <pre>
+status_code: 400
+message: [
+            {'error': 'ValidationError',
+             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+             }
+          ]
+response: {
+                "status_code": 400,
+                "errors": [
+                            {'error': 'ValidationError',
+                             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+                             }
+                             ]
+           }
+</pre>
 <pre>
 status_code: 404
 message: [
@@ -419,32 +261,39 @@ response: {
               ]
            }
 </pre>
-        </td>
-        <tr>
-        <td>HTTPError
-        </td>
-        <td>
 <pre>
 status_code: 400
 message: [
-            {'error': 'ValidationError',
-             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-             }
-          ]
+            {
+              "error": "NoResultFound",
+              "message": "No result found"
+            }
+         ]
 response: {
-                "status_code": 400,
-                "errors": [
-                            {'error': 'ValidationError',
-                             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-                             }
-                             ]
-           }
+              "status_code": 404
+              "errors": [
+                {
+                  "error": "NoResultFound",
+                  "message": "No result found"
+                }
+              ]
+            }
 </pre>
-        </td>
-    </tr>
-    </tr>
-
-  </tbody>
-</table>
-
-</details> 
+<pre>
+status_code: 400
+message: [
+    {
+        "error": "ValidationError",
+        "message": "id is a required"
+     }
+]
+response: {
+               "status_code":"400",
+                "errors":[
+                    {
+                        "error": "ValidationError",
+                        "message": "id is a required"
+                     }
+                ]
+            }    
+</pre>
