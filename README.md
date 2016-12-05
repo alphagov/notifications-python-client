@@ -5,7 +5,7 @@ If you have used the client before and your version of notification-python-clien
 ## Installation
 
 ```shell
-pip install git+https://github.com/alphagov/notifications-python-client.git
+pip install notifications-python-client
 ```
 
 ## Getting started
@@ -20,80 +20,220 @@ Generate an API key by logging in to
 [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to
 the **API integration** page.
 
-## Send a message
+## Send messages
 
-Text message:
+### Text message
 
 ```python
-notifications_client.send_sms_notification(
-    phone_number='the_phone_number', 
-    template_id='the_template_id', 
+response = notifications_client.send_sms_notification(
+    phone_number='+447900900123', 
+    template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda', 
     personalisation=None, 
     reference=None
 )
 ```
-Email:
+<details>
+<summary>
+Response
+</summary>
 
-```python
-notifications_client.send_email_notification(
-    email_address='the_email_address',
-    template_id='the_template_id'
-    personalisation=None, 
-    reference=None
-)
-```
+If the request is successful, `response` will be a `dict`:
 
-Find `template_id` by clicking **API info** for the template you want to send.
-
-The `reference` is optional, it is an identifier that you want to use to identify the notification, rather than use our id of the notification.
-
-If a template has placeholders, you need to provide their values in `personalisation`,
-for example:
-
-```python
-notifications_client.send_email_notification(
-    email_address,
-    template_id,
-    personalisation={
-        'first_name': 'Amala',
-        'reference_number': '300241',
-    }
-)
-```
-
-### Successful response:
-Status code: 201
-<pre>
-```{
-  "id":"unique_id"
-  "reference": None or "the reference you gave"
-  "content": {
-        "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-        "from_email": "your from email address",
-        "subject": "Licence renewal"
-        }
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/unique_id"
-  "template": {
-        "id": "unique_id_of_template",
-        "version": 1,
-        "uri": "https://api.notificaitons.service.gov.uk/service/your_service_id/templates/unique_id_of_template"
-        }
-  }
+```json
+{
+        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+        "reference": None,
+        "content": {
+                    "body": "Some words", 
+                    "from_number": "40604"
+                    },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+        "template": {
+                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+                     "version": 1,
+                     "uri": "https://api.notifications.service.gov.uk/v2/templates/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+                     }
 }
 ```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
 </pre>
-        
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
 
 
+### Email
+
+```python
+response = notifications_client.send_email_notification(
+    email_address='the_email_address@example.com',
+    template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
+    personalisation=None, 
+    reference=None
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```json
+{
+        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+        "reference": None,
+        "content": {"subject": "Licence renewal",
+                    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+                    "from_email": "the_service@gov.uk"
+                    },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+        "template": {
+                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+                     "version": 1,
+                     "uri": "https://api.notificaitons.service.gov.uk/service/your_service_id/templates/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+                     }
+}
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+
+### Arguments
+
+
+#### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `reference`
+
+An optional identifier you generate if you don’t want to use Notify’s `id`.
+
+
+#### `personalisation`
+
+If a template has placeholders, you need to provide their values, for example:
+
+```python
+personalisation={
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+      
 ## Get the status of one message
 
 ```python
-notifications_client.get_notification_by_id(notification_id)
+response = notifications_client.get_notification_by_id(notification_id)
 ```
 
-### Successful response:
-Status code: 200
-<pre>
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```json
 {
     "id": "notify_id", # required
     "reference": "client reference", # optional
@@ -116,35 +256,60 @@ Status code: 200
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
 }
-</pre> 
+```
 
-
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "id is not a valid UUID"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
 
 ## Get the status of all messages
 
 ```python
 notifications_client.get_all_notifications(template_type="email", status="sending")
 ```
-Optional `template_type` can be one of, if left empty all template_types are returned:
+<details>
+<summary>
+Response
+</summary>
 
-* `email`
-* `sms`
-* `letter`
+If the request is successful, `response` will be a `dict`:
 
-Optional `status` can be one of, if not included then all status types are returned:
-
-* `sending` - the message is queued to be sent by the provider.
-* `delivered` - the message was successfully delivered.
-* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
-* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
-* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
-* `technical-failure` - Notify had a technical failure; you can try to send the message again.
-
-
-
-### Successful Response:
-Status code: 200
-<pre>
+```json
 {"notifications":
   [{
          "id": "notify_id", # required
@@ -175,125 +340,65 @@ Status code: 200
     "next": "/notifications?other_than=last_id_in_list&template_type=sms&status=delivered"
   }
 }
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+	'error': 'ValidationError',
+    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "Apple is not one of [sms, email, letter]"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+#### `template_type`
+
+If omitted all messages are returned. Otherwise you can filter by: 
+
+* `email`
+* `sms`
+* `letter`
 
 
+#### `status`
 
-### Possible exceptions thrown:
+If omitted all messages are returned. Otherwise you can filter by: 
 
-<pre>
-status code: 429
-message: [{
-            "error": "TooManyRequestsError",
-            "message": "Exceeded send limits (50) for today"
-           }
-          ]
-response: {
-            "status_code": 429,
-            "errors": [{
-                        "error": "TooManyRequestsError",
-                        "message": "Exceeded send limits (50) for today"
-                       }
-                     ]
-          }
-          
-</pre>
-
-<pre>
-status_code: 400
-message: [{
-             "error": "BadRequestError",
-             "message": "Can"t send to this recipient using a team-only API key"
-          ]}
-response: {
-            "status_code":"400",
-            "errors":[{
-                         "error": "BadRequestError",
-                         "message": "Can"t send to this recipient using a team-only API key"
-                      ]}
-           }
-</pre>
-
-<pre>
-status_code: 400
-message: [{
-             "error": "BadRequestError",
-             "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
-         ]
-response: {   
-            "status_code":"400",
-            "errors":[{
-                         "error": "BadRequestError",
-                         "message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"
-                     ]
-          }
-</pre>
- <pre>
-status_code: 400
-message: [
-            {'error': 'ValidationError',
-             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-             }
-          ]
-response: {
-                "status_code": 400,
-                "errors": [
-                            {'error': 'ValidationError',
-                             'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-                             }
-                             ]
-           }
-</pre>
-<pre>
-status_code: 404
-message: [
-            {
-              "error": "NoResultFound",
-              "message": "No result found"
-            }
-          ]
-response: {
-              "status_code": 404
-              "errors": [
-                {
-                  "error": "NoResultFound",
-                  "message": "No result found"
-                }
-              ]
-           }
-</pre>
-<pre>
-status_code: 400
-message: [
-            {
-              "error": "NoResultFound",
-              "message": "No result found"
-            }
-         ]
-response: {
-              "status_code": 404
-              "errors": [
-                {
-                  "error": "NoResultFound",
-                  "message": "No result found"
-                }
-              ]
-            }
-</pre>
-<pre>
-status_code: 400
-message: [
-    {
-        "error": "ValidationError",
-        "message": "id is a required"
-     }
-]
-response: {
-               "status_code":"400",
-                "errors":[
-                    {
-                        "error": "ValidationError",
-                        "message": "id is a required"
-                     }
-                ]
-            }    
-</pre>
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
+* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
