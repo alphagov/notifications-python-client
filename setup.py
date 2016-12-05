@@ -15,9 +15,11 @@ with open('notifications_python_client/version.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
+
 def get_reqs(requirement_file):
     requirements = list(parse_requirements(requirement_file, session=pip.download.PipSession()))
     return [str(r.req) for r in requirements]
+
 
 install_requires = get_reqs('requirements.txt')
 tests_require = get_reqs('requirements_for_test.txt')
