@@ -9,12 +9,6 @@ BUILD_TAG ?= notifications-python-client-manual
 
 DOCKER_CONTAINER_PREFIX = ${USER}-${BUILD_TAG}
 
-PYPI_REPOSITORY_NAME = pypi
-PYPI_REPOSITORY_URL = https://pypi.python.org/pypi/
-# pypi's test repository, for testing changes to .rst or packaging. Note: you'll need different credentials for testpypi
-# PYPI_REPOSITORY_NAME = testpypi
-# PYPI_REPOSITORY_URL = https://testpypi.python.org/pypi
-
 .PHONY: help
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -49,8 +43,12 @@ build-wheel: venv ## build distributable wheel
 
 .PHONY: publish-to-pypi
 publish-to-pypi: build-wheel ## upload distributable wheel to pypi
+	# to test changes to the publish process, make sure you've set the following environment variables:
+	# PYPI_REPOSITORY_NAME = testpypi
+	# PYPI_REPOSITORY_URL = https://testpypi.python.org/pypi
+	# (also your credentials will be different)
 	./venv/bin/pip install twine
-	twine upload dist/*.whl \
+	./venv/bin/pip/twine upload dist/*.whl \
 		--repository=${PYPI_REPOSITORY_NAME} \
 		--repository-url=${PYPI_REPOSITORY_URL} \
 		--username=${PYPI_USERNAME} \
@@ -118,6 +116,8 @@ publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## pu
 		-e NO_PROXY="${NO_PROXY}" \
 		-e PYPI_USERNAME="${PYPI_USERNAME}" \
 		-e PYPI_PASSWORD="${PYPI_PASSWORD}" \
+		-e PYPI_REPOSITORY_NAME="${PYPI_REPOSITORY_NAME}" \
+		-e PYPI_REPOSITORY_URL="${PYPI_REPOSITORY_URL}" \
 		--env-file docker.env \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		make publish-to-pypi
