@@ -4,7 +4,7 @@
 ## Installation
 
 ```shell
-pip install git+https://github.com/alphagov/notifications-python-client.git
+pip install notifications-python-client
 ```
 
 ## Getting started
@@ -54,7 +54,7 @@ notifications_client.send_email_notification(
 )
 ```
 
-<details> 
+<details>
     <summary>
         Response:
     </summary>
@@ -84,7 +84,7 @@ notifications_client.send_email_notification(
     "subject": "Licence renewal"
   }
 }
-</pre> 
+</pre>
         </td>
     </tr>
     <tr>
@@ -103,7 +103,7 @@ notifications_client.send_email_notification(
         <td>
 <pre>
 {"result":"error",
-"message": "Can’t send to this recipient using a team-only API key"]} 
+"message": "Can’t send to this recipient using a team-only API key"]}
 </pre>
         </td>
     </tr>
@@ -113,8 +113,8 @@ notifications_client.send_email_notification(
         </td>
         <td>
 <pre>
-{"result":"error", 
-"message"="Can’t send to this recipient when service is in trial 
+{"result":"error",
+"message"="Can’t send to this recipient when service is in trial
 mode - see https://www.notifications.service.gov.uk/trial-mode"]}
 </pre>
         </td>
@@ -122,7 +122,7 @@ mode - see https://www.notifications.service.gov.uk/trial-mode"]}
   </tbody>
 </table>
 
-</details> 
+</details>
 
 
 ## Get the status of one message
@@ -131,7 +131,7 @@ mode - see https://www.notifications.service.gov.uk/trial-mode"]}
 notifications_client.get_notification_by_id(notification_id)
 ```
 
-<details> 
+<details>
     <summary>
         Response:
     </summary>
@@ -179,7 +179,7 @@ notifications_client.get_notification_by_id(notification_id)
     }
   }
 }
-</pre> 
+</pre>
 
         </td>
     </tr>
@@ -188,7 +188,7 @@ notifications_client.get_notification_by_id(notification_id)
         </td>
         <td>
 <pre>
-{"result": "error", 
+{"result": "error",
 "message": "id: required field"}    
 </pre>
         </td>
@@ -208,7 +208,7 @@ notifications_client.get_notification_by_id(notification_id)
 </table>
 
 
-</details> 
+</details>
 
 
 
@@ -232,7 +232,7 @@ Optional `status` can be one of:
 
 
 
-<details> 
+<details>
     <summary>
         Response:
     </summary>
@@ -303,7 +303,7 @@ Optional `status` can be one of:
   "total": 162,
   "page_size": 50
 }
-</pre> 
+</pre>
         </td>
     </tr>
     <tr>
@@ -330,7 +330,4 @@ Optional `status` can be one of:
   </tbody>
 </table>
 
-</details> 
-
-
-
+</details>
