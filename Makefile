@@ -44,12 +44,12 @@ integration-test: ## Run integration tests
 
 .PHONY: build-wheel
 build-wheel: venv ## build distributable wheel
-	pip install wheel
-	python setup.py bdist_wheel
+	./venv/bin/pip install wheel
+	./venv/bin/python setup.py bdist_wheel
 
 .PHONY: publish-to-pypi
 publish-to-pypi: build-wheel ## upload distributable wheel to pypi
-	pip install twine
+	./venv/bin/pip install twine
 	twine upload dist/*.whl \
 		--repository=${PYPI_REPOSITORY_NAME} \
 		--repository-url=${PYPI_REPOSITORY_URL} \
