@@ -48,11 +48,11 @@ publish-to-pypi: build-wheel ## upload distributable wheel to pypi
 	# PYPI_REPOSITORY_URL = https://testpypi.python.org/pypi
 	# (also your credentials will be different)
 	./venv/bin/pip install twine
-	./venv/bin/pip/twine upload dist/*.whl \
-		--repository=${PYPI_REPOSITORY_NAME} \
-		--repository-url=${PYPI_REPOSITORY_URL} \
-		--username=${PYPI_USERNAME} \
-		--password=${PYPI_PASSWORD} \
+	@./venv/bin/pip/twine upload dist/*.whl \
+		--repository="${PYPI_REPOSITORY_NAME}" \
+		--repository-url="${PYPI_REPOSITORY_URL}" \
+		--username="${PYPI_USERNAME}" \
+		--password="${PYPI_PASSWORD}" \
 		--skip-existing # if you haven't run `make clean` there may be old wheels - don't try and re-upload them
 
 .PHONY: generate-env-file
@@ -106,7 +106,7 @@ integration-test-with-docker: prepare-docker-runner-image generate-env-file ## R
 
 .PHONY: publish-to-pypi-with-docker
 publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## publish wheel to pypi inside a docker container
-	docker run -i --rm \
+	@docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-publish-to-pypi" \
 		-v `pwd`:/var/project \
 		-e http_proxy="${HTTP_PROXY}" \
