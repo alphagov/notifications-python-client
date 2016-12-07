@@ -48,7 +48,7 @@ publish-to-pypi: build-wheel ## upload distributable wheel to pypi
 	# PYPI_REPOSITORY_URL = https://testpypi.python.org/pypi
 	# (also your credentials will be different)
 	./venv/bin/pip install twine
-	@./venv/bin/pip/twine upload dist/*.whl \
+	@./venv/bin/twine upload dist/*.whl \
 		--repository="${PYPI_REPOSITORY_NAME}" \
 		--repository-url="${PYPI_REPOSITORY_URL}" \
 		--username="${PYPI_USERNAME}" \
