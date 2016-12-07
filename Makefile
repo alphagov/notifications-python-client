@@ -17,7 +17,7 @@ help:
 venv: venv/bin/activate ## Create virtualenv if it does not exist
 
 venv/bin/activate:
-	test -d venv || virtualenv venv
+	test -d venv || virtualenv venv -p python3
 	./venv/bin/pip install pip-accel
 
 .PHONY: dependencies
@@ -35,6 +35,25 @@ test: venv ## Run tests
 .PHONY: integration-test
 integration-test: ## Run integration tests
 	./scripts/run_integration_tests.sh
+
+.PHONY: build-wheel
+build-wheel: venv ## build distributable wheel
+	./venv/bin/pip install wheel
+	./venv/bin/python setup.py bdist_wheel
+
+.PHONY: publish-to-pypi
+publish-to-pypi: build-wheel ## upload distributable wheel to pypi
+	# to test changes to the publish process, make sure you've set the following environment variables:
+	# PYPI_REPOSITORY_NAME = testpypi
+	# PYPI_REPOSITORY_URL = https://testpypi.python.org/pypi
+	# (also your credentials will be different)
+	./venv/bin/pip install twine
+	./venv/bin/pip/twine upload dist/*.whl \
+		--repository=${PYPI_REPOSITORY_NAME} \
+		--repository-url=${PYPI_REPOSITORY_URL} \
+		--username=${PYPI_USERNAME} \
+		--password=${PYPI_PASSWORD} \
+		--skip-existing # if you haven't run `make clean` there may be old wheels - don't try and re-upload them
 
 .PHONY: generate-env-file
 generate-env-file: ## Generate the environment file for running the tests inside a Docker container
@@ -85,9 +104,27 @@ integration-test-with-docker: prepare-docker-runner-image generate-env-file ## R
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		make integration-test
 
+.PHONY: publish-to-pypi-with-docker
+publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## publish wheel to pypi inside a docker container
+	docker run -i --rm \
+		--name "${DOCKER_CONTAINER_PREFIX}-publish-to-pypi" \
+		-v `pwd`:/var/project \
+		-e http_proxy="${HTTP_PROXY}" \
+		-e HTTP_PROXY="${HTTP_PROXY}" \
+		-e https_proxy="${HTTPS_PROXY}" \
+		-e HTTPS_PROXY="${HTTPS_PROXY}" \
+		-e NO_PROXY="${NO_PROXY}" \
+		-e PYPI_USERNAME="${PYPI_USERNAME}" \
+		-e PYPI_PASSWORD="${PYPI_PASSWORD}" \
+		-e PYPI_REPOSITORY_NAME="${PYPI_REPOSITORY_NAME}" \
+		-e PYPI_REPOSITORY_URL="${PYPI_REPOSITORY_URL}" \
+		--env-file docker.env \
+		${DOCKER_BUILDER_IMAGE_NAME} \
+		make publish-to-pypi
+
 .PHONY: clean-docker-containers
 clean-docker-containers: ## Clean up any remaining docker containers
 	docker rm -f $(shell docker ps -q -f "name=${DOCKER_CONTAINER_PREFIX}") 2> /dev/null || true
 
 clean:
-	rm -rf .cache venv
+	rm -rf .cache venv dist .eggs build
