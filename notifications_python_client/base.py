@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import logging
 import json
-from time import monotonic
+from monotonic import monotonic
 
 from notifications_python_client.version import __version__
 from notifications_python_client.errors import HTTPError, InvalidResponse
