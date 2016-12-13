@@ -29,8 +29,9 @@ def create_sms_notification(notifications_client):
     template_id = input("template id: ")
     personalisation = input("personalisation (JSON string):")
     personalisation = personalisation and json.loads(personalisation)
+    reference = input("reference string for notification: ")
     return notifications_client.send_sms_notification(
-        mobile_number, template_id=template_id, personalisation=personalisation
+        mobile_number, template_id=template_id, personalisation=personalisation, reference=reference
     )
 
 
@@ -39,8 +40,9 @@ def create_email_notification(notifications_client):
     template_id = input("template id: ")
     personalisation = input("personalisation (as JSON):") or None
     personalisation = personalisation and json.loads(personalisation)
+    reference = input("reference string for notification: ")
     return notifications_client.send_email_notification(
-        mobile_number, template_id=template_id, personalisation=personalisation
+        mobile_number, template_id=template_id, personalisation=personalisation, reference=reference
     )
 
 
@@ -52,7 +54,8 @@ def get_notification(notifications_client):
 def get_all_notifications(notifications_client):
     status = input("Notification status: ")
     template_type = input("Notification template type: ")
-    return notifications_client.get_all_notifications(status, template_type)
+    reference = input("Notification reference: ")
+    return notifications_client.get_all_notifications(status=status, template_type=template_type, reference=reference)
 
 
 def get_notification_statistics_for_day(notifications_client):

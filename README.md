@@ -199,6 +199,11 @@ Otherwise the client will raise a `HTTPError`:
 
 ### Arguments
 
+####
+The phone number of the recipient, only required for sms notifications.
+
+#### `email_address`
+The email address of the recipient, only required for email notifications.
 
 #### `template_id`
 
@@ -206,7 +211,9 @@ Find by clicking **API info** for the template you want to send.
 
 #### `reference`
 
-An optional identifier you generate if you don’t want to use Notify’s `id`.
+An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
 
 
 #### `personalisation`
@@ -385,16 +392,18 @@ Otherwise the client will raise a `HTTPError`:
 
 #### `template_type`
 
-If omitted all messages are returned. Otherwise you can filter by: 
+You can filter by: 
 
 * `email`
 * `sms`
 * `letter`
 
+You can omit this argument to ignore this filter.
+
 
 #### `status`
 
-If omitted all messages are returned. Otherwise you can filter by: 
+You can filter by: 
 
 * `sending` - the message is queued to be sent by the provider.
 * `delivered` - the message was successfully delivered.
@@ -402,3 +411,11 @@ If omitted all messages are returned. Otherwise you can filter by:
 * `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
 * `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
 * `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+### `reference`
+
+This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
+You can omit this argument to ignore the filter.

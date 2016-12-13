@@ -31,16 +31,14 @@ class NotificationsAPIClient(BaseAPIClient):
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
 
-    def get_all_notifications(self, status=None, template_type=None):
+    def get_all_notifications(self, status=None, template_type=None, reference=None):
         data = {}
         if status:
-            data.update({
-                'status': status
-            })
+            data.update({'status': status})
         if template_type:
-            data.update({
-                'template_type': template_type
-            })
+            data.update({'template_type': template_type})
+        if reference:
+            data.update({'reference': reference})
         return self.get(
             '/v2/notifications',
             params=data
