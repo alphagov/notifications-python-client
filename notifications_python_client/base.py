@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import logging
 import json
-from time import monotonic
+from monotonic import monotonic
 
 from notifications_python_client.version import __version__
 from notifications_python_client.errors import HTTPError, InvalidResponse
@@ -14,16 +14,15 @@ except ImportError:
 
 import requests
 
-
 logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient(object):
     def __init__(
-        self,
-        api_key,
-        base_url='https://api.notifications.service.gov.uk',
-        service_id=None,
+            self,
+            api_key,
+            base_url='https://api.notifications.service.gov.uk',
+            service_id=None,
     ):
         """
         Initialise the client
@@ -57,6 +56,13 @@ class BaseAPIClient(object):
     def delete(self, url, data=None):
         return self.request("DELETE", url, data=data)
 
+    def generate_headers(self, api_token):
+        return {
+            "Content-type": "application/json",
+            "Authorization": "Bearer {}".format(api_token),
+            "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__)
+        }
+
     def request(self, method, url, data=None, params=None):
 
         logger.debug("API request {} {}".format(method, url))
@@ -68,12 +74,6 @@ class BaseAPIClient(object):
             self.service_id
         )
 
-        headers = {
-            "Content-type": "application/json",
-            "Authorization": "Bearer {}".format(api_token),
-            "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__),
-        }
-
         url = urlparse.urljoin(self.base_url, url)
 
         start_time = monotonic()
@@ -81,7 +81,7 @@ class BaseAPIClient(object):
             response = requests.request(
                 method,
                 url,
-                headers=headers,
+                headers=self.generate_headers(api_token),
                 data=payload,
                 params=params
             )

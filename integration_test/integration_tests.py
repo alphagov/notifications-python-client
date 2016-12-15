@@ -53,7 +53,7 @@ def get_all_notifications(client):
     validate(response, get_notifications_response)
 
 
-if __name__ == "__main__":
+def test_integration():
     client = NotificationsAPIClient(
         base_url=os.environ['NOTIFY_API_URL'],
         service_id=os.environ['SERVICE_ID'],
@@ -68,3 +68,6 @@ if __name__ == "__main__":
     get_all_notifications(client)
 
     print("notifications-python-client integration tests are successful")
+
+if __name__ == "__main__":
+    test_integration()
