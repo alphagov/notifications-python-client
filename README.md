@@ -259,9 +259,12 @@ If the request is successful, `response` will be a `dict`:
                     "version": 1 # template version num # required
                     "id": 1 # template id # required
                     "uri": "/template/{id}/{version}", # required
-                },
+                },                
+    "body": "Body of the notification",
+    "subject: "Subject of an email notification of None if an sms message"
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
+	"completed_at:" "date the notification is delivered or failed" # optional
 }
 ```
 
@@ -337,9 +340,12 @@ If the request is successful, `response` will be a `dict`:
                          "id": 1 # template id # required
                          "uri": "/template/{id}/{version}", # required
                      },
-         "created_at": "created at", # required
-         "sent_at": " sent to provider at", # optional
-    },
+          "body": "Body of the notification",
+          "subject: "Subject of an email notification of None if an sms message"
+          "created_at": "created at", # required
+          "sent_at": " sent to provider at", # optional
+          "completed_at:" "date the notification is delivered or failed" # optional
+        },
     …
   ],
   "links": {
