@@ -1,7 +1,7 @@
 import os
 import uuid
 
-from integration_test import (validate, validate_v0)
+from integration_test import (validate)
 from integration_test.schemas.v2.notification_schemas import (
     get_notifications_response,
     get_notification_response,
