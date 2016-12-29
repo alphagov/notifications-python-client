@@ -39,7 +39,7 @@ class APIError(Exception):
     @property
     def message(self):
         try:
-            return self.response.json()['errors']
+            return self.response.json().get('message',  self.response.json().get('errors'))
         except (TypeError, ValueError, AttributeError, KeyError):
             return self._message or REQUEST_ERROR_MESSAGE
 

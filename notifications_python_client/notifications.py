@@ -54,16 +54,16 @@ class NotificationsAPIClient(BaseAPIClient):
         )
 
     def get_template_preview(self, template_id):
-        return self.get('service/{}/template/{}/preview'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}/preview'.format(self.service_id, template_id))
 
     def get_template(self, template_id):
-        return self.get('service/{}/template/{}'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}'.format(self.service_id, template_id))
 
     def get_all_templates(self):
-        return self.get('service/{}/template'.format(self.client_id))
+        return self.get('service/{}/template'.format(self.service_id))
 
     def get_template_version(self, template_id, version):
-        return self.get('service/{}/template/{}/version/{}'.format(self.client_id, template_id, version))
+        return self.get('service/{}/template/{}/version/{}'.format(self.service_id, template_id, version))
 
     def get_all_template_versions(self, template_id):
-        return self.get('service/{}/template/{}/versions'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}/versions'.format(self.service_id, template_id))
