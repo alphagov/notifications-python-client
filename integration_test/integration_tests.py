@@ -20,7 +20,7 @@ def send_sms_notification_test_response(python_client):
                                                    template_id=template_id,
                                                    personalisation=personalisation)
     validate(response, post_sms_response)
-    assert unique_name in response['content']['body']  # check placeholders are resplaced
+    assert unique_name in response['content']['body']  # check placeholders are replaced
     return response['id']
 
 
@@ -39,7 +39,6 @@ def send_email_notification_test_response(python_client):
 
 def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
-
     if notification_type == 'email':
         validate(response, get_notification_response)
     elif notification_type == 'sms':
@@ -56,7 +55,6 @@ def get_all_notifications(client):
 def test_integration():
     client = NotificationsAPIClient(
         base_url=os.environ['NOTIFY_API_URL'],
-        service_id=os.environ['SERVICE_ID'],
         api_key=os.environ['API_KEY']
     )
 

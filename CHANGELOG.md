@@ -1,5 +1,6 @@
 ## 4.0.0 
 * Using version 2 of the notification-api.
+* When creating a new NotificationsAPIClient the optional parameter of service_id has been removed. The api_key is a combined string contain the api_key and the service_id
 * Update to `NotificationsAPIClient.send_sms_notification()`: 
     * added `reference`: an optional unique identifier for the notification or an identifier for a batch of notifications. `reference` can be omitted.
     * the `dict` returned has changed, learn more from the README. 

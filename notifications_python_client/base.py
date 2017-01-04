@@ -21,8 +21,7 @@ class BaseAPIClient(object):
     def __init__(
             self,
             api_key,
-            base_url='https://api.notifications.service.gov.uk',
-            service_id=None,
+            base_url='https://api.notifications.service.gov.uk'
     ):
         """
         Initialise the client
@@ -32,9 +31,7 @@ class BaseAPIClient(object):
         :return:
         """
 
-        if service_id is None and len(api_key) > 74:
-            service_id = api_key[-73:-37]
-
+        service_id = api_key[-73:-37]
         api_key = api_key[-36:]
 
         assert base_url, "Missing base url"
