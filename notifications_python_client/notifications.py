@@ -2,43 +2,45 @@ from notifications_python_client.base import BaseAPIClient
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, to, template_id, personalisation=None):
+    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None):
         notification = {
-            "to": to,
-            "template": template_id
+            "phone_number": phone_number,
+            "template_id": template_id
         }
         if personalisation:
             notification.update({'personalisation': personalisation})
+        if reference:
+            notification.update({'reference': reference})
         return self.post(
-            '/notifications/sms',
+            '/v2/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, to, template_id, personalisation=None):
+    def send_email_notification(self, email_address, template_id, personalisation=None, reference=None):
         notification = {
-            "to": to,
-            "template": template_id
+            "email_address": email_address,
+            "template_id": template_id
         }
         if personalisation:
             notification.update({'personalisation': personalisation})
+        if reference:
+            notification.update({'reference': reference})
         return self.post(
-            '/notifications/email',
+            '/v2/notifications/email',
             data=notification)
 
     def get_notification_by_id(self, id):
-        return self.get('/notifications/{}'.format(id))
+        return self.get('/v2/notifications/{}'.format(id))
 
-    def get_all_notifications(self, status=None, template_type=None):
+    def get_all_notifications(self, status=None, template_type=None, reference=None):
         data = {}
         if status:
-            data.update({
-                'status': status
-            })
+            data.update({'status': status})
         if template_type:
-            data.update({
-                'template_type': template_type
-            })
+            data.update({'template_type': template_type})
+        if reference:
+            data.update({'reference': reference})
         return self.get(
-            '/notifications',
+            '/v2/notifications',
             params=data
         )
 
@@ -52,16 +54,16 @@ class NotificationsAPIClient(BaseAPIClient):
         )
 
     def get_template_preview(self, template_id):
-        return self.get('service/{}/template/{}/preview'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}/preview'.format(self.service_id, template_id))
 
     def get_template(self, template_id):
-        return self.get('service/{}/template/{}'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}'.format(self.service_id, template_id))
 
     def get_all_templates(self):
-        return self.get('service/{}/template'.format(self.client_id))
+        return self.get('service/{}/template'.format(self.service_id))
 
     def get_template_version(self, template_id, version):
-        return self.get('service/{}/template/{}/version/{}'.format(self.client_id, template_id, version))
+        return self.get('service/{}/template/{}/version/{}'.format(self.service_id, template_id, version))
 
     def get_all_template_versions(self, template_id):
-        return self.get('service/{}/template/{}/versions'.format(self.client_id, template_id))
+        return self.get('service/{}/template/{}/versions'.format(self.service_id, template_id))
