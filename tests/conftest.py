@@ -10,6 +10,7 @@ from notifications_python_client.notifications import NotificationsAPIClient
 TEST_HOST = 'http://test-host'
 SERVICE_ID = 'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'
 API_KEY_ID = '8b3aa916-ec82-434e-b0c5-d5d9b371d6a3'
+COMBINED_API_KEY = 'key_name-{}-{}'.format(SERVICE_ID, API_KEY_ID)
 
 
 @pytest.yield_fixture
@@ -27,12 +28,10 @@ def rmock_patch():
 @pytest.yield_fixture
 def base_client():
     yield BaseAPIClient(base_url=TEST_HOST,
-                        service_id=SERVICE_ID,
-                        api_key=API_KEY_ID)
+                        api_key=COMBINED_API_KEY)
 
 
 @pytest.yield_fixture
 def notifications_client():
     yield NotificationsAPIClient(base_url=TEST_HOST,
-                                 service_id=SERVICE_ID,
-                                 api_key=API_KEY_ID)
+                                 api_key=COMBINED_API_KEY)

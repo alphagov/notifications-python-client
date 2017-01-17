@@ -1,6 +1,5 @@
 # GOV.UK Notify Python client
 
-
 ## Installation
 
 ```shell
@@ -19,315 +18,410 @@ Generate an API key by logging in to
 [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to
 the **API integration** page.
 
-## Send a message
+## Send messages
 
-Text message:
+### Text message
 
 ```python
-notifications_client.send_sms_notification(
-    mobile_number,
-    template_id
+response = notifications_client.send_sms_notification(
+    phone_number='+447900900123', 
+    template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda', 
+    personalisation=None, 
+    reference=None
 )
 ```
-Email:
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
 
 ```python
-notifications_client.send_email_notification(
-    email_address,
-    template_id
-)
+{
+        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+        "reference": None,
+        "content": {
+                    "body": "Some words", 
+                    "from_number": "40604"
+                    },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+        "template": {
+                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+                     "version": 1,
+                     "uri": "https://api.notifications.service.gov.uk/v2/templates/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+                     }
+}
 ```
 
-Find `template_id` by clicking **API info** for the template you want to send.
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode 
+                - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
 
-If a template has placeholders, you need to provide their values in `personalisation`,
-for example:
+
+### Email
 
 ```python
-notifications_client.send_email_notification(
-    email_address,
-    template_id,
-    personalisation={
-        'first_name': 'Amala',
-        'reference_number': '300241',
-    }
+response = notifications_client.send_email_notification(
+    email_address='the_email_address@example.com',
+    template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
+    personalisation=None, 
+    reference=None
 )
 ```
 
 <details>
-    <summary>
-        Response:
-    </summary>
+<summary>
+Response
+</summary>
 
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>201
-        </td>
-        <td>
-<pre>
+If the request is successful, `response` will be a `dict`:
+
+```python
 {
-  "data":{
-    "notification": {
-      "id":1
-    },
-    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-    "template_version": 1,
-    "subject": "Licence renewal"
-  }
+        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+        "reference": None,
+        "content": {"subject": "Licence renewal",
+                    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+                    "from_email": "the_service@gov.uk"
+                    },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+        "template": {
+                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+                     "version": 1,
+                     "uri": "https://api.notificaitons.service.gov.uk/service/your_service_id/templates/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+                     }
 }
-</pre>
-        </td>
-    </tr>
-    <tr>
-        <td>429
-        </td>
-        <td>
-<pre>
-{"result": "error",
-"message": "Exceeded send limits (50) for today"}
-</pre>
-        </td>
-    </tr>
-        <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result":"error",
-"message": "Can’t send to this recipient using a team-only API key"]}
-</pre>
-        </td>
-    </tr>
-        </tr>
-        <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result":"error",
-"message"="Can’t send to this recipient when service is in trial
-mode - see https://www.notifications.service.gov.uk/trial-mode"]}
-</pre>
-        </td>
-    </tr>
-  </tbody>
-</table>
+```
 
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode 
+                - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
 </details>
 
 
+### Arguments
+
+####
+The phone number of the recipient, only required for sms notifications.
+
+#### `email_address`
+The email address of the recipient, only required for email notifications.
+
+#### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `reference`
+
+An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
+
+
+#### `personalisation`
+
+If a template has placeholders, you need to provide their values, for example:
+
+```python
+personalisation={
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+      
 ## Get the status of one message
 
 ```python
-notifications_client.get_notification_by_id(notification_id)
+response = notifications_client.get_notification_by_id(notification_id)
 ```
 
 <details>
-    <summary>
-        Response:
-    </summary>
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>201
-        </td>
-        <td>
+<summary>
+Response
+</summary>
 
-<pre>
+If the request is successful, `response` will be a `dict`:
+
+```python
 {
-  "data": {
-    "notification": {
-      "status": "delivered",
-      "to": "07515 987 456",
-      "template": {
-        "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-        "name": "First template",
-        "template_type": "sms"
-      },
-      "created_at": "2016-04-26T15:29:36.891512+00:00",
-      "updated_at": "2016-04-26T15:29:38.724808+00:00",
-      "sent_at": "2016-04-26T15:29:37.230976+00:00",
-      "job": {
-        "id": "f9043884-acac-46db-b2ea-f08cd8ec6d67",
-        "original_file_name": "Test run"
-      },
-      "sent_at": "2016-04-26T15:29:37.230976+00:00",
-      "id": "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-      "content_char_count": 490,
-      "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-      "reference": None,
-      "sent_by": "mmg",
-      "body": "Dear Bill, your licence is due for renewal on 3 January 2016."
-      "date": "3 January 2016"
-    }
-  }
+    "id": "notify_id", # required
+    "reference": "client reference", # optional
+    "email_address": "email address",  # required for emails
+    "phone_number": "phone number",  # required for sms
+    "line_1": "full name of a person or company", # required for letter
+    "line_2": "123 The Street", # optional
+    "line_3": "Some Area", # optional
+    "line_4": "Some Town", # optional
+    "line_5": "Some county", # optional
+    "line_6": "Something else", # optional
+    "postcode": "postcode", # required for letter
+    "type": "sms|letter|email", # required
+    "status": "current status", # required
+    "template": {
+                    "version": 1 # template version num # required
+                    "id": 1 # template id # required
+                    "uri": "/template/{id}/{version}", # required
+                },                
+    "body": "Body of the notification",
+    "subject: "Subject of an email notification of None if an sms message"
+	"created_at": "created at", # required
+	"sent_at": " sent to provider at", # optional
+	"completed_at:" "date the notification is delivered or failed" # optional
 }
-</pre>
+```
 
-        </td>
-    </tr>
-    <tr>
-        <td>400
-        </td>
-        <td>
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
 <pre>
-{"result": "error",
-"message": "id: required field"}    
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+}]
 </pre>
-        </td>
-    </tr>
-        <tr>
-        <td>404
-        </td>
-        <td>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
 <pre>
-{"result": "error"
-"message": "No result found"}    
+[{
+    "error": "ValidationError",
+    "message": "id is not a valid UUID"
+}]
 </pre>
-        </td>
-    </tr>
-
-  </tbody>
+</td>
+</tr>
+</tbody>
 </table>
-
-
 </details>
-
-
 
 ## Get the status of all messages
 
 ```python
-notifications_client.get_all_notifications(template_type="email", status="sending")
+response = notifications_client.get_all_notifications(template_type="email", status="sending")
 ```
-Optional `template_type` can be one of:
-
-* `email`
-* `sms`
-
-Optional `status` can be one of:
-
-* `sending`
-* `delivered`
-* `permanent-failure`
-* `temporary-failure`
-* `technical-failure`
-
-
-
 <details>
-    <summary>
-        Response:
-    </summary>
-<table>
-  <thead>
-    <tr>
-        <td>Status
-        </td>
-        <td>Body
-        </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>201
-        </td>
-        <td>
-<pre>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
 {"notifications":
   [{
-    "status": "delivered",
-    "to": "07515 987 456",
-    "template": {
-      "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-      "name": "First template",
-      "template_type": "sms"
-    },
-    "job": {
-      "id": "5cc9d7ae-ceb7-4565-8345-4931d71f8c2e",
-      "original_file_name": "Test run"
-    },
-    "created_at": "2016-04-26T15:30:49.968969+00:00",
-    "updated_at": "2016-04-26T15:30:50.853844+00:00",
-    "sent_at": "2016-04-26T15:30:50.383634+00:00",
-    "id": "04ae9bdc-92aa-4d6c-a0da-48587c03d4c7",
-    "content_char_count": 446,
-    "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-    "reference": None,
-    "sent_by": "mmg"
-    },
-    {
-    "status": "delivered",
-    "to": "07515 987 456",
-    "template": {
-      "id": "5e427b42-4e98-46f3-a047-32c4a87d26bb",
-      "name": "First template",
-      "template_type": "sms"
-    },
-    "job": {
-      "id": "f9043884-acac-46db-b2ea-f08cd8ec6d67",
-      "original_file_name": "Test run"
-    },
-    "created_at": "2016-04-26T15:29:36.891512+00:00",
-    "updated_at": "2016-04-26T15:29:38.724808+00:00",
-    "sent_at": "2016-04-26T15:29:37.230976+00:00",
-    "id": "f163deaf-2d3f-4ec6-98fc-f23fa511518f",
-    "content_char_count": 490,
-    "service": "5cf87313-fddd-4482-a2ea-48e37320efd1",
-    "reference": None,
-    "sent_by": "mmg"
-    },
+         "id": "notify_id", # required
+         "reference": "client reference", # optional
+         "email_address": "email address",  # required for emails
+         "phone_number": "phone number",  # required for sms
+         "line_1": "full name of a person or company", # required for letter
+         "line_2": "123 The Street", # optional
+         "line_3": "Some Area", # optional
+         "line_4": "Some Town", # optional
+         "line_5": "Some county", # optional
+         "line_6": "Something else", # optional
+         "postcode": "postcode", # required for letter
+         "type": "sms | letter | email", # required
+         "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+         "template": {
+                         "version": 1 # template version num # required
+                         "id": 1 # template id # required
+                         "uri": "/template/{id}/{version}", # required
+                     },
+          "body": "Body of the notification",
+          "subject: "Subject of an email notification of None if an sms message"
+          "created_at": "created at", # required
+          "sent_at": " sent to provider at", # optional
+          "completed_at:" "date the notification is delivered or failed" # optional
+        },
     …
   ],
   "links": {
-    "last": "/notifications?page=3&template_type=sms&status=delivered",
-    "next": "/notifications?page=2&template_type=sms&status=delivered"
-  },
-  "total": 162,
-  "page_size": 50
+    "current": "/notifications?template_type=sms&status=delivered",
+    "next": "/notifications?other_than=last_id_in_list&template_type=sms&status=delivered"
+  }
 }
-</pre>
-        </td>
-    </tr>
-    <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result": "error"
-"message": {"status": {"0": {"status": ["Not a valid choice.""]}}},}
-</pre>
-        </td>
-        <tr>
-        <td>400
-        </td>
-        <td>
-<pre>
-{"result": "error"
-"message": {"template_type": {"0": {"template_type": ["Not a valid choice.""]}}},}
-</pre>
-        </td>
-    </tr>
-    </tr>
+```
 
-  </tbody>
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+	'error': 'ValidationError',
+    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "Apple is not one of [sms, email, letter]"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
 </table>
-
 </details>
+
+### Arguments
+
+#### `template_type`
+
+You can filter by: 
+
+* `email`
+* `sms`
+* `letter`
+
+You can omit this argument to ignore this filter.
+
+
+#### `status`
+
+You can filter by: 
+
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
+* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+### `reference`
+
+This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
+You can omit this argument to ignore the filter.
