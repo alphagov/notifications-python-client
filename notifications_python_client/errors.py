@@ -1,3 +1,10 @@
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from builtins import super
+from future import standard_library
+standard_library.install_aliases()
 REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"
 
@@ -39,7 +46,7 @@ class APIError(Exception):
     @property
     def message(self):
         try:
-            return self.response.json().get('message',  self.response.json().get('errors'))
+            return self.response.json().get('message', self.response.json().get('errors'))
         except (TypeError, ValueError, AttributeError, KeyError):
             return self._message or REQUEST_ERROR_MESSAGE
 

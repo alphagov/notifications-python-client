@@ -127,7 +127,7 @@ clean-docker-containers: ## Clean up any remaining docker containers
 	docker rm -f $(shell docker ps -q -f "name=${DOCKER_CONTAINER_PREFIX}") 2> /dev/null || true
 
 clean:
-	rm -rf .cache venv dist .eggs build
+	rm -rf .cache venv dist .eggs build .tox
 
 .PHONY: tox-with-docker
 tox-with-docker: prepare-docker-runner-image

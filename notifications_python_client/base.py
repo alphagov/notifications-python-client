@@ -1,18 +1,20 @@
 from __future__ import absolute_import
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from future import standard_library
+standard_library.install_aliases()
+import urllib.parse
 import logging
 import json
+
 from monotonic import monotonic
+import requests
 
 from notifications_python_client.version import __version__
 from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.authentication import create_jwt_token
 
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
-
-import requests
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +32,6 @@ class BaseAPIClient(object):
         :param secret - application secret - used to sign the request:
         :return:
         """
-
         service_id = api_key[-73:-37]
         api_key = api_key[-36:]
 
@@ -71,7 +72,7 @@ class BaseAPIClient(object):
             self.service_id
         )
 
-        url = urlparse.urljoin(self.base_url, url)
+        url = urllib.parse.urljoin(self.base_url, url)
 
         start_time = monotonic()
         try:
