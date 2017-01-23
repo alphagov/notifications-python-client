@@ -1,4 +1,4 @@
-from ..conftest import TEST_HOST
+from tests.conftest import TEST_HOST
 
 
 def test_get_notification_by_id(notifications_client, rmock):

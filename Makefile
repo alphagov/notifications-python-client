@@ -128,3 +128,17 @@ clean-docker-containers: ## Clean up any remaining docker containers
 
 clean:
 	rm -rf .cache venv dist .eggs build
+
+.PHONY: tox-with-docker
+tox-with-docker: prepare-docker-runner-image
+	docker run -i --rm \
+		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
+		-v `pwd`:/var/project \
+		-e http_proxy="${HTTP_PROXY}" \
+		-e HTTP_PROXY="${HTTP_PROXY}" \
+		-e https_proxy="${HTTPS_PROXY}" \
+		-e HTTPS_PROXY="${HTTPS_PROXY}" \
+		-e NO_PROXY="${NO_PROXY}" \
+		--env-file docker.env \
+		${DOCKER_BUILDER_IMAGE_NAME} \
+		tox

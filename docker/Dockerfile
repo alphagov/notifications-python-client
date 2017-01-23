@@ -1,4 +1,4 @@
-FROM python:3.4-slim
+FROM debian:jessie
 
 ARG HTTP_PROXY
 ARG HTTPS_PROXY
@@ -14,13 +14,17 @@ RUN \
 	&& apt-get install -y --no-install-recommends \
 		make \
 		git \
+		python2.7 \
+		python3.4 \
+		python-pip \
+		python3-pip \
 	&& echo "Clean up" \
 	&& rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN \
 	echo "Install global pip packages" \
 	&& pip install \
-		virtualenv
+		tox
 
 
 WORKDIR /var/project

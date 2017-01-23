@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 import requests
-from unittest import mock
+import mock
 
 import pytest
 from notifications_python_client.errors import HTTPError, InvalidResponse

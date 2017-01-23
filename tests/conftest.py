@@ -1,4 +1,4 @@
-from unittest import mock
+import mock
 
 import requests_mock
 import pytest

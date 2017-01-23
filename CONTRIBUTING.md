@@ -40,8 +40,8 @@ Additionally code coverage is checked via `pytest-cov`.
 
 ## Integration tests
 
-The `./scripts/run_integration_tests.py` script will run the integration tests. 
-The integration tests will test the contract of the response to all the api calls, 
+The `./scripts/run_integration_tests.py` script will run the integration tests.
+The integration tests will test the contract of the response to all the api calls,
 ensuring the latest version of notifications-api do not break the contract of the notifications-python-client.
 
 ## Command line tool
