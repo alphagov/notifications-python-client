@@ -72,7 +72,7 @@ class BaseAPIClient(object):
             self.service_id
         )
 
-        url = urllib.parse.urljoin(self.base_url, url)
+        url = urllib.parse.urljoin(str(self.base_url), str(url))
 
         start_time = monotonic()
         try:
