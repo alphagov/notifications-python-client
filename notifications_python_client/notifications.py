@@ -62,7 +62,11 @@ class NotificationsAPIClient(BaseAPIClient):
             uuid_regex = re.compile("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", re.I)
             notification_id = uuid_regex.search(next_link).group(0)
             if notification_id:
-                yield from self.get_all_notifications_iterator(status, template_type, reference, notification_id)
+                for notification in self.get_all_notifications_iterator(
+                    status, template_type,
+                    reference, notification_id
+                ):
+                    yield notification
             else:
                 logger.error('Could not find valid UUID in next link: {}'.format(next_link))
 
