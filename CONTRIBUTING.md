@@ -49,7 +49,7 @@ ensuring the latest version of notifications-api do not break the contract of th
 Use this to test the client without having to create an application.
 
 ```
-    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <service_id> <api_key> [fetch|create]
+    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
 ```
 
 This will use the API referred to in the base_api_url argument to send a text message.

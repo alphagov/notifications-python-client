@@ -11,7 +11,6 @@ echo -n "" > docker.env
 
 env_vars=(
     NOTIFY_API_URL
-    SERVICE_ID
     API_KEY
     FUNCTIONAL_TEST_EMAIL
     FUNCTIONAL_TEST_NUMBER
