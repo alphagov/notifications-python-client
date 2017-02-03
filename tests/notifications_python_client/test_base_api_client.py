@@ -1,21 +1,25 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from builtins import str
+from future import standard_library
+standard_library.install_aliases()
 import requests
-from unittest import mock
+import mock
 
 import pytest
 from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.base import BaseAPIClient
 from tests.conftest import API_KEY_ID, SERVICE_ID, COMBINED_API_KEY
 
-EMOJI_API_KEY = '😬'.join(['name_of_key', SERVICE_ID, API_KEY_ID])
-
 
 @pytest.mark.parametrize('client', [
     BaseAPIClient(api_key=COMBINED_API_KEY),
-    BaseAPIClient(api_key=EMOJI_API_KEY),
     BaseAPIClient(COMBINED_API_KEY),
 ], ids=[
     'combined api key',
-    'key with emoji',
     'positional api key'
 ])
 def test_passes_through_service_id_and_key(rmock, client):

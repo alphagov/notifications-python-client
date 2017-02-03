@@ -1,0 +1,2 @@
+include Makefile  *.txt *.md
+recursive-include *.py

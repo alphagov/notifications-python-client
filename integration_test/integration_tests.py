@@ -1,14 +1,20 @@
 import os
 import uuid
 
-from integration_test import (validate)
-from integration_test.schemas.v2.notification_schemas import (
+from jsonschema import Draft4Validator
+
+from notifications_python_client.notifications import NotificationsAPIClient
+from schemas.v2.notification_schemas import (
     get_notifications_response,
     get_notification_response,
     post_sms_response,
     post_email_response
 )
-from notifications_python_client.notifications import NotificationsAPIClient
+
+
+def validate(json_to_validate, schema):
+    validator = Draft4Validator(schema)
+    validator.validate(json_to_validate, schema)
 
 
 def send_sms_notification_test_response(python_client):

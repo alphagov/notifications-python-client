@@ -40,8 +40,8 @@ Additionally code coverage is checked via `pytest-cov`.
 
 ## Integration tests
 
-The `./scripts/run_integration_tests.py` script will run the integration tests. 
-The integration tests will test the contract of the response to all the api calls, 
+The `./scripts/run_integration_tests.py` script will run the integration tests.
+The integration tests will test the contract of the response to all the api calls,
 ensuring the latest version of notifications-api do not break the contract of the notifications-python-client.
 
 ## Command line tool
@@ -49,7 +49,7 @@ ensuring the latest version of notifications-api do not break the contract of th
 Use this to test the client without having to create an application.
 
 ```
-    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <service_id> <api_key> [fetch|create]
+    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
 ```
 
 This will use the API referred to in the base_api_url argument to send a text message.
