@@ -4,7 +4,11 @@ from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
 standard_library.install_aliases()
+import logging
+
 from notifications_python_client.base import BaseAPIClient
+
+logger = logging.getLogger(__name__)
 
 
 class NotificationsAPIClient(BaseAPIClient):
@@ -51,6 +55,26 @@ class NotificationsAPIClient(BaseAPIClient):
             '/v2/notifications',
             params=data
         )
+
+    def get_all_notifications_iterator(self, status=None, template_type=None, reference=None, older_than=None):
+        result = self.get_all_notifications(status, template_type, reference, older_than)
+        notifications = result.get('notifications')
+        for notification in notifications:
+            yield notification
+
+        import re
+        next_link = result.get('links', {}).get('next')
+        if next_link:
+            uuid_regex = re.compile("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", re.I)
+            notification_id = uuid_regex.search(next_link).group(0)
+            if notification_id:
+                for notification in self.get_all_notifications_iterator(
+                    status, template_type,
+                    reference, notification_id
+                ):
+                    yield notification
+            else:
+                logger.error('Could not find valid UUID in next link: {}'.format(next_link))
 
     def get_notification_statistics_for_day(self, day=None):
         data = {}
