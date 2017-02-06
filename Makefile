@@ -33,7 +33,7 @@ test: venv ## Run tests
 	./scripts/run_tests.sh
 
 .PHONY: integration-test
-integration-test: ## Run integration tests
+integration-test: venv ## Run integration tests
 	./scripts/run_integration_tests.sh
 
 .PHONY: build-wheel
@@ -130,7 +130,7 @@ clean:
 	rm -rf .cache venv dist .eggs build .tox
 
 .PHONY: tox-with-docker
-tox-with-docker: prepare-docker-runner-image
+tox-with-docker: prepare-docker-runner-image generate-env-file
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
 		-v `pwd`:/var/project \
