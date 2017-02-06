@@ -5,7 +5,7 @@ Usage:
 
 Example:
     ./make_api_call.py http://api my_service super_secret \
-    fetch|fetch-all|create|preview|template|all_templates|template_version|all_template_versions
+    fetch|fetch-all|fetch-generator|create|preview|template|all_templates|template_version|all_template_versions
 """
 
 import json
@@ -49,6 +49,18 @@ def create_email_notification(notifications_client):
 def get_notification(notifications_client):
     id = input("Notification id: ")
     return notifications_client.get_notification_by_id(id)
+
+
+def get_all_notifications_generator(notifications_client):
+    status = input("Notification status: ")
+    template_type = input("Notification template type: ")
+    reference = input("Notification reference: ")
+    older_than = input("Older than notification id: ")
+    generator = notifications_client.get_all_notifications_iterator(status=status,
+                                                                    template_type=template_type,
+                                                                    reference=reference,
+                                                                    other_than=older_than)
+    return generator
 
 
 def get_all_notifications(notifications_client):
@@ -110,6 +122,11 @@ if __name__ == "__main__":
 
     if arguments['<call>'] == 'fetch-all':
         print(get_all_notifications(
+            notifications_client=client
+        ))
+
+    if arguments['<call>'] == 'fetch-generator':
+        print(get_all_notifications_generator(
             notifications_client=client
         ))
 
