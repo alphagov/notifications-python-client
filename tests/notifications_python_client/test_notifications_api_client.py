@@ -20,7 +20,7 @@ def test_get_notification_by_id(notifications_client, rmock):
     assert rmock.called
 
 
-def test_get_all_notifications_by_stype_and_status(notifications_client, rmock):
+def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?status={1}&template_type={2}".format(TEST_HOST, "status", "type")
     rmock.request(
         "GET",
@@ -42,6 +42,32 @@ def test_get_all_notifications_by_type(notifications_client, rmock):
         status_code=200)
 
     notifications_client.get_all_notifications(template_type="type")
+
+    assert rmock.called
+
+
+def test_get_all_notifications_by_reference(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications?reference={1}".format(TEST_HOST, "reference")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications(reference="reference")
+
+    assert rmock.called
+
+
+def test_get_all_notifications_by_older_than(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications?older_than={1}".format(TEST_HOST, "older_than")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications(older_than="older_than")
 
     assert rmock.called
 

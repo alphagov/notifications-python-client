@@ -310,7 +310,7 @@ Otherwise the client will raise a `HTTPError`:
 ## Get the status of all messages
 
 ```python
-response = notifications_client.get_all_notifications(template_type="email", status="sending")
+response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
 ```
 <details>
 <summary>
@@ -423,5 +423,11 @@ You can omit this argument to ignore this filter.
 ### `reference`
 
 This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
+You can omit this argument to ignore the filter.
+
+### `olderThanId`
+
+You can get the notifications older than a given Notification.notificationId.
 
 You can omit this argument to ignore the filter.

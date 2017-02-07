@@ -55,7 +55,9 @@ def get_all_notifications(notifications_client):
     status = input("Notification status: ")
     template_type = input("Notification template type: ")
     reference = input("Notification reference: ")
-    return notifications_client.get_all_notifications(status=status, template_type=template_type, reference=reference)
+    older_than = input("Older than id: ")
+    return notifications_client.get_all_notifications(status=status, template_type=template_type,
+                                                      reference=reference, older_than=older_than)
 
 
 def get_notification_statistics_for_day(notifications_client):
