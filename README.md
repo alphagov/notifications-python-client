@@ -307,7 +307,7 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-## Get the status of all messages
+## Get the status of all messages (with pagination)
 
 _This will return one page of notifications per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated._
 
@@ -433,3 +433,89 @@ You can omit this argument to ignore the filter.
 You can get the notifications older than a given Notification.notificationId.
 
 You can omit this argument to ignore the filter.
+
+## Get the status of all messages (without pagination)
+
+```python
+response = get_all_notifications_iterator(status="sending")
+```
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `<generator object>` that will yield all messages:
+
+```python
+<generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    'error': 'ValidationError',
+    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "Apple is not one of [sms, email, letter]"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+#### `template_type`
+
+You can filter by:
+
+* `email`
+* `sms`
+* `letter`
+
+You can omit this argument to ignore this filter.
+
+
+#### `status`
+
+You can filter by:
+
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+### `reference`
+
+This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
