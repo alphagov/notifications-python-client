@@ -309,7 +309,7 @@ Otherwise the client will raise a `HTTPError`:
 
 ## Get the status of all messages (with pagination)
 
-_This will return one page of notifications per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated._
+_This will return one page of notifications (250) per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated._
 
 ```python
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
