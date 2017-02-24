@@ -3,13 +3,11 @@ import uuid
 
 from jsonschema import Draft4Validator
 
+from integration_test.schemas.v2.notification_schemas import (post_sms_response,
+                                                              post_email_response,
+                                                              get_notification_response,
+                                                              get_notifications_response)
 from notifications_python_client.notifications import NotificationsAPIClient
-from schemas.v2.notification_schemas import (
-    get_notifications_response,
-    get_notification_response,
-    post_sms_response,
-    post_email_response
-)
 
 
 def validate(json_to_validate, schema):
