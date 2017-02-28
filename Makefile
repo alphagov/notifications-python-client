@@ -133,7 +133,7 @@ clean:
 tox-with-docker: prepare-docker-runner-image generate-env-file
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
-		-v `pwd`:/var/project \
+		-v "`pwd`:/var/project" \
 		-e http_proxy="${HTTP_PROXY}" \
 		-e HTTP_PROXY="${HTTP_PROXY}" \
 		-e https_proxy="${HTTPS_PROXY}" \
