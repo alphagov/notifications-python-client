@@ -9,9 +9,11 @@ Example:
 """
 
 import json
-from notifications_python_client.notifications import NotificationsAPIClient
-from docopt import docopt
 import sys
+from docopt import docopt
+from pprint import pprint
+
+from notifications_python_client.notifications import NotificationsAPIClient
 
 
 def create_notification(notifications_client):
@@ -56,10 +58,12 @@ def get_all_notifications_generator(notifications_client):
     template_type = input("Notification template type: ")
     reference = input("Notification reference: ")
     older_than = input("Older than notification id: ")
-    generator = notifications_client.get_all_notifications_iterator(status=status,
-                                                                    template_type=template_type,
-                                                                    reference=reference,
-                                                                    other_than=older_than)
+    generator = notifications_client.get_all_notifications_iterator(
+        status=status,
+        template_type=template_type,
+        reference=reference,
+        older_than=older_than
+    )
     return generator
 
 
@@ -111,41 +115,41 @@ if __name__ == "__main__":
     )
 
     if arguments['<call>'] == 'create':
-        print(create_notification(
+        pprint(create_notification(
             notifications_client=client
         ))
 
     if arguments['<call>'] == 'fetch':
-        print(get_notification(
+        pprint(get_notification(
             notifications_client=client
         ))
 
     if arguments['<call>'] == 'fetch-all':
-        print(get_all_notifications(
+        pprint(get_all_notifications(
             notifications_client=client
         ))
 
     if arguments['<call>'] == 'fetch-generator':
-        print(get_all_notifications_generator(
+        pprint(list(get_all_notifications_generator(
             notifications_client=client
-        ))
+        )))
 
     if arguments['<call>'] == 'statistics':
-        print(get_notification_statistics_for_day(
+        pprint(get_notification_statistics_for_day(
             notifications_client=client
         ))
 
     if arguments['<call>'] == 'preview':
-        print(preview_template(notifications_client=client))
+        pprint(preview_template(notifications_client=client))
 
     if arguments['<call>'] == 'template':
-        print(get_template(notifications_client=client))
+        pprint(get_template(notifications_client=client))
 
     if arguments['<call>'] == 'all_templates':
-        print(get_all_templates(notifications_client=client))
+        pprint(get_all_templates(notifications_client=client))
 
     if arguments['<call>'] == 'template_version':
-        print(get_template_version(notifications_client=client))
+        pprint(get_template_version(notifications_client=client))
 
     if arguments['<call>'] == 'all_template_versions':
-        print(get_all_template_versions(notifications_client=client))
+        pprint(get_all_template_versions(notifications_client=client))
