@@ -163,3 +163,64 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
     assert rmock.last_request.json() == {
         'template_id': '456', 'email_address': 'to@example.com', 'personalisation': {'name': 'chris'}
     }
+
+
+def test_get_all_notifications_iterator_calls_get_notifications(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    list(notifications_client.get_all_notifications_iterator())
+
+    assert rmock.called
+
+
+def test_get_all_notifications_iterator_stops_if_empty_notification_list_returned(
+    notifications_client,
+    rmock
+):
+    responses = [
+        _generate_response('79f9c6ce-cd6a-4b47-a3e7-41e155f112b0', [1, 2]),
+        _generate_response('3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb')
+    ]
+
+    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        responses
+    )
+
+    list(notifications_client.get_all_notifications_iterator())
+    assert rmock.call_count == 2
+
+
+def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
+    notifications_client,
+    rmock
+):
+    responses = [
+        _generate_response('79f9c6ce-cd6a-4b47-a3e7-41e155f112b0', [1, 2]),
+        _generate_response('ea179232-3190-410d-b8ab-23dfecdd3157', [3, 4]),
+        _generate_response('3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb')
+    ]
+
+    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    rmock.request("GET", endpoint, responses)
+    list(notifications_client.get_all_notifications_iterator())
+    assert rmock.call_count == 3
+
+
+def _generate_response(next_link_uuid, notifications=[]):
+    return {
+        'json': {
+            'notifications': notifications,
+            'links': {
+                'next': 'http://localhost:6011/v2/notifications?older_than={}'.format(next_link_uuid)
+            }
+        },
+        'status_code': 200
+    }

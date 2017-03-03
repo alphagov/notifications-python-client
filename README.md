@@ -24,9 +24,9 @@ the **API integration** page.
 
 ```python
 response = notifications_client.send_sms_notification(
-    phone_number='+447900900123', 
-    template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda', 
-    personalisation=None, 
+    phone_number='+447900900123',
+    template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda',
+    personalisation=None,
     reference=None
 )
 ```
@@ -42,7 +42,7 @@ If the request is successful, `response` will be a `dict`:
         "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
         "reference": None,
         "content": {
-                    "body": "Some words", 
+                    "body": "Some words",
                     "from_number": "40604"
                     },
         "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
@@ -97,7 +97,7 @@ Otherwise the client will raise a `HTTPError`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode 
+    "message": "Can"t send to this recipient when service is in trial mode
                 - see https://www.notifications.service.gov.uk/trial-mode"
 }]
 </pre>
@@ -114,7 +114,7 @@ Otherwise the client will raise a `HTTPError`:
 response = notifications_client.send_email_notification(
     email_address='the_email_address@example.com',
     template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
-    personalisation=None, 
+    personalisation=None,
     reference=None
 )
 ```
@@ -186,7 +186,7 @@ Otherwise the client will raise a `HTTPError`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode 
+    "message": "Can"t send to this recipient when service is in trial mode
                 - see https://www.notifications.service.gov.uk/trial-mode"
 }]
 </pre>
@@ -226,7 +226,7 @@ personalisation={
     'reference_number': '300241',
 }
 ```
-      
+
 ## Get the status of one message
 
 ```python
@@ -259,7 +259,7 @@ If the request is successful, `response` will be a `dict`:
                     "version": 1 # template version num # required
                     "id": 1 # template id # required
                     "uri": "/template/{id}/{version}", # required
-                },                
+                },
     "body": "Body of the notification",
     "subject: "Subject of an email notification of None if an sms message"
 	"created_at": "created at", # required
@@ -307,7 +307,9 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-## Get the status of all messages
+## Get the status of all messages (with pagination)
+
+_This will return one page of notifications (250) per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated._
 
 ```python
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
@@ -398,7 +400,7 @@ Otherwise the client will raise a `HTTPError`:
 
 #### `template_type`
 
-You can filter by: 
+You can filter by:
 
 * `email`
 * `sms`
@@ -409,12 +411,12 @@ You can omit this argument to ignore this filter.
 
 #### `status`
 
-You can filter by: 
+You can filter by:
 
 * `sending` - the message is queued to be sent by the provider.
 * `delivered` - the message was successfully delivered.
 * `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
-* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list. 
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list.
 * `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
 * `technical-failure` - Notify had a technical failure; you can try to send the message again.
 
@@ -431,3 +433,89 @@ You can omit this argument to ignore the filter.
 You can get the notifications older than a given Notification.notificationId.
 
 You can omit this argument to ignore the filter.
+
+## Get the status of all messages (without pagination)
+
+```python
+response = get_all_notifications_iterator(status="sending")
+```
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `<generator object>` that will yield all messages:
+
+```python
+<generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    'error': 'ValidationError',
+    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "Apple is not one of [sms, email, letter]"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+#### `template_type`
+
+You can filter by:
+
+* `email`
+* `sms`
+* `letter`
+
+You can omit this argument to ignore this filter.
+
+
+#### `status`
+
+You can filter by:
+
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+### `reference`
+
+This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+

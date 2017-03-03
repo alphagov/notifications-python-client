@@ -4,7 +4,12 @@ from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
 standard_library.install_aliases()
+import logging
+import re
+
 from notifications_python_client.base import BaseAPIClient
+
+logger = logging.getLogger(__name__)
 
 
 class NotificationsAPIClient(BaseAPIClient):
@@ -51,6 +56,17 @@ class NotificationsAPIClient(BaseAPIClient):
             '/v2/notifications',
             params=data
         )
+
+    def get_all_notifications_iterator(self, status=None, template_type=None, reference=None, older_than=None):
+        result = self.get_all_notifications(status, template_type, reference, older_than)
+        notifications = result.get('notifications')
+        while notifications:
+            for notification in notifications:
+                yield notification
+            next_link = result['links'].get('next')
+            notification_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
+            result = self.get_all_notifications(status, template_type, reference, notification_id)
+            notifications = result.get('notifications')
 
     def get_notification_statistics_for_day(self, day=None):
         data = {}
