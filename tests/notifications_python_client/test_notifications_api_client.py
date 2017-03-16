@@ -214,6 +214,32 @@ def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
     assert rmock.call_count == 3
 
 
+def test_get_template(notifications_client, rmock):
+    endpoint = "{0}/v2/template/{1}".format(TEST_HOST, "123")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_template(123)
+
+    assert rmock.called
+
+
+def test_get_template_version(notifications_client, rmock):
+    endpoint = "{0}/v2/template/{1}/version/{2}".format(TEST_HOST, "123", 1)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_template_version(123, 1)
+
+    assert rmock.called
+
+
 def _generate_response(next_link_uuid, notifications=[]):
     return {
         'json': {
