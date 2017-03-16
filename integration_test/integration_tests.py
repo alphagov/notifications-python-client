@@ -66,7 +66,7 @@ def get_template_by_id(python_client, template_id, notification_type):
         validate(response, get_template_by_id_response)
     elif notification_type == SMS_TYPE:
         validate(response, get_template_by_id_response)
-        assert response['subject'] == None
+        assert response['subject'] is None
     else:
         raise KeyError("template type should be email|sms")
 
@@ -80,7 +80,7 @@ def get_template_by_id_and_version(python_client, template_id, version, notifica
         validate(response, get_template_by_id_response)
     elif notification_type == SMS_TYPE:
         validate(response, get_template_by_id_response)
-        assert response['subject'] == None
+        assert response['subject'] is None
     else:
         raise KeyError("template type should be email|sms")
 
