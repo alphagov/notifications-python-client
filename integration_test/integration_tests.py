@@ -7,7 +7,7 @@ from integration_test.schemas.v2.notification_schemas import (post_sms_response,
                                                               post_email_response,
                                                               get_notification_response,
                                                               get_notifications_response)
-from integration_test.schemas.v2.template_schemas import get_template_by_id_response
+from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
 from integration_test.enums import SMS_TYPE, EMAIL_TYPE
 
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -88,6 +88,24 @@ def get_template_by_id_and_version(python_client, template_id, version, notifica
     assert version == response['version']
 
 
+def post_template_preview(python_client, template_id, notification_type):
+    unique_name = str(uuid.uuid4())
+    personalisation = {'name': unique_name}
+
+    response = python_client.post_template_preview(template_id, personalisation)
+
+    if notification_type == EMAIL_TYPE:
+        validate(response, post_template_preview_response)
+    elif notification_type == SMS_TYPE:
+        validate(response, post_template_preview_response)
+        assert response['subject'] is None
+    else:
+        raise KeyError("template type should be email|sms")
+
+    assert template_id == response['id']
+    assert unique_name in response['body']
+
+
 def test_integration():
     client = NotificationsAPIClient(
         base_url=os.environ['NOTIFY_API_URL'],
@@ -109,6 +127,8 @@ def test_integration():
     get_template_by_id(client, email_template_id, EMAIL_TYPE)
     get_template_by_id_and_version(client, sms_template_id, version_number, SMS_TYPE)
     get_template_by_id_and_version(client, email_template_id, version_number, EMAIL_TYPE)
+    post_template_preview(client, sms_template_id, SMS_TYPE)
+    post_template_preview(client, email_template_id, EMAIL_TYPE)
 
     print("notifications-python-client integration tests are successful")
 
