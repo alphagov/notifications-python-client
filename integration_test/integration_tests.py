@@ -1,5 +1,6 @@
 import os
 import uuid
+import time
 
 from jsonschema import Draft4Validator
 
@@ -8,6 +9,7 @@ from integration_test.schemas.v2.notification_schemas import (post_sms_response,
                                                               get_notification_response,
                                                               get_notifications_response)
 from notifications_python_client.notifications import NotificationsAPIClient
+from notifications_python_client.errors import HTTPError
 
 
 def validate(json_to_validate, schema):
@@ -42,7 +44,14 @@ def send_email_notification_test_response(python_client):
 
 
 def get_notification_by_id(python_client, id, notification_type):
-    response = python_client.get_notification_by_id(id)
+    for i in range(14):
+        try:
+            response = python_client.get_notification_by_id(id)
+        except HTTPError as e:
+            if e.status_code == 404:
+                time.sleep(5)
+            else:
+                raise e
     if notification_type == 'email':
         validate(response, get_notification_response)
     elif notification_type == 'sms':
