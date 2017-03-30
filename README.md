@@ -258,7 +258,7 @@ If the request is successful, `response` will be a `dict`:
     "template": {
                     "version": 1 # template version num # required
                     "id": 1 # template id # required
-                    "uri": "/template/{id}/{version}", # required
+                    "uri": "/v2/template/{id}/{version}", # required
                 },
     "body": "Body of the notification",
     "subject: "Subject of an email notification of None if an sms message"
@@ -340,7 +340,7 @@ If the request is successful, `response` will be a `dict`:
          "template": {
                          "version": 1 # template version num # required
                          "id": 1 # template id # required
-                         "uri": "/template/{id}/{version}", # required
+                         "uri": "/v2/template/{id}/{version}", # required
                      },
           "body": "Body of the notification",
           "subject: "Subject of an email notification of None if an sms message"
