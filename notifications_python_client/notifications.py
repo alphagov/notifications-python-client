@@ -86,8 +86,12 @@ class NotificationsAPIClient(BaseAPIClient):
     def get_template(self, template_id):
         return self.get('/v2/template/{}'.format(template_id))
 
-    def get_all_templates(self):
-        return self.get('service/{}/template'.format(self.service_id))
+    def get_all_templates(self, template_type=None):
+        _template_type = ''
+        if template_type:
+            _template_type = '?type={}'.format(template_type)
+
+        return self.get('/v2/templates{}'.format(_template_type))
 
     def get_template_version(self, template_id, version):
         return self.get('/v2/template/{}/version/{}'.format(template_id, version))

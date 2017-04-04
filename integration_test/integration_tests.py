@@ -8,6 +8,7 @@ from integration_test.schemas.v2.notification_schemas import (post_sms_response,
                                                               get_notification_response,
                                                               get_notifications_response)
 from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
+from integration_test.schemas.v2.templates_schemas import get_all_template_response
 from integration_test.enums import SMS_TYPE, EMAIL_TYPE
 
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -106,6 +107,16 @@ def post_template_preview(python_client, template_id, notification_type):
     assert unique_name in response['body']
 
 
+def get_all_templates(python_client):
+    response = python_client.get_all_templates()
+    validate(response, get_all_template_response)
+
+
+def get_all_templates_for_type(python_client, template_type):
+    response = python_client.get_all_templates(template_type)
+    validate(response, get_all_template_response)
+
+
 def test_integration():
     client = NotificationsAPIClient(
         base_url=os.environ['NOTIFY_API_URL'],
@@ -129,6 +140,10 @@ def test_integration():
     get_template_by_id_and_version(client, email_template_id, version_number, EMAIL_TYPE)
     post_template_preview(client, sms_template_id, SMS_TYPE)
     post_template_preview(client, email_template_id, EMAIL_TYPE)
+
+    get_all_templates(client)
+    get_all_templates_for_type(client, EMAIL_TYPE)
+    get_all_templates_for_type(client, SMS_TYPE)
 
     print("notifications-python-client integration tests are successful")
 

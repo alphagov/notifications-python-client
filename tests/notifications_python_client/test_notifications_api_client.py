@@ -256,6 +256,32 @@ def test_post_template_preview(notifications_client, rmock):
     }
 
 
+def test_get_all_templates(notifications_client, rmock):
+    endpoint = "{0}/v2/templates".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_templates()
+
+    assert rmock.called
+
+
+def test_get_all_templates_by_type(notifications_client, rmock):
+    endpoint = "{0}/v2/templates?type={1}".format(TEST_HOST, 'type')
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_templates('type')
+
+    assert rmock.called
+
+
 def _generate_response(next_link_uuid, notifications=[]):
     return {
         'json': {
