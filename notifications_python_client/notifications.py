@@ -77,8 +77,11 @@ class NotificationsAPIClient(BaseAPIClient):
             params=data
         )
 
-    def get_template_preview(self, template_id):
-        return self.get('service/{}/template/{}/preview'.format(self.service_id, template_id))
+    def post_template_preview(self, template_id, personalisation):
+        template = {
+            "personalisation": personalisation
+        }
+        return self.post('/v2/template/{}/preview'.format(template_id), data=template)
 
     def get_template(self, template_id):
         return self.get('/v2/template/{}'.format(template_id))

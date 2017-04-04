@@ -240,6 +240,22 @@ def test_get_template_version(notifications_client, rmock):
     assert rmock.called
 
 
+def test_post_template_preview(notifications_client, rmock):
+    endpoint = "{0}/v2/template/{1}/preview".format(TEST_HOST, "123")
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.post_template_preview(123, personalisation={'name': 'chris'})
+
+    assert rmock.called
+    assert rmock.last_request.json() == {
+        'personalisation': {'name': 'chris'}
+    }
+
+
 def _generate_response(next_link_uuid, notifications=[]):
     return {
         'json': {
