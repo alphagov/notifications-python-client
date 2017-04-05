@@ -580,7 +580,7 @@ Otherwise the client will raise a `HTTPError`:
 ```
 response = notifications_client.get_template_version(
     'template_id',
-    'version'
+    1   # integer required for version number
 )
 ```
 
