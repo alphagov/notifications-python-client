@@ -521,6 +521,8 @@ This is the `reference` you gave at the time of sending the notification. The `r
 
 ## Get a template by ID
 
+_This will return the latest version of the template. Use [get_template_version](#template_version) to retrieve a specific template version_
+
 ```
 response = notifications_client.get_template(
     'template_id'
@@ -536,12 +538,12 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-    "id": "notify_id", # required
-    "type": "sms" | "letter" | "email", # required
+    "id": "template_id", # required
+    "type": "sms" | "email", # required
     "created_at": "created at", # required
     "updated_at": "updated at", # required
-    "version": "version", # required
-    "created_by": "created by", # required
+    "version": "version", # integer required
+    "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
     "subject": "Subject of an email notification of None if an sms message"
 }
@@ -573,7 +575,7 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-## Get a template by ID and version
+## <span id='template_version'>Get a template by ID and version</span>
 
 ```
 response = notifications_client.get_template_version(
@@ -591,12 +593,12 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-    "id": "notify_id", # required
-    "type": "sms" | "letter" | "email", # required
+    "id": "template_id", # required
+    "type": "sms" | "email", # required
     "created_at": "created at", # required
     "updated_at": "updated at", # required
-    "version": "version", # required
-    "created_by": "created by", # required
+    "version": "version", # integer required
+    "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
     "subject": "Subject of an email notification of None if an sms message"
 }
@@ -647,9 +649,10 @@ If the request is successful, `response` will be a `dict`:
 ```python
 {
     "id": "notify_id", # required
-    "type": "sms" | "letter" | "email", # required
-    "version": "version", # required
-    "subject": "Subject of an email notification of None if an sms message","body": "Body of the notification"
+    "type": "sms" | "email", # required
+    "version": "version", # integer required
+    "body": "Body of the notification", # required
+    "subject": "Subject of an email notification of None if an sms message"
 } 
 ```
 
