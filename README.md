@@ -261,7 +261,7 @@ If the request is successful, `response` will be a `dict`:
                     "uri": "/v2/template/{id}/{version}", # required
                 },
     "body": "Body of the notification",
-    "subject": "Subject of an email notification of None if an sms message"
+    "subject": "Subject of an email notification or None if an sms message"
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
 	"completed_at:" "date the notification is delivered or failed" # optional
@@ -343,7 +343,7 @@ If the request is successful, `response` will be a `dict`:
                          "uri": "/v2/template/{id}/{version}", # required
                      },
           "body": "Body of the notification",
-          "subject": "Subject of an email notification of None if an sms message"
+          "subject": "Subject of an email notification or None if an sms message"
           "created_at": "created at", # required
           "sent_at": " sent to provider at", # optional
           "completed_at:" "date the notification is delivered or failed" # optional
@@ -545,7 +545,7 @@ If the request is successful, `response` will be a `dict`:
     "version": "version", # integer required
     "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification of None if an sms message"
+    "subject": "Subject of an email notification or None if an sms message"
 }
 ```
 
@@ -600,7 +600,7 @@ If the request is successful, `response` will be a `dict`:
     "version": "version", # integer required
     "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification of None if an sms message"
+    "subject": "Subject of an email notification or None if an sms message"
 }
 ```
 
@@ -652,7 +652,7 @@ If the request is successful, `response` will be a `dict`:
     "type": "sms" | "email", # required
     "version": "version", # integer required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification of None if an sms message"
+    "subject": "Subject of an email notification or None if an sms message"
 } 
 ```
 
