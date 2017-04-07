@@ -261,7 +261,7 @@ If the request is successful, `response` will be a `dict`:
                     "uri": "/v2/template/{id}/{version}", # required
                 },
     "body": "Body of the notification",
-    "subject: "Subject of an email notification of None if an sms message"
+    "subject": "Subject of an email notification or None if an sms message"
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
 	"completed_at:" "date the notification is delivered or failed" # optional
@@ -343,7 +343,7 @@ If the request is successful, `response` will be a `dict`:
                          "uri": "/v2/template/{id}/{version}", # required
                      },
           "body": "Body of the notification",
-          "subject: "Subject of an email notification of None if an sms message"
+          "subject": "Subject of an email notification or None if an sms message"
           "created_at": "created at", # required
           "sent_at": " sent to provider at", # optional
           "completed_at:" "date the notification is delivered or failed" # optional
@@ -518,4 +518,180 @@ You can omit this argument to ignore this filter.
 ### `reference`
 
 This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
+## Get a template by ID
+
+_This will return the latest version of the template. Use [get_template_version](#template_version) to retrieve a specific template version_
+
+```
+response = notifications_client.get_template(
+    'template_id'
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+    "id": "template_id", # required
+    "type": "sms" | "email", # required
+    "created_at": "created at", # required
+    "updated_at": "updated at", # required
+    "version": "version", # integer required
+    "created_by": "someone@example.com", # email required
+    "body": "Body of the notification", # required
+    "subject": "Subject of an email notification or None if an sms message"
+}
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+]}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+## <span id='template_version'>Get a template by ID and version</span>
+
+```
+response = notifications_client.get_template_version(
+    'template_id',
+    1   # integer required for version number
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+    "id": "template_id", # required
+    "type": "sms" | "email", # required
+    "created_at": "created at", # required
+    "updated_at": "updated at", # required
+    "version": "version", # integer required
+    "created_by": "someone@example.com", # email required
+    "body": "Body of the notification", # required
+    "subject": "Subject of an email notification or None if an sms message"
+}
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+]}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+## Generate a preview template
+
+```
+response = notifications_client.post_template_preview(
+    'template_id', 
+    personalisation={'name': 'chris'}
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+    "id": "notify_id", # required
+    "type": "sms" | "email", # required
+    "version": "version", # integer required
+    "body": "Body of the notification", # required
+    "subject": "Subject of an email notification or None if an sms message"
+} 
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Missing personalisation: [name]"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+]}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
 
