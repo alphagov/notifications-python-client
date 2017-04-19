@@ -634,9 +634,12 @@ Otherwise the client will raise a `HTTPError`:
 
 ```python
 response = notifications_client.get_all_templates(
-    template_type=None # optional - SMS_TYPE | EMAIL_TYPE
+    template_type=None # optional
 )
 ```
+_This will return the latest version for each template_
+
+[See available template types](#template_type)
 
 <details>
 <summary>
