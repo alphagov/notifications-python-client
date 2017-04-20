@@ -521,9 +521,9 @@ This is the `reference` you gave at the time of sending the notification. The `r
 
 ## Get a template by ID
 
-_This will return the latest version of the template. Use [get_template_version](#template_version) to retrieve a specific template version_
+_This will return the latest version of the template. Use [get_template_version](#get-a-template-by-id-and-version) to retrieve a specific template version_
 
-```
+```python
 response = notifications_client.get_template(
     'template_id'
 )
@@ -575,9 +575,9 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-## <span id='template_version'>Get a template by ID and version</span>
+## Get a template by ID and version
 
-```
+```python
 response = notifications_client.get_template_version(
     'template_id',
     1   # integer required for version number
@@ -628,6 +628,54 @@ Otherwise the client will raise a `HTTPError`:
 </tr>
 </tbody>
 </table>
+</details>
+
+## Get all templates
+
+```python
+response = notifications_client.get_all_templates(
+    template_type=None # optional
+)
+```
+_This will return the latest version for each template_
+
+[See available template types](#template_type)
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+    "templates" : [
+        {
+            "id": "template_id", # required
+            "type": "sms" | "email", # required
+            "created_at": "created at", # required
+            "updated_at": "updated at", # required
+            "version": "version", # integer required
+            "created_by": "someone@example.com", # email required
+            "body": "Body of the notification", # required
+            "subject": "Subject of an email notification or None if an sms message"
+        },
+        {
+            ... another template
+        }
+    ]
+}
+```
+
+If no templates exist for a template type or there no templates for a service, the `response` will be a `dict` with an empty `templates` list element:
+
+```python
+{
+    "templates" : []
+}
+```
+
 </details>
 
 ## Generate a preview template
