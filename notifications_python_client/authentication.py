@@ -109,9 +109,10 @@ def decode_jwt_token(token, secret):
         # check iat time is within bounds
         now = epoch_seconds()
         iat = int(decoded_token['iat'])
-
         if now > (iat + __bound__):
             raise TokenExpiredError("Token has expired", decoded_token)
+        if iat > (now + __bound__):
+            raise TokenExpiredError("Token can not be in the future", decoded_token)
 
         return True
     except jwt.InvalidIssuedAtError:
