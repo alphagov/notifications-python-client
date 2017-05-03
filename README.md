@@ -70,6 +70,19 @@ Otherwise the client will raise a `HTTPError`:
 <td>
 <pre>
 [{
+    "error": "RateLimitError",
+    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
     "error": "TooManyRequestsError",
     "message": "Exceeded send limits (50) for today"
 }]
@@ -682,7 +695,7 @@ If no templates exist for a template type or there no templates for a service, t
 
 ```
 response = notifications_client.post_template_preview(
-    'template_id', 
+    'template_id',
     personalisation={'name': 'chris'}
 )
 ```
@@ -701,7 +714,7 @@ If the request is successful, `response` will be a `dict`:
     "version": "version", # integer required
     "body": "Body of the notification", # required
     "subject": "Subject of an email notification or None if an sms message"
-} 
+}
 ```
 
 Otherwise the client will raise a `HTTPError`:
@@ -742,4 +755,3 @@ Otherwise the client will raise a `HTTPError`:
 </tbody>
 </table>
 </details>
-
