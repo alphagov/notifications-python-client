@@ -1,3 +1,10 @@
+## 4.4.0
+* Added an optional parameter to `NotificationsAPIClient.send_sms_notification()` and `NotificationsAPIClient.send_email_notification()`.
+  • the `schedule_for` parameter will schedule the notification to be delivered at the given time. 
+  • `YYYY-MM-DD HH`  is the accepted format where the date time is in BST.
+  * the `scheduled_for` is returned in the response of the  `NotificationsAPIClient.send_sms_notification()` and `NotificationsAPIClient.send_email_notification()`
+    and in the  `NotificationsAPIClient.get_notification_by_id()` and `NotificationsAPIClient.get_all_notifications()`
+
 ## 4.3.0
 
 ### Changed

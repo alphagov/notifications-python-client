@@ -27,7 +27,8 @@ response = notifications_client.send_sms_notification(
     phone_number='+447900900123',
     template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda',
     personalisation=None,
-    reference=None
+    reference=None,
+    schedule_for=None
 )
 ```
 <details>
@@ -50,7 +51,8 @@ If the request is successful, `response` will be a `dict`:
                      "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
                      "version": 1,
                      "uri": "https://api.notifications.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+                     },
+        "scheduled_for": None
 }
 ```
 
@@ -128,7 +130,8 @@ response = notifications_client.send_email_notification(
     email_address='the_email_address@example.com',
     template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
     personalisation=None,
-    reference=None
+    reference=None,
+    schedule_for=None
 )
 ```
 
@@ -152,7 +155,8 @@ If the request is successful, `response` will be a `dict`:
                      "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
                      "version": 1,
                      "uri": "https://api.notificaitons.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+                     },
+        "scheduled_for": None
 }
 ```
 
@@ -252,6 +256,11 @@ personalisation={
     'reference_number': '300241',
 }
 ```
+
+#### `schedule_for`
+Add `schedule_for` when you want to schedule the notification to be delivered at a later hour.
+`YYYY-MM-DD HH` is the accepted format, for example 2017-05-17 14 where the date time is in BST.
+
 
 ## Get the status of one message
 
