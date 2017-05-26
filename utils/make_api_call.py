@@ -35,7 +35,7 @@ def create_sms_notification(notifications_client):
     schedule_for = input("Schedule notification for (YYYY-MM-DD HH) in BST: ")
     return notifications_client.send_sms_notification(
         mobile_number, template_id=template_id, personalisation=personalisation, reference=reference,
-        schedule_for=schedule_for
+        scheduled_for=schedule_for
     )
 
 
@@ -48,7 +48,7 @@ def create_email_notification(notifications_client):
     schedule_for = input("Schedule notification for (YYYY-MM-DD HH) in BST: ")
     return notifications_client.send_email_notification(
         mobile_number, template_id=template_id, personalisation=personalisation, reference=reference,
-        schedule_for=schedule_for
+        scheduled_for=schedule_for
     )
 
 

@@ -28,7 +28,7 @@ response = notifications_client.send_sms_notification(
     template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda',
     personalisation=None,
     reference=None,
-    schedule_for=None
+    scheduled_for=None
 )
 ```
 <details>
@@ -131,7 +131,7 @@ response = notifications_client.send_email_notification(
     template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
     personalisation=None,
     reference=None,
-    schedule_for=None
+    scheduled_for=None
 )
 ```
 
@@ -257,9 +257,10 @@ personalisation={
 }
 ```
 
-#### `schedule_for`
-Add `schedule_for` when you want to schedule the notification to be delivered at a later hour.
-`YYYY-MM-DD HH` is the accepted format, for example 2017-05-17 14 where the date time is in BST.
+#### `scheduled_for`
+Add `scheduled_for` when you want to schedule the notification to be delivered at a later hour.
+`YYYY-MM-DD HH:MI` is the accepted format, for example 2017-05-17 14 where the date time is in BST.
+Scheduled notifications are processed every 15 minutes.
 
 
 ## Get the status of one message
