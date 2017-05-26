@@ -89,7 +89,7 @@ post_sms_request = {
         "phone_number": {"type": "string", "format": "phone_number"},
         "template_id": uuid,
         "personalisation": personalisation,
-        "scheduled_for": {"type": "string", "format": "datetime"}
+        "scheduled_for": {"type": ["string", "null"], "format": "datetime"}
     },
     "required": ["phone_number", "template_id"]
 }
@@ -117,7 +117,7 @@ post_sms_response = {
         "content": sms_content,
         "uri": {"type": "string"},
         "template": template,
-        "scheduled_for": {"type": "string"}
+        "scheduled_for": {"type": ["string", "null"]}
     },
     "required": ["id", "content", "uri", "template"]
 }
@@ -132,7 +132,7 @@ post_email_request = {
         "email_address": {"type": "string", "format": "email_address"},
         "template_id": uuid,
         "personalisation": personalisation,
-        "scheduled_for": {"type": "string", "format": "datetime"}
+        "scheduled_for": {"type": ["string", "null"], "format": "datetime"}
     },
     "required": ["email_address", "template_id"]
 }
@@ -161,7 +161,7 @@ post_email_response = {
         "content": email_content,
         "uri": {"type": "string"},
         "template": template,
-        "scheduled_for": {"type": "string"}
+        "scheduled_for": {"type": ["string", "null"]}
     },
     "required": ["id", "content", "uri", "template"]
 }
