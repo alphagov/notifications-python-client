@@ -38,7 +38,8 @@ get_notification_response = {
         "subject": {"type": ["string", "null"]},
         "created_at": {"type": "string"},
         "sent_at": {"type": ["string", "null"]},
-        "completed_at": {"type": ["string", "null"]}
+        "completed_at": {"type": ["string", "null"]},
+        "scheduled_for": {"type": ["string", "null"]}
     },
     "required": [
         # technically, all keys are required since we always have all of them
@@ -87,7 +88,8 @@ post_sms_request = {
         "reference": {"type": "string"},
         "phone_number": {"type": "string", "format": "phone_number"},
         "template_id": uuid,
-        "personalisation": personalisation
+        "personalisation": personalisation,
+        "scheduled_for": {"type": "string", "format": "datetime"}
     },
     "required": ["phone_number", "template_id"]
 }
@@ -114,7 +116,8 @@ post_sms_response = {
         "reference": {"type": ["string", "null"]},
         "content": sms_content,
         "uri": {"type": "string"},
-        "template": template
+        "template": template,
+        "scheduled_for": {"type": "string"}
     },
     "required": ["id", "content", "uri", "template"]
 }
@@ -128,7 +131,8 @@ post_email_request = {
         "reference": {"type": "string"},
         "email_address": {"type": "string", "format": "email_address"},
         "template_id": uuid,
-        "personalisation": personalisation
+        "personalisation": personalisation,
+        "scheduled_for": {"type": "string", "format": "datetime"}
     },
     "required": ["email_address", "template_id"]
 }
@@ -156,23 +160,28 @@ post_email_response = {
         "reference": {"type": ["string", "null"]},
         "content": email_content,
         "uri": {"type": "string"},
-        "template": template
+        "template": template,
+        "scheduled_for": {"type": "string"}
     },
     "required": ["id", "content", "uri", "template"]
 }
 
 
-def create_post_sms_response_from_notification(notification, body, from_number, url_root):
+def create_post_sms_response_from_notification(notification, body, from_number, url_root, service_id, scheduled_for):
     return {"id": notification.id,
             "reference": notification.client_reference,
             "content": {'body': body,
                         'from_number': from_number},
-            "uri": "{}/v2/notifications/{}".format(url_root, str(notification.id)),
-            "template": __create_template_from_notification(notification=notification, url_root=url_root)
+            "uri": "{}v2/notifications/{}".format(url_root, str(notification.id)),
+            "template": __create_template_from_notification(notification=notification,
+                                                            url_root=url_root,
+                                                            service_id=service_id),
+            "scheduled_for": scheduled_for if scheduled_for else None
             }
 
 
-def create_post_email_response_from_notification(notification, content, subject, email_from, url_root):
+def create_post_email_response_from_notification(notification, content, subject, email_from, url_root, service_id,
+                                                 scheduled_for):
     return {
         "id": notification.id,
         "reference": notification.client_reference,
@@ -181,8 +190,11 @@ def create_post_email_response_from_notification(notification, content, subject,
             "body": content,
             "subject": subject
         },
-        "uri": "{}/v2/notifications/{}".format(url_root, str(notification.id)),
-        "template": __create_template_from_notification(notification=notification, url_root=url_root)
+        "uri": "{}v2/notifications/{}".format(url_root, str(notification.id)),
+        "template": __create_template_from_notification(notification=notification,
+                                                        url_root=url_root,
+                                                        service_id=service_id),
+        "scheduled_for": scheduled_for if scheduled_for else None
     }
 
 
