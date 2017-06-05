@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None, scheduled_for=None):
+    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None,
+                              scheduled_for=None):
         notification = {
             "phone_number": phone_number,
             "template_id": template_id
