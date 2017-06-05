@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationsAPIClient(BaseAPIClient):
-    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None):
+    def send_sms_notification(self, phone_number, template_id, personalisation=None, reference=None,
+                              scheduled_for=None):
         notification = {
             "phone_number": phone_number,
             "template_id": template_id
@@ -22,11 +23,15 @@ class NotificationsAPIClient(BaseAPIClient):
             notification.update({'personalisation': personalisation})
         if reference:
             notification.update({'reference': reference})
+        if scheduled_for:
+            notification.update({'scheduled_for': scheduled_for})
+
         return self.post(
             '/v2/notifications/sms',
             data=notification)
 
-    def send_email_notification(self, email_address, template_id, personalisation=None, reference=None):
+    def send_email_notification(self, email_address, template_id, personalisation=None, reference=None,
+                                scheduled_for=None):
         notification = {
             "email_address": email_address,
             "template_id": template_id
@@ -35,6 +40,8 @@ class NotificationsAPIClient(BaseAPIClient):
             notification.update({'personalisation': personalisation})
         if reference:
             notification.update({'reference': reference})
+        if scheduled_for:
+            notification.update({'scheduled_for': scheduled_for})
         return self.post(
             '/v2/notifications/email',
             data=notification)
