@@ -39,18 +39,18 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
-        "reference": None,
-        "content": {
-                    "body": "Some words",
-                    "from_number": "40604"
-                    },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
-        "template": {
-                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
-                     "version": 1,
-                     "uri": "https://api.notifications.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+  "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+  "reference": None,
+  "content": {
+    "body": "Some words",
+    "from_number": "40604"
+  },
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+  "template": {
+    "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+    "version": 1,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+  }
 }
 ```
 
@@ -141,18 +141,19 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
-        "reference": None,
-        "content": {"subject": "Licence renewal",
-                    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-                    "from_email": "the_service@gov.uk"
-                    },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
-        "template": {
-                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
-                     "version": 1,
-                     "uri": "https://api.notificaitons.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+  "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+  "reference": None,
+  "content": {
+    "subject": "Licence renewal",
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+    "from_email": "the_service@gov.uk"
+  },
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+  "template": {
+    "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+    "version": 1,
+    "uri": "https://api.notificaitons.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+  }
 }
 ```
 
@@ -268,26 +269,26 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-    "id": "notify_id", # required
-    "reference": "client reference", # optional
-    "email_address": "email address",  # required for emails
-    "phone_number": "phone number",  # required for sms
-    "line_1": "full name of a person or company", # required for letter
-    "line_2": "123 The Street", # optional
-    "line_3": "Some Area", # optional
-    "line_4": "Some Town", # optional
-    "line_5": "Some county", # optional
-    "line_6": "Something else", # optional
-    "postcode": "postcode", # required for letter
-    "type": "sms|letter|email", # required
-    "status": "current status", # required
-    "template": {
-                    "version": 1 # template version num # required
-                    "id": 1 # template id # required
-                    "uri": "/v2/template/{id}/{version}", # required
-                },
-    "body": "Body of the notification",
-    "subject": "Subject of an email notification or None if an sms message"
+  "id": "notify_id", # required
+  "reference": "client reference", # optional
+  "email_address": "email address",  # required for emails
+  "phone_number": "phone number",  # required for sms
+  "line_1": "full name of a person or company", # required for letter
+  "line_2": "123 The Street", # optional
+  "line_3": "Some Area", # optional
+  "line_4": "Some Town", # optional
+  "line_5": "Some county", # optional
+  "line_6": "Something else", # optional
+  "postcode": "postcode", # required for letter
+  "type": "sms|letter|email", # required
+  "status": "current status", # required
+  "template": {
+    "version": 1 # template version num # required
+    "id": 1 # template id # required
+    "uri": "/v2/template/{id}/{version}", # required
+  },
+  "body": "Body of the notification",
+  "subject": "Subject of an email notification or None if an sms message"
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
 	"completed_at:" "date the notification is delivered or failed" # optional
@@ -349,31 +350,32 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {"notifications":
-  [{
-         "id": "notify_id", # required
-         "reference": "client reference", # optional
-         "email_address": "email address",  # required for emails
-         "phone_number": "phone number",  # required for sms
-         "line_1": "full name of a person or company", # required for letter
-         "line_2": "123 The Street", # optional
-         "line_3": "Some Area", # optional
-         "line_4": "Some Town", # optional
-         "line_5": "Some county", # optional
-         "line_6": "Something else", # optional
-         "postcode": "postcode", # required for letter
-         "type": "sms | letter | email", # required
-         "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
-         "template": {
-                         "version": 1 # template version num # required
-                         "id": 1 # template id # required
-                         "uri": "/v2/template/{id}/{version}", # required
-                     },
-          "body": "Body of the notification",
-          "subject": "Subject of an email notification or None if an sms message"
-          "created_at": "created at", # required
-          "sent_at": " sent to provider at", # optional
-          "completed_at:" "date the notification is delivered or failed" # optional
-        },
+  [
+    {
+      "id": "notify_id", # required
+      "reference": "client reference", # optional
+      "email_address": "email address",  # required for emails
+      "phone_number": "phone number",  # required for sms
+      "line_1": "full name of a person or company", # required for letter
+      "line_2": "123 The Street", # optional
+      "line_3": "Some Area", # optional
+      "line_4": "Some Town", # optional
+      "line_5": "Some county", # optional
+      "line_6": "Something else", # optional
+      "postcode": "postcode", # required for letter
+      "type": "sms | letter | email", # required
+      "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+      "template": {
+        "version": 1 # template version num # required
+        "id": 1 # template id # required
+        "uri": "/v2/template/{id}/{version}", # required
+      },
+      "body": "Body of the notification",
+      "subject": "Subject of an email notification or None if an sms message"
+      "created_at": "created at", # required
+      "sent_at": " sent to provider at", # optional
+      "completed_at:" "date the notification is delivered or failed" # optional
+    },
     …
   ],
   "links": {
@@ -399,7 +401,7 @@ Otherwise the client will raise a `HTTPError`:
 <td>
 <pre>
 [{
-	'error': 'ValidationError',
+    'error': 'ValidationError',
     'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
 }]
 </pre>
