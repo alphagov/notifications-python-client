@@ -39,6 +39,42 @@ class NotificationsAPIClient(BaseAPIClient):
             '/v2/notifications/email',
             data=notification)
 
+    def send_letter_notification(self, template_id, personalisation, reference=None):
+        """
+        Send a letter notification
+
+        :param template_id - the id of the letter template
+        :param personalisation - a dict containing the address information, along with any additional personalisation
+            that the template requires. address information must be in the format "address_line_1", "address_line_2",
+            and so on up to "address_line_6", and "postcode". "address_line_1" and "postcode" are not optional.
+        :param reference - a reference that you would like to be able to refer to the notification by
+
+        :return A dict formatted as follows:
+            {
+                'id': '<uuid>',  # a uuid
+                'reference': '',  # the reference you supplied, if any.
+                'content': {
+                    'subject': '',  # the plaintext subject of the letter, with any placeholders replaced
+                    'body': '',  # the plaintext body of the letter, with any placeholders replaced
+                },
+                'uri': '<uri>',  # the URI to send a GET to if you wish to get the notification yourself
+                'template': {
+
+                },
+                'scheduled_for': None  # always None for letter notifications
+            }
+        """
+        notification = {
+            "template_id": template_id,
+            "personalisation": personalisation
+        }
+        if reference:
+            notification.update({'reference': reference})
+        return self.post(
+            '/v2/notifications/letter',
+            data=notification
+        )
+
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
 
