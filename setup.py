@@ -14,7 +14,7 @@ from setuptools.command.test import test as TestCommand
 # can't just import notifications_python_client.version as requirements may not be installed yet and imports will fail
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
-with open('notifications_python_client/version.py', 'rb') as f:
+with open('notifications_python_client/__init__.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
