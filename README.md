@@ -25,7 +25,7 @@ the **API integration** page.
 ```python
 response = notifications_client.send_sms_notification(
     phone_number='+447900900123',
-    template_id='ceb50d92-100d-4b8b-b559-14fa3b091cda',
+    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a',
     personalisation=None,
     reference=None
 )
@@ -39,18 +39,18 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
-        "reference": None,
-        "content": {
-                    "body": "Some words",
-                    "from_number": "40604"
-                    },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
-        "template": {
-                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
-                     "version": 1,
-                     "uri": "https://api.notifications.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": None,
+  "content": {
+    "body": "Some words",
+    "from_number": "40604"
+  },
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
+  "template": {
+    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
+    "version": 1,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/ceb50d92-100d-4b8b-b559-14fa3b091cd"
+  }
 }
 ```
 
@@ -126,7 +126,7 @@ Otherwise the client will raise a `HTTPError`:
 ```python
 response = notifications_client.send_email_notification(
     email_address='the_email_address@example.com',
-    template_id='bfb50d92-100d-4b8b-b559-14fa3b091cda'
+    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
     personalisation=None,
     reference=None
 )
@@ -141,18 +141,19 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
-        "reference": None,
-        "content": {"subject": "Licence renewal",
-                    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-                    "from_email": "the_service@gov.uk"
-                    },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
-        "template": {
-                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
-                     "version": 1,
-                     "uri": "https://api.notificaitons.service.gov.uk/v2/template/bfb50d92-100d-4b8b-b559-14fa3b091cda"
-                     }
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": None,
+  "content": {
+    "subject": "Licence renewal",
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+    "from_email": "the_service@gov.uk"
+  },
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
+  "template": {
+    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
+    "version": 1,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
+  }
 }
 ```
 
@@ -222,6 +223,127 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
+### Letter
+
+```python
+response = notifications_client.send_letter_notification(
+    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
+    personalisation={
+      'address_line_1': 'Her Majesty The Queen',  # required
+      'address_line_2': 'Buckingham Palace',
+      'address_line_3': 'London',
+      'postcode': 'SW1 1AA',  # required
+
+      ... # any other personalisation found in your template
+    },
+    reference=None
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": None,
+  "content": {
+    "subject": "Licence renewal",
+    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
+  },
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
+  "template": {
+    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
+    "version": 1,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
+  }
+  "scheduled_for": None
+}
+```
+
+Otherwise the client will raise a `HTTPError`:
+<table>
+<thead>
+<tr>
+<th>`error.status_code`</th>
+<th>`error.message`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "RateLimitError",
+    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode
+                - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "personalisation address_line_1 is a required property"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
 
 ### Arguments
 
@@ -253,6 +375,23 @@ personalisation={
 }
 ```
 
+#### `personalisation` (for letters)
+
+If you are sending a letter, you will need to provide the letter fields in the format `"address_line_#"`, for example:
+
+```python
+personalisation={
+    'address_line_1': 'The Occupier',
+    'address_line_2': '123 High Street',
+    'address_line_3': 'London',
+    'postcode': 'SW14 6BH',
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+
+The fields `"address_line_1"` and `"postcode"` are required.
+
 ## Get the status of one message
 
 ```python
@@ -268,26 +407,26 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {
-    "id": "notify_id", # required
-    "reference": "client reference", # optional
-    "email_address": "email address",  # required for emails
-    "phone_number": "phone number",  # required for sms
-    "line_1": "full name of a person or company", # required for letter
-    "line_2": "123 The Street", # optional
-    "line_3": "Some Area", # optional
-    "line_4": "Some Town", # optional
-    "line_5": "Some county", # optional
-    "line_6": "Something else", # optional
-    "postcode": "postcode", # required for letter
-    "type": "sms|letter|email", # required
-    "status": "current status", # required
-    "template": {
-                    "version": 1 # template version num # required
-                    "id": 1 # template id # required
-                    "uri": "/v2/template/{id}/{version}", # required
-                },
-    "body": "Body of the notification",
-    "subject": "Subject of an email notification or None if an sms message"
+  "id": "notify_id", # required
+  "reference": "client reference", # optional
+  "email_address": "email address",  # required for emails
+  "phone_number": "phone number",  # required for sms
+  "line_1": "full name of a person or company", # required for letter
+  "line_2": "123 The Street", # optional
+  "line_3": "Some Area", # optional
+  "line_4": "Some Town", # optional
+  "line_5": "Some county", # optional
+  "line_6": "Something else", # optional
+  "postcode": "postcode", # required for letter
+  "type": "sms|letter|email", # required
+  "status": "current status", # required
+  "template": {
+    "version": 1 # template version num # required
+    "id": 1 # template id # required
+    "uri": "/v2/template/{id}/{version}", # required
+  },
+  "body": "Body of the notification",
+  "subject": "Subject of an email notification or None if an sms message"
 	"created_at": "created at", # required
 	"sent_at": " sent to provider at", # optional
 	"completed_at:" "date the notification is delivered or failed" # optional
@@ -349,31 +488,32 @@ If the request is successful, `response` will be a `dict`:
 
 ```python
 {"notifications":
-  [{
-         "id": "notify_id", # required
-         "reference": "client reference", # optional
-         "email_address": "email address",  # required for emails
-         "phone_number": "phone number",  # required for sms
-         "line_1": "full name of a person or company", # required for letter
-         "line_2": "123 The Street", # optional
-         "line_3": "Some Area", # optional
-         "line_4": "Some Town", # optional
-         "line_5": "Some county", # optional
-         "line_6": "Something else", # optional
-         "postcode": "postcode", # required for letter
-         "type": "sms | letter | email", # required
-         "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
-         "template": {
-                         "version": 1 # template version num # required
-                         "id": 1 # template id # required
-                         "uri": "/v2/template/{id}/{version}", # required
-                     },
-          "body": "Body of the notification",
-          "subject": "Subject of an email notification or None if an sms message"
-          "created_at": "created at", # required
-          "sent_at": " sent to provider at", # optional
-          "completed_at:" "date the notification is delivered or failed" # optional
-        },
+  [
+    {
+      "id": "notify_id", # required
+      "reference": "client reference", # optional
+      "email_address": "email address",  # required for emails
+      "phone_number": "phone number",  # required for sms
+      "line_1": "full name of a person or company", # required for letter
+      "line_2": "123 The Street", # optional
+      "line_3": "Some Area", # optional
+      "line_4": "Some Town", # optional
+      "line_5": "Some county", # optional
+      "line_6": "Something else", # optional
+      "postcode": "postcode", # required for letter
+      "type": "sms | letter | email", # required
+      "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+      "template": {
+        "version": 1 # template version num # required
+        "id": 1 # template id # required
+        "uri": "/v2/template/{id}/{version}", # required
+      },
+      "body": "Body of the notification",
+      "subject": "Subject of an email notification or None if an sms message"
+      "created_at": "created at", # required
+      "sent_at": " sent to provider at", # optional
+      "completed_at:" "date the notification is delivered or failed" # optional
+    },
     …
   ],
   "links": {
@@ -399,7 +539,7 @@ Otherwise the client will raise a `HTTPError`:
 <td>
 <pre>
 [{
-	'error': 'ValidationError',
+    'error': 'ValidationError',
     'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
 }]
 </pre>

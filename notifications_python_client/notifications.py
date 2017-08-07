@@ -39,6 +39,18 @@ class NotificationsAPIClient(BaseAPIClient):
             '/v2/notifications/email',
             data=notification)
 
+    def send_letter_notification(self, template_id, personalisation, reference=None):
+        notification = {
+            "template_id": template_id,
+            "personalisation": personalisation
+        }
+        if reference:
+            notification.update({'reference': reference})
+        return self.post(
+            '/v2/notifications/letter',
+            data=notification
+        )
+
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
 

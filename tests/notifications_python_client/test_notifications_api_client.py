@@ -165,6 +165,52 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
     }
 
 
+def test_create_letter_notification(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_letter_notification(
+        template_id="456",
+        personalisation={'address_line_1': 'Foo', 'postcode': 'Bar'}
+    )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456',
+        'personalisation': {
+            'address_line_1': 'Foo',
+            'postcode': 'Bar'
+        }
+    }
+
+
+def test_create_letter_notification_with_reference(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_letter_notification(
+        template_id="456",
+        personalisation={'address_line_1': 'Foo', 'postcode': 'Bar'},
+        reference='Baz'
+    )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456',
+        'personalisation': {
+            'address_line_1': 'Foo',
+            'postcode': 'Bar'
+        },
+        'reference': 'Baz'
+    }
+
+
 def test_get_all_notifications_iterator_calls_get_notifications(notifications_client, rmock):
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
     rmock.request(
