@@ -230,7 +230,7 @@ response = notifications_client.send_letter_notification(
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
     personalisation={
       'address_line_1': 'Her Majesty The Queen',  # required
-      'address_line_2': 'Buckingham Palace',
+      'address_line_2': 'Buckingham Palace', # required
       'address_line_3': 'London',
       'postcode': 'SW1 1AA',  # required
 
@@ -390,7 +390,7 @@ personalisation={
 }
 ```
 
-The fields `"address_line_1"` and `"postcode"` are required.
+The fields `"address_line_1"`, `"address_line_2"` and `"postcode"` are required.
 
 ## Get the status of one message
 
