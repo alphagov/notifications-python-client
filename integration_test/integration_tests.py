@@ -3,10 +3,13 @@ import uuid
 
 from jsonschema import Draft4Validator
 
-from integration_test.schemas.v2.notification_schemas import (post_sms_response,
-                                                              post_email_response,
-                                                              get_notification_response,
-                                                              get_notifications_response)
+from integration_test.schemas.v2.notification_schemas import (
+    post_sms_response,
+    post_email_response,
+    post_letter_response,
+    get_notification_response,
+    get_notifications_response
+)
 from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
 from integration_test.schemas.v2.templates_schemas import get_all_template_response
 from integration_test.enums import SMS_TYPE, EMAIL_TYPE
@@ -41,7 +44,24 @@ def send_email_notification_test_response(python_client):
                                                      template_id=template_id,
                                                      personalisation=personalisation)
     validate(response, post_email_response)
-    assert unique_name in response['content']['body']  # check placeholders are resplaced
+    assert unique_name in response['content']['body']  # check placeholders are replaced
+    return response['id']
+
+
+def send_letter_notification_test_response(python_client):
+    template_id = os.environ['LETTER_TEMPLATE_ID']
+    unique_name = str(uuid.uuid4())
+    personalisation = {
+        'address_line_1': unique_name,
+        'address_line_2': 'foo',
+        'postcode': 'bar'
+    }
+    response = python_client.send_letter_notification(
+        template_id=template_id,
+        personalisation=personalisation
+    )
+    validate(response, post_letter_response)
+    assert unique_name in response['content']['body']  # check placeholders are replaced
     return response['id']
 
 
@@ -129,8 +149,10 @@ def test_integration():
 
     sms_id = send_sms_notification_test_response(client)
     email_id = send_email_notification_test_response(client)
+    letter_id = send_letter_notification_test_response(client)
     get_notification_by_id(client, sms_id, SMS_TYPE)
     get_notification_by_id(client, email_id, EMAIL_TYPE)
+    get_notification_by_id(client, letter_id, EMAIL_TYPE)
 
     get_all_notifications(client)
 
