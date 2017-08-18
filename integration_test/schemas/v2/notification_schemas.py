@@ -148,13 +148,53 @@ email_content = {
 
 post_email_response = {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "POST sms notification response schema",
+    "description": "POST email notification response schema",
     "type": "object",
     "title": "response v2/notifications/email",
     "properties": {
         "id": uuid,
         "reference": {"type": ["string", "null"]},
         "content": email_content,
+        "uri": {"type": "string"},
+        "template": template
+    },
+    "required": ["id", "content", "uri", "template"]
+}
+
+post_letter_request = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "POST letter notification schema",
+    "type": "object",
+    "title": "POST v2/notifications/letter",
+    "properties": {
+        "reference": {"type": "string"},
+        "template_id": uuid,
+        "personalisation": personalisation
+    },
+    "required": ["letter_address", "template_id"]
+}
+
+letter_content = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Letter content for POST letter notification",
+    "type": "object",
+    "title": "notification letter content",
+    "properties": {
+        "body": {"type": "string"},
+        "subject": {"type": "string"}
+    },
+    "required": ["body", "subject"]
+}
+
+post_letter_response = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "POST letter notification response schema",
+    "type": "object",
+    "title": "response v2/notifications/letter",
+    "properties": {
+        "id": uuid,
+        "reference": {"type": ["string", "null"]},
+        "content": letter_content,
         "uri": {"type": "string"},
         "template": template
     },
