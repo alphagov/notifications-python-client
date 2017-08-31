@@ -120,6 +120,38 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
+<details>
+<summary>
+Arguments
+</summary>
+
+#### `phone_number`
+
+The phone number of the recipient, only required for sms notifications.
+
+#### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `reference`
+
+An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
+
+
+#### `personalisation`
+
+If a template has placeholders, you need to provide their values, for example:
+
+```python
+personalisation={
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+
+</details>
 
 ### Email
 
@@ -223,16 +255,45 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
+<details>
+<summary>Arguments</summary>
+
+#### `email_address`
+The email address of the recipient, only required for email notifications.
+
+#### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `reference`
+
+An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
+
+#### `personalisation`
+
+If a template has placeholders, you need to provide their values, for example:
+
+```python
+personalisation={
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+
+</details>
+
 ### Letter
 
 ```python
 response = notifications_client.send_letter_notification(
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
     personalisation={
-      'address_line_1': 'Her Majesty The Queen',  # required
-      'address_line_2': 'Buckingham Palace', # required
+      'address_line_1': 'The Occupier',  # required
+      'address_line_2': '123 High Street', # required
       'address_line_3': 'London',
-      'postcode': 'SW1 1AA',  # required
+      'postcode': 'SW14 6BH',  # required
 
       ... # any other personalisation found in your template
     },
@@ -344,14 +405,9 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
+<details>
+<summary>Arguments</summary>
 
-### Arguments
-
-####
-The phone number of the recipient, only required for sms notifications.
-
-#### `email_address`
-The email address of the recipient, only required for email notifications.
 
 #### `template_id`
 
@@ -363,19 +419,7 @@ An optional identifier you generate. The `reference` can be used as a unique ref
 
 You can omit this argument if you do not require a reference for the notification.
 
-
 #### `personalisation`
-
-If a template has placeholders, you need to provide their values, for example:
-
-```python
-personalisation={
-    'first_name': 'Amala',
-    'reference_number': '300241',
-}
-```
-
-#### `personalisation` (for letters)
 
 If you are sending a letter, you will need to provide the letter fields in the format `"address_line_#"`, for example:
 
@@ -383,14 +427,17 @@ If you are sending a letter, you will need to provide the letter fields in the f
 personalisation={
     'address_line_1': 'The Occupier',
     'address_line_2': '123 High Street',
-    'address_line_3': 'London',
+    'address_line_3': 'London', # There can be up to six address_line fields
     'postcode': 'SW14 6BH',
     'first_name': 'Amala',
     'reference_number': '300241',
 }
 ```
 
-The fields `"address_line_1"`, `"address_line_2"` and `"postcode"` are required.
+The fields `"address_line_1"`, `"address_line_2"` and `"postcode"` are required. We support up to six address lines.
+
+</details>
+
 
 ## Get the status of one message
 
@@ -577,13 +624,39 @@ You can omit this argument to ignore this filter.
 
 #### `status`
 
+##### email
+
 You can filter by:
 
 * `sending` - the message is queued to be sent by the provider.
 * `delivered` - the message was successfully delivered.
 * `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
-* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list.
-* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `permanent-failure` - the provider was unable to deliver message, email does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, email box was full; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+##### text message
+
+You can filter by:
+
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, phone number does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+##### letter
+
+You can filter by:
+
+* `created` - the message has been created
+* `sending` - the message is queued to be sent by the provider.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
 * `technical-failure` - Notify had a technical failure; you can try to send the message again.
 
 You can omit this argument to ignore this filter.
@@ -670,13 +743,39 @@ You can omit this argument to ignore this filter.
 
 #### `status`
 
+##### email
+
 You can filter by:
 
 * `sending` - the message is queued to be sent by the provider.
 * `delivered` - the message was successfully delivered.
 * `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
-* `permanent-failure` - the provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list.
-* `temporary-failure` - the provider was unable to deliver message, email box was full or the phone was turned off; you can try to send the message again.
+* `permanent-failure` - the provider was unable to deliver message, email does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, email box was full; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+##### text message
+
+You can filter by:
+
+* `sending` - the message is queued to be sent by the provider.
+* `delivered` - the message was successfully delivered.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
+* `permanent-failure` - the provider was unable to deliver message, phone number does not exist; remove this recipient from your list.
+* `temporary-failure` - the provider was unable to deliver message, the phone was turned off; you can try to send the message again.
+* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+
+You can omit this argument to ignore this filter.
+
+##### letter
+
+You can filter by:
+
+* `created` - the message has been created
+* `sending` - the message is queued to be sent by the provider.
+* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
 * `technical-failure` - Notify had a technical failure; you can try to send the message again.
 
 You can omit this argument to ignore this filter.
@@ -705,13 +804,13 @@ If the request is successful, `response` will be a `dict`:
 ```python
 {
     "id": "template_id", # required
-    "type": "sms" | "email", # required
+    "type": "sms" | "email" | "letter", # required
     "created_at": "created at", # required
     "updated_at": "updated at", # required
     "version": "version", # integer required
     "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification or None if an sms message"
+    "subject": "Subject of an email or letter notification or None if an sms message"
 }
 ```
 
@@ -760,13 +859,13 @@ If the request is successful, `response` will be a `dict`:
 ```python
 {
     "id": "template_id", # required
-    "type": "sms" | "email", # required
+    "type": "sms" | "email" | "letter", # required
     "created_at": "created at", # required
     "updated_at": "updated at", # required
     "version": "version", # integer required
     "created_by": "someone@example.com", # email required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification or None if an sms message"
+    "subject": "Subject of an email or letter notification, or None if an sms message"
 }
 ```
 
@@ -819,13 +918,13 @@ If the request is successful, `response` will be a `dict`:
     "templates" : [
         {
             "id": "template_id", # required
-            "type": "sms" | "email", # required
+            "type": "sms" | "email" | "letter", # required
             "created_at": "created at", # required
             "updated_at": "updated at", # required
             "version": "version", # integer required
             "created_by": "someone@example.com", # email required
             "body": "Body of the notification", # required
-            "subject": "Subject of an email notification or None if an sms message"
+            "subject": "Subject of an email or letter notification, or None if an sms message"
         },
         {
             ... another template
@@ -863,10 +962,10 @@ If the request is successful, `response` will be a `dict`:
 ```python
 {
     "id": "notify_id", # required
-    "type": "sms" | "email", # required
+    "type": "sms" | "email" | "letter", # required
     "version": "version", # integer required
     "body": "Body of the notification", # required
-    "subject": "Subject of an email notification or None if an sms message"
+    "subject": "Subject of an email or letter notification, or None if an sms message"
 }
 ```
 
