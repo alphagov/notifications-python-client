@@ -1,5 +1,7 @@
 # GOV.UK Notify Python client
 
+This documentation is for developers interested in using this python client to integrate their government service with GOV.UK Notify.
+
 ## Installation
 
 ```shell
@@ -278,7 +280,7 @@ If a template has placeholders, you need to provide their values, for example:
 ```python
 personalisation={
     'first_name': 'Amala',
-    'reference_number': '300241',
+    'application_number': '300241',
 }
 ```
 
@@ -295,7 +297,7 @@ response = notifications_client.send_letter_notification(
       'address_line_3': 'London',
       'postcode': 'SW14 6BH',  # required
 
-      ... # any other personalisation found in your template
+      ... # any other optional address lines, or personalisation fields found in your template
     },
     reference=None
 )
@@ -421,20 +423,25 @@ You can omit this argument if you do not require a reference for the notificatio
 
 #### `personalisation`
 
-If you are sending a letter, you will need to provide the letter fields in the format `"address_line_#"`, for example:
+The letter must contain:
+
+- mandatory address fields
+- optional address fields if applicable
+- fields from template
 
 ```python
 personalisation={
-    'address_line_1': 'The Occupier',
-    'address_line_2': '123 High Street',
-    'address_line_3': 'London', # There can be up to six address_line fields
-    'postcode': 'SW14 6BH',
-    'first_name': 'Amala',
-    'reference_number': '300241',
+    'address_line_1': 'The Occupier', 		# mandatory address field
+    'address_line_2': 'Flat 2', 		# mandatory address field
+    'address_line_3': '123 High Street', 	# optional address field
+    'address_line_4': 'Richmond upon Thames', 	# optional address field
+    'address_line_5': 'London', 		# optional address field
+    'address_line_6': 'Middlesex', 		# optional address field
+    'postcode': 'SW14 6BH', 			# mandatory address field
+    'application_id': '1234', 			# field from template
+    'application_date': '2017-01-01', 		# field from template
 }
 ```
-
-The fields `"address_line_1"`, `"address_line_2"` and `"postcode"` are required. We support up to six address lines.
 
 </details>
 
@@ -609,9 +616,10 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-### Arguments
+<details>
+<summary>Arguments</summary>
 
-#### `template_type`
+### `template_type`
 
 You can filter by:
 
@@ -621,10 +629,9 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
+### `status`
 
-#### `status`
-
-##### email
+#### email
 
 You can filter by:
 
@@ -637,7 +644,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-##### text message
+#### text message
 
 You can filter by:
 
@@ -650,7 +657,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-##### letter
+#### letter
 
 You can filter by:
 
@@ -672,6 +679,8 @@ You can omit this argument to ignore the filter.
 You can get the notifications older than a given Notification.notificationId.
 
 You can omit this argument to ignore the filter.
+
+</details>
 
 ## Get the status of all messages (without pagination)
 
@@ -728,9 +737,10 @@ Otherwise the client will raise a `HTTPError`:
 </table>
 </details>
 
-### Arguments
+<details>
+<summary>Arguments</summary>
 
-#### `template_type`
+### `template_type`
 
 You can filter by:
 
@@ -740,10 +750,9 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
+### `status`
 
-#### `status`
-
-##### email
+#### email
 
 You can filter by:
 
@@ -756,7 +765,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-##### text message
+#### text message
 
 You can filter by:
 
@@ -783,6 +792,8 @@ You can omit this argument to ignore this filter.
 ### `reference`
 
 This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
+
+</details>
 
 ## Get a template by ID
 
