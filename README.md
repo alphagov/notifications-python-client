@@ -288,7 +288,7 @@ personalisation={
 
 ```python
 response = notifications_client.send_letter_notification(
-    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
+    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a',
     personalisation={
       'address_line_1': 'The Occupier',  # required
       'address_line_2': '123 High Street', # required
