@@ -466,7 +466,7 @@ If the request is successful, `response` will be a `dict`:
   "email_address": "email address",  # required for emails
   "phone_number": "phone number",  # required for sms
   "line_1": "full name of a person or company", # required for letter
-  "line_2": "123 The Street", # optional
+  "line_2": "123 The Street", # required for letter
   "line_3": "Some Area", # optional
   "line_4": "Some Town", # optional
   "line_5": "Some county", # optional
@@ -549,7 +549,7 @@ If the request is successful, `response` will be a `dict`:
       "email_address": "email address",  # required for emails
       "phone_number": "phone number",  # required for sms
       "line_1": "full name of a person or company", # required for letter
-      "line_2": "123 The Street", # optional
+      "line_2": "123 The Street", # required for letter
       "line_3": "Some Area", # optional
       "line_4": "Some Town", # optional
       "line_5": "Some county", # optional
