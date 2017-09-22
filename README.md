@@ -660,10 +660,8 @@ You can omit this argument to ignore this filter.
 
 You can filter by:
 
-* `created` - the message has been created
-* `sending` - the message is queued to be sent by the provider.
-* `failed` - this will return all failure statuses `permanent-failure`, `temporary-failure` and `technical-failure`.
-* `technical-failure` - Notify had a technical failure; you can try to send the message again.
+* `accepted` - the letter has been generated.
+* `technical-failure` - Notify had an unexpected error while sending to our printing provider
 
 You can omit this argument to ignore this filter.
 
