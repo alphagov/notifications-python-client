@@ -35,14 +35,16 @@ def send_sms_notification_test_response(python_client):
     return response['id']
 
 
-def send_email_notification_test_response(python_client):
+def send_email_notification_test_response(python_client, reply_to=None):
     email_address = os.environ['FUNCTIONAL_TEST_EMAIL']
     template_id = os.environ['EMAIL_TEMPLATE_ID']
+    email_reply_to_id = reply_to
     unique_name = str(uuid.uuid4())
     personalisation = {'name': unique_name}
     response = python_client.send_email_notification(email_address=email_address,
                                                      template_id=template_id,
-                                                     personalisation=personalisation)
+                                                     personalisation=personalisation,
+                                                     email_reply_to_id=email_reply_to_id)
     validate(response, post_email_response)
     assert unique_name in response['content']['body']  # check placeholders are replaced
     return response['id']
@@ -145,13 +147,17 @@ def test_integration():
 
     sms_template_id = os.environ['SMS_TEMPLATE_ID']
     email_template_id = os.environ['EMAIL_TEMPLATE_ID']
+    email_reply_to_id = os.environ['EMAIL_REPLY_TO_ID']
     version_number = 1
 
     sms_id = send_sms_notification_test_response(client)
     email_id = send_email_notification_test_response(client)
+    email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
+
     get_notification_by_id(client, sms_id, SMS_TYPE)
     get_notification_by_id(client, email_id, EMAIL_TYPE)
+    get_notification_by_id(client, email_with_reply_id, EMAIL_TYPE)
     get_notification_by_id(client, letter_id, EMAIL_TYPE)
 
     get_all_notifications(client)
