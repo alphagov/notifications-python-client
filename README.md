@@ -162,7 +162,8 @@ response = notifications_client.send_email_notification(
     email_address='the_email_address@example.com',
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a'
     personalisation=None,
-    reference=None
+    reference=None,
+    email_reply_to_id=None
 )
 ```
 
