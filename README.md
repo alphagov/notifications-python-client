@@ -274,6 +274,12 @@ An optional identifier you generate. The `reference` can be used as a unique ref
 
 You can omit this argument if you do not require a reference for the notification.
 
+#### `email_reply_to_id`
+
+An optional identifier that you can get from the service email_reply_to ids found  in the service settings / manage email reply to addresses page.
+
+You can omit this argument if you want to use the default service email reply to otherwise add the id from the list of email_reply_to ids associated with the service.
+
 #### `personalisation`
 
 If a template has placeholders, you need to provide their values, for example:
