@@ -45,8 +45,13 @@ def create_email_notification(notifications_client):
     personalisation = input("personalisation (as JSON):") or None
     personalisation = personalisation and json.loads(personalisation)
     reference = input("reference string for notification: ")
+    email_reply_to_id = input("email reply to id:")
     return notifications_client.send_email_notification(
-        email_address, template_id=template_id, personalisation=personalisation, reference=reference
+        email_address,
+        template_id=template_id,
+        personalisation=personalisation,
+        reference=reference,
+        email_reply_to_id=email_reply_to_id
     )
 
 

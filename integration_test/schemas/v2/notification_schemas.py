@@ -128,6 +128,7 @@ post_email_request = {
         "reference": {"type": "string"},
         "email_address": {"type": "string", "format": "email_address"},
         "template_id": uuid,
+        "email_reply_to_id": uuid,
         "personalisation": personalisation
     },
     "required": ["email_address", "template_id"]

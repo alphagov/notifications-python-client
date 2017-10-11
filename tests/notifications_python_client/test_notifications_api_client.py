@@ -148,6 +148,22 @@ def test_create_email_notification(notifications_client, rmock):
     }
 
 
+def test_create_email_notification_with_email_reply_to_id(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_email_notification(
+        email_address="to@example.com", template_id="456", email_reply_to_id="789")
+
+    assert rmock.last_request.json() == {
+        'template_id': '456', 'email_address': 'to@example.com', 'email_reply_to_id': '789'
+    }
+
+
 def test_create_email_notification_with_personalisation(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
     rmock.request(
