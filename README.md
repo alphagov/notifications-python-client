@@ -276,9 +276,9 @@ You can omit this argument if you do not require a reference for the notificatio
 
 #### `email_reply_to_id`
 
-An optional identifier that you can get from the service email_reply_to ids found  in the service settings / manage email reply to addresses page.
+Optional. Specifies the identifier of the email reply-to address to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Email reply to addresses'. 
 
-You can omit this argument if you want to use the default service email reply to otherwise add the id from the list of email_reply_to ids associated with the service.
+If you omit this argument your default email reply-to address will be set for the notification.
 
 #### `personalisation`
 
