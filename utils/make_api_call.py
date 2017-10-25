@@ -1,7 +1,14 @@
 """
 
 Usage:
-    utils/make_api_call.py <base_url> <secret> <call>
+    utils/make_api_call.py <base_url> <secret> <call> [options]
+
+Options:
+    --type=<sms>
+    --to=<07123456789>
+    --template=<4051caf5-3c65-4dd3-82d7-31c8c8e82e27>
+    --personalisation=<{}>
+    --reference=<''>
 
 Example:
     ./make_api_call.py http://api my_service super_secret \
@@ -16,35 +23,36 @@ from pprint import pprint
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
-def create_notification(notifications_client):
-    notification_type = input("enter type email|sms|letter: ")
+def create_notification(notifications_client, **kwargs):
+    notification_type = kwargs['--type'] or input("enter type email|sms|letter: ")
+
     if notification_type == 'sms':
-        return create_sms_notification(notifications_client)
+        return create_sms_notification(notifications_client, **kwargs)
     if notification_type == 'email':
-        return create_email_notification(notifications_client)
+        return create_email_notification(notifications_client, **kwargs)
     if notification_type == 'letter':
-        return create_letter_notification(notifications_client)
+        return create_letter_notification(notifications_client, **kwargs)
     print("Invalid type: {}, exiting".format(notification_type))
     sys.exit(1)
 
 
-def create_sms_notification(notifications_client):
-    mobile_number = input("enter number (+441234123123): ")
-    template_id = input("template id: ")
-    personalisation = input("personalisation (JSON string):")
+def create_sms_notification(notifications_client, **kwargs):
+    mobile_number = kwargs['--to'] or input("enter number (+441234123123): ")
+    template_id = kwargs['--template'] or input("template id: ")
+    personalisation = kwargs['--personalisation'] or input("personalisation (JSON string):")
     personalisation = personalisation and json.loads(personalisation)
-    reference = input("reference string for notification: ")
+    reference = kwargs['--reference'] if kwargs['--reference'] is not None else input("reference string for notification: ")  # noqa
     return notifications_client.send_sms_notification(
         mobile_number, template_id=template_id, personalisation=personalisation, reference=reference
     )
 
 
-def create_email_notification(notifications_client):
-    email_address = input("enter email: ")
-    template_id = input("template id: ")
-    personalisation = input("personalisation (as JSON):") or None
+def create_email_notification(notifications_client, **kwargs):
+    email_address = kwargs['--to'] or input("enter email: ")
+    template_id = kwargs['--template'] or input("template id: ")
+    personalisation = kwargs['--personalisation'] or input("personalisation (as JSON):") or None
     personalisation = personalisation and json.loads(personalisation)
-    reference = input("reference string for notification: ")
+    reference = kwargs['--reference'] if kwargs['--reference'] is not None else input("reference string for notification: ")  # noqa
     email_reply_to_id = input("email reply to id:")
     return notifications_client.send_email_notification(
         email_address,
@@ -55,10 +63,10 @@ def create_email_notification(notifications_client):
     )
 
 
-def create_letter_notification(notifications_client):
-    template_id = input("template id: ")
-    personalisation = json.loads(input("personalisation (as JSON):"))
-    reference = input("reference string for notification: ")
+def create_letter_notification(notifications_client, **kwargs):
+    template_id = kwargs['--template'] or input("template id: ")
+    personalisation = json.loads(kwargs['--personalisation'] or input("personalisation (as JSON):"))
+    reference = kwargs['--reference'] if kwargs['--reference'] is not None else input("reference string for notification: ")  # noqa
     return notifications_client.send_letter_notification(
         template_id=template_id, personalisation=personalisation, reference=reference
     )
@@ -132,7 +140,8 @@ if __name__ == "__main__":
 
     if arguments['<call>'] == 'create':
         pprint(create_notification(
-            notifications_client=client
+            notifications_client=client,
+            **{k: arguments[k] for k in arguments if k.startswith('--')}
         ))
 
     if arguments['<call>'] == 'fetch':
