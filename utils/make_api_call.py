@@ -9,6 +9,7 @@ Options:
     --template=<4051caf5-3c65-4dd3-82d7-31c8c8e82e27>
     --personalisation=<{}>
     --reference=<''>
+    --sms_sender_id=<''>
 
 Example:
     ./make_api_call.py http://api my_service super_secret \
@@ -42,8 +43,13 @@ def create_sms_notification(notifications_client, **kwargs):
     personalisation = kwargs['--personalisation'] or input("personalisation (JSON string):")
     personalisation = personalisation and json.loads(personalisation)
     reference = kwargs['--reference'] if kwargs['--reference'] is not None else input("reference string for notification: ")  # noqa
+    sms_sender_id = kwargs['--sms_sender_id'] or input("sms sender id: ")
     return notifications_client.send_sms_notification(
-        mobile_number, template_id=template_id, personalisation=personalisation, reference=reference
+        mobile_number,
+        template_id=template_id,
+        personalisation=personalisation,
+        reference=reference,
+        sms_sender_id=sms_sender_id,
     )
 
 
