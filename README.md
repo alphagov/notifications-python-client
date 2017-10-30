@@ -29,7 +29,8 @@ response = notifications_client.send_sms_notification(
     phone_number='+447900900123',
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a',
     personalisation=None,
-    reference=None
+    reference=None,
+    sms_sender_id=None
 )
 ```
 <details>
@@ -152,6 +153,12 @@ personalisation={
     'reference_number': '300241',
 }
 ```
+
+#### `sms_sender_id`
+
+Optional. Specifies the identifier of the sms sender to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Text message sender'.
+
+If you omit this argument your default sms sender will be set for the notification.
 
 </details>
 

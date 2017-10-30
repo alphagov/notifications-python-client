@@ -1,3 +1,10 @@
+## 4.6.0
+
+### Changed
+
+* Update to `NotificationsAPIClient.send_sms_notification()`
+    * added `sms_sender_id`: an optional `sms_sender_id` specified when adding SMS senders under service settings. If this is not provided, the SMS sender will be the service default SMS sender. `sms_sender_id` can be omitted.
+
 ## 4.5.0
 
 * Update to `NotificationsAPIClient.send_email_notification()`
