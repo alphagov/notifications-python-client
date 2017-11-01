@@ -100,11 +100,6 @@ def get_all_notifications(notifications_client):
                                                       reference=reference, older_than=older_than)
 
 
-def get_notification_statistics_for_day(notifications_client):
-    day = input("Day: ")
-    return notifications_client.get_notification_statistics_for_day(day)
-
-
 def preview_template(notifications_client):
     template_id = input("Template id: ")
     return notifications_client.get_template_preview(template_id)
@@ -158,11 +153,6 @@ if __name__ == "__main__":
         pprint(list(get_all_notifications_generator(
             notifications_client=client
         )))
-
-    if arguments['<call>'] == 'statistics':
-        pprint(get_notification_statistics_for_day(
-            notifications_client=client
-        ))
 
     if arguments['<call>'] == 'preview':
         pprint(preview_template(notifications_client=client))
