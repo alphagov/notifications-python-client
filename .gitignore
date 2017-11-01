@@ -59,6 +59,7 @@ docs/_build/
 target/
 
 .idea/
+.DS_Store
 
 environment.sh
 docker.env

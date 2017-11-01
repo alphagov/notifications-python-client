@@ -89,15 +89,6 @@ class NotificationsAPIClient(BaseAPIClient):
             result = self.get_all_notifications(status, template_type, reference, notification_id)
             notifications = result.get('notifications')
 
-    def get_notification_statistics_for_day(self, day=None):
-        data = {}
-        if day:
-            data.update({'day': day})
-        return self.get(
-            '/notifications/statistics',
-            params=data
-        )
-
     def post_template_preview(self, template_id, personalisation):
         template = {
             "personalisation": personalisation
