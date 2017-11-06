@@ -151,6 +151,12 @@ def test_integration():
     sms_sender_id = os.environ['SMS_SENDER_ID']
     email_template_id = os.environ['EMAIL_TEMPLATE_ID']
     email_reply_to_id = os.environ['EMAIL_REPLY_TO_ID']
+
+    assert sms_template_id
+    assert sms_sender_id
+    assert email_template_id
+    assert email_reply_to_id
+
     version_number = 1
 
     sms_id = send_sms_notification_test_response(client)
@@ -179,6 +185,7 @@ def test_integration():
     get_all_templates_for_type(client, SMS_TYPE)
 
     print("notifications-python-client integration tests are successful")
+
 
 if __name__ == "__main__":
     test_integration()
