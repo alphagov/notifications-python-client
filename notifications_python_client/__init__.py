@@ -15,7 +15,7 @@ standard_library.install_aliases()
 #
 # -- http://semver.org/
 
-__version__ = '4.5.1'
+__version__ = '4.6.0'
 
 from notifications_python_client.errors import REQUEST_ERROR_STATUS_CODE, REQUEST_ERROR_MESSAGE
 

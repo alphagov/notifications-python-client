@@ -132,6 +132,23 @@ def test_create_sms_notification_with_personalisation(notifications_client, rmoc
     }
 
 
+def test_create_sms_notification_with_sms_sender_id(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_sms_notification(
+        phone_number="07700 900000", template_id="456", sms_sender_id="789"
+    )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456', 'phone_number': '07700 900000', 'sms_sender_id': '789'
+    }
+
+
 def test_create_email_notification(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
     rmock.request(

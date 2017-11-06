@@ -87,6 +87,7 @@ post_sms_request = {
         "reference": {"type": "string"},
         "phone_number": {"type": "string", "format": "phone_number"},
         "template_id": uuid,
+        "sms_sender_id": uuid,
         "personalisation": personalisation
     },
     "required": ["phone_number", "template_id"]

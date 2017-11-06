@@ -22,14 +22,16 @@ def validate(json_to_validate, schema):
     validator.validate(json_to_validate, schema)
 
 
-def send_sms_notification_test_response(python_client):
+def send_sms_notification_test_response(python_client, sender_id=None):
     mobile_number = os.environ['FUNCTIONAL_TEST_NUMBER']
     template_id = os.environ['SMS_TEMPLATE_ID']
     unique_name = str(uuid.uuid4())
     personalisation = {'name': unique_name}
+    sms_sender_id = sender_id
     response = python_client.send_sms_notification(phone_number=mobile_number,
                                                    template_id=template_id,
-                                                   personalisation=personalisation)
+                                                   personalisation=personalisation,
+                                                   sms_sender_id=sms_sender_id)
     validate(response, post_sms_response)
     assert unique_name in response['content']['body']  # check placeholders are replaced
     return response['id']
@@ -146,16 +148,19 @@ def test_integration():
     )
 
     sms_template_id = os.environ['SMS_TEMPLATE_ID']
+    sms_sender_id = os.environ['SMS_SENDER_ID']
     email_template_id = os.environ['EMAIL_TEMPLATE_ID']
     email_reply_to_id = os.environ['EMAIL_REPLY_TO_ID']
     version_number = 1
 
     sms_id = send_sms_notification_test_response(client)
+    sms_with_sender_id = send_sms_notification_test_response(client, sms_sender_id)
     email_id = send_email_notification_test_response(client)
     email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
 
     get_notification_by_id(client, sms_id, SMS_TYPE)
+    get_notification_by_id(client, sms_with_sender_id, SMS_TYPE)
     get_notification_by_id(client, email_id, EMAIL_TYPE)
     get_notification_by_id(client, email_with_reply_id, EMAIL_TYPE)
     get_notification_by_id(client, letter_id, EMAIL_TYPE)
