@@ -526,7 +526,7 @@ __letter__
 
 You can filter by:
 
-* `accepted` - the letter has been generated.
+* `accepted` -  Notify is in the process of printing and posting the letter
 * `technical-failure` - Notify had an unexpected error while sending to our printing provider
 
 You can omit this argument to ignore this filter.
