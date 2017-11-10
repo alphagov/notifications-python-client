@@ -2,6 +2,19 @@
 
 This documentation is for developers interested in using this python client to integrate their government service with GOV.UK Notify.
 
+## Table of Contents
+
+* [Installation](#installation)
+* [Getting started](#getting-started)
+* [Send messages](#send-messages)
+* [Get the status of one message](#get-the-status-of-one-message)
+* [Get the status of all messages with pagination](#get-the-status-of-all-messages-with-pagination)
+* [Get the status of all messages without pagination](#get-the-status-of-all-messages-without-pagination)
+* [Get a template by ID](#get-a-template-by-id)
+* [Get a template by ID and version](#get-a-template-by-id-and-version)
+* [Get all templates](#get-all-templates)
+* [Generate a preview template](#generate-a-preview-template)
+
 ## Installation
 
 ```shell
@@ -24,21 +37,31 @@ the **API integration** page.
 
 ### Text message
 
+#### Method 
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
 ```python
 response = notifications_client.send_sms_notification(
     phone_number='+447900900123',
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a',
     personalisation=None,
-    reference=None,
+    reference=None
     sms_sender_id=None
 )
 ```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -58,92 +81,40 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "RateLimitError",
-    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "TooManyRequestsError",
-    "message": "Exceeded send limits (50) for today"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Can"t send to this recipient using a team-only API key"
-]}
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode
-                - see https://www.notifications.service.gov.uk/trial-mode"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"`<br>`}]`|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|
+
 </details>
+
+#### Arguments
 
 <details>
 <summary>
-Arguments
+Click here to expand for more information.
 </summary>
 
-#### `phone_number`
+##### `phone_number`
 
 The phone number of the recipient, only required for sms notifications.
 
-#### `template_id`
+##### `template_id`
 
 Find by clicking **API info** for the template you want to send.
 
-#### `reference`
+##### `reference`
 
 An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
 
 You can omit this argument if you do not require a reference for the notification.
 
 
-#### `personalisation`
+##### `personalisation`
 
 If a template has placeholders, you need to provide their values, for example:
 
@@ -153,8 +124,7 @@ personalisation={
     'reference_number': '300241',
 }
 ```
-
-#### `sms_sender_id`
+##### `sms_sender_id`
 
 Optional. Specifies the identifier of the sms sender to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Text message sender'.
 
@@ -163,6 +133,13 @@ If you omit this argument your default sms sender will be set for the notificati
 </details>
 
 ### Email
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
 
 ```python
 response = notifications_client.send_email_notification(
@@ -173,13 +150,16 @@ response = notifications_client.send_email_notification(
     email_reply_to_id=None
 )
 ```
+</details>
 
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -200,94 +180,35 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "RateLimitError",
-    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "TooManyRequestsError",
-    "message": "Exceeded send limits (50) for today"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Can"t send to this recipient using a team-only API key"
-]}
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode
-                - see https://www.notifications.service.gov.uk/trial-mode"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"`<br>`}]`|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|
+
 </details>
 
-<details>
-<summary>Arguments</summary>
+#### Arguments
 
-#### `email_address`
+<details>
+<summary>Click here to expand for more information</summary>
+
+##### `email_address`
 The email address of the recipient, only required for email notifications.
 
-#### `template_id`
+##### `template_id`
 
 Find by clicking **API info** for the template you want to send.
 
-#### `reference`
-
-An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
-
-You can omit this argument if you do not require a reference for the notification.
-
-#### `email_reply_to_id`
+##### `reference`
 
 Optional. Specifies the identifier of the email reply-to address to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Email reply to addresses'. 
 
 If you omit this argument your default email reply-to address will be set for the notification.
 
-#### `personalisation`
+##### `personalisation`
 
 If a template has placeholders, you need to provide their values, for example:
 
@@ -298,9 +219,22 @@ personalisation={
 }
 ```
 
+##### `email_reply_to_id`
+
+An optional identifier that you can get from the service email_reply_to ids found  in the service settings / manage email reply to addresses page.
+
+You can omit this argument if you want to use the default service email reply to otherwise add the id from the list of email_reply_to ids associated with the service.
+
 </details>
 
 ### Letter
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
 
 ```python
 response = notifications_client.send_letter_notification(
@@ -316,13 +250,15 @@ response = notifications_client.send_letter_notification(
     reference=None
 )
 ```
+</details>
 
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -343,98 +279,33 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "RateLimitError",
-    "message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>429</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "TooManyRequestsError",
-    "message": "Exceeded send limits (50) for today"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Cannot send letters with a team api key"
-]}
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Cannot send letters when service is in trial mode"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "ValidationError",
-    "message": "personalisation address_line_1 is a required property"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"`<br>`}]`|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|
+
 </details>
 
+#### Arguments
+
 <details>
-<summary>Arguments</summary>
+<summary>Click here to expand for more information.</summary>
 
-
-#### `template_id`
+##### `template_id`
 
 Find by clicking **API info** for the template you want to send.
 
-#### `reference`
+##### `reference`
 
 An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
 
 You can omit this argument if you do not require a reference for the notification.
 
-#### `personalisation`
+##### `personalisation`
 
 The letter must contain:
 
@@ -461,16 +332,26 @@ personalisation={
 
 ## Get the status of one message
 
-```python
-response = notifications_client.get_notification_by_id(notification_id)
-```
+#### Method
 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
-If the request is successful, `response` will be a `dict`:
+```python
+response = notifications_client.get_notification_by_id(notification_id)
+```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
 
 ```python
 {
@@ -501,57 +382,54 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>404</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "NoResultFound",
-    "message": "No result found"
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "ValidationError",
-    "message": "id is not a valid UUID"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|
+
 </details>
 
-## Get the status of all messages (with pagination)
+#### Arguments
 
-_This will return one page of notifications (250) per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated._
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+##### `notification_id`
+
+The ID of the notification.
+
+</details>
+
+## Get the status of all messages with pagination
+
+#### Method
+
+This will return one page of notifications (250) per call. Use the `get_all_notifications_iterator` to retrieve all notifications unpaginated. 
+<details>
+
+<summary>
+Click here to expand for more information.
+</summary>
+
 
 ```python
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
 ```
+
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
-If the request is successful, `response` will be a `dict`:
+
 
 ```python
 {"notifications":
@@ -591,48 +469,22 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    'error': 'ValidationError',
-    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "ValidationError",
-    "message": "Apple is not one of [sms, email, letter]"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|
+
+
 </details>
 
-<details>
-<summary>Arguments</summary>
 
-### `template_type`
+#### Arguments
+
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_type`
 
 You can filter by:
 
@@ -642,9 +494,9 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-### `status`
+##### `status`
 
-#### email
+__email__
 
 You can filter by:
 
@@ -657,7 +509,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-#### text message
+__text message__
 
 You can filter by:
 
@@ -670,7 +522,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-#### letter
+__letter__
 
 You can filter by:
 
@@ -679,13 +531,13 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-### `reference`
+##### `reference`
 
 This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
 
 You can omit this argument to ignore the filter.
 
-### `olderThanId`
+##### `older_than`
 
 You can get the notifications older than a given Notification.notificationId.
 
@@ -693,65 +545,47 @@ You can omit this argument to ignore the filter.
 
 </details>
 
-## Get the status of all messages (without pagination)
+## Get the status of all messages without pagination
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
 
 ```python
 response = get_all_notifications_iterator(status="sending")
 ```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `<generator object>` that will yield all messages. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `<generator object>` that will yield all messages:
 
 ```python
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    'error': 'ValidationError',
-    'message': 'bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]'
-}]
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "ValidationError",
-    "message": "Apple is not one of [sms, email, letter]"
-}]
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|
+
 </details>
 
-<details>
-<summary>Arguments</summary>
+#### Arguments
 
-### `template_type`
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_type`
 
 You can filter by:
 
@@ -761,9 +595,9 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-### `status`
+##### `status`
 
-#### email
+__email__
 
 You can filter by:
 
@@ -776,7 +610,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-#### text message
+__text message__
 
 You can filter by:
 
@@ -789,7 +623,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-#### letter
+__letter__
 
 You can filter by:
 
@@ -798,7 +632,7 @@ You can filter by:
 
 You can omit this argument to ignore this filter.
 
-### `reference`
+##### `reference`
 
 This is the `reference` you gave at the time of sending the notification. The `reference` can be a unique identifier for the notification or an identifier for a batch of notifications.
 
@@ -806,20 +640,31 @@ This is the `reference` you gave at the time of sending the notification. The `r
 
 ## Get a template by ID
 
-_This will return the latest version of the template. Use [get_template_version](#get-a-template-by-id-and-version) to retrieve a specific template version_
+#### Method 
+
+This will return the latest version of the template. Use [get_template_version](#get-a-template-by-id-and-version) to retrieve a specific template version. 
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
 
 ```python
 response = notifications_client.get_template(
     'template_id'
 )
 ```
+</details>
 
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -835,32 +680,33 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>404</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "NoResultFound",
-    "message": "No result found"
-]}
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|
+
 </details>
 
+#### Arguments
+
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+</details>
+
+
 ## Get a template by ID and version
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
 
 ```python
 response = notifications_client.get_template_version(
@@ -868,13 +714,15 @@ response = notifications_client.get_template_version(
     1   # integer required for version number
 )
 ```
+</details>
 
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -890,48 +738,56 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>404</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "NoResultFound",
-    "message": "No result found"
-]}
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|
+
+</details>
+
+#### Arguments
+
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+##### `version`
+
+The version number of the template.
+
 </details>
 
 ## Get all templates
+
+#### Method
+
+This will return the latest version for each template. 
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
 
 ```python
 response = notifications_client.get_all_templates(
     template_type=None # optional
 )
 ```
-_This will return the latest version for each template_
 
 [See available template types](#template_type)
 
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -963,7 +819,30 @@ If no templates exist for a template type or there no templates for a service, t
 
 </details>
 
+#### Arguments
+
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_type`
+
+If omitted all messages are returned. Otherwise you can filter by:
+
+- `email`
+- `sms`
+- `letter`
+
+</details>
+
 ## Generate a preview template
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
 
 ```
 response = notifications_client.post_template_preview(
@@ -972,12 +851,16 @@ response = notifications_client.post_template_preview(
 )
 ```
 
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`. 
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -990,40 +873,32 @@ If the request is successful, `response` will be a `dict`:
 ```
 
 Otherwise the client will raise a `HTTPError`:
-<table>
-<thead>
-<tr>
-<th>`error.status_code`</th>
-<th>`error.message`</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<pre>400</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "BadRequestError",
-    "message": "Missing personalisation: [name]"
-]}
-</pre>
-</td>
-</tr>
-<tr>
-<td>
-<pre>404</pre>
-</td>
-<td>
-<pre>
-[{
-    "error": "NoResultFound",
-    "message": "No result found"
-]}
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+|`error.status_code`|`error.message`|
+|:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [name]"`<br>`}]`|
+|`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|
+
+</details>
+
+#### Arguments
+
+<details>
+<summary>Click here to expand for more information.</summary>
+
+##### `template_id`
+
+Find by clicking **API info** for the template you want to send.
+
+##### `personalisation`
+
+If a template has placeholders, you need to provide their values, for example:
+
+```python
+personalisation={
+    'first_name': 'Amala',
+    'reference_number': '300241',
+}
+```
+
 </details>
