@@ -3,6 +3,7 @@ import uuid
 
 from jsonschema import Draft4Validator
 
+from integration_test.schemas.v2.inbound_sms_schemas import get_inbound_sms_response
 from integration_test.schemas.v2.notification_schemas import (
     post_sms_response,
     post_email_response,
@@ -77,6 +78,16 @@ def get_notification_by_id(python_client, id, notification_type):
         validate(response, get_notification_response)
     else:
         raise KeyError("notification type should be email|sms")
+
+
+def get_received_text_messages():
+    client = NotificationsAPIClient(
+        base_url=os.environ['NOTIFY_API_URL'],
+        api_key=os.environ['INBOUND_SMS_QUERY_KEY']
+    )
+
+    response = client.get_received_texts()
+    validate(response, get_inbound_sms_response)
 
 
 def get_all_notifications(client):
@@ -183,6 +194,8 @@ def test_integration():
     get_all_templates(client)
     get_all_templates_for_type(client, EMAIL_TYPE)
     get_all_templates_for_type(client, SMS_TYPE)
+
+    get_received_text_messages()
 
     print("notifications-python-client integration tests are successful")
 
