@@ -446,8 +446,8 @@ Click here to expand for more information.
       "line_5": "Some county", # optional
       "line_6": "Something else", # optional
       "postcode": "postcode", # required for letter
-      "type": "sms | letter | email", # required
-      "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+      "type": "sms" | "letter" | "email", # required
+      "status": "sending" | "delivered" | "permanent-failure" | "temporary-failure" | "technical-failure" # required
       "template": {
         "version": 1 # template version num # required
         "id": 1 # template id # required
@@ -456,8 +456,8 @@ Click here to expand for more information.
       "body": "Body of the notification",
       "subject": "Subject of an email notification or None if an sms message"
       "created_at": "created at", # required
-      "sent_at": " sent to provider at", # optional
-      "completed_at:" "date the notification is delivered or failed" # optional
+      "sent_at": "sent to provider at", # optional
+      "completed_at": "date the notification is delivered or failed" # optional
     },
     …
   ],
@@ -539,9 +539,7 @@ You can omit this argument to ignore the filter.
 
 ##### `older_than`
 
-You can get the notifications older than a given Notification.notificationId.
-
-You can omit this argument to ignore the filter.
+If omitted all notifications are returned. Otherwise you can filter to retrieve all received text messages older than the given Notification.notificationId.
 
 </details>
 
@@ -900,5 +898,54 @@ personalisation={
     'reference_number': '300241',
 }
 ```
+
+</details>
+
+## Get all received text messages
+
+```python
+
+response = client.get_received_texts(older_than)
+
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+  "received_text_messages":
+  [
+    {
+      "id": "notify_id", # required
+      "user_number": "user number", # required user number
+      "notify_number": "notify number", # receiving number 
+      "created_at": "created at", # required
+      "service_id": "service id", # required service id
+      "content": "text content" # required text content
+    },
+    …
+  ],
+  "links": {
+    "current": "/received-text-messages",
+    "next": "/received-text-messages?other_than=last_id_in_list"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>
+Arguments
+</summary>
+	
+#### `older_than`
+
+If omitted all messages are returned. Otherwise you can filter to retrieve all received text messages older than the given id.
 
 </details>
