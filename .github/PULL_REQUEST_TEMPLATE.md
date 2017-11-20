@@ -10,3 +10,6 @@
 - [ ] I’ve written unit tests for these changes
 - [ ] I’ve update the documentation (in `README.md`)
 - [ ] I’ve bumped the version number (in `notifications_python_client/__init__.py`)
+- [ ] I've added new environment variables 
+  - in `notifications-python-client/scripts/generate_docker_env.sh`
+  - and `notifications-python-client/tox.ini`
