@@ -4,6 +4,8 @@
     * an optional `older_than` argument can be specified to retrieve all received text older than the last
     received text id. If omitted up to 250, the api limit, received texts will be returned, with links indicating
     how to retrieve the next page of results.
+* Update to `NotificationsAPIClient.send_sms_notification()`
+    * updated sending for SMS select sender id test in order to send to an inbound number using a whitelist API key.
 
 ## 4.6.0
 
