@@ -40,7 +40,7 @@ Additionally code coverage is checked via `pytest-cov`.
 
 ## Integration tests
 
-Before running tests please ensure that the environment variables are set up for the integration test project.
+Before running tests please ensure that the environment variables are set up for the integration test.
 
 ```
 NOTIFY_API_URL "https://example.notify-api.url"
@@ -52,7 +52,7 @@ SMS_TEMPLATE_ID "valid sms_template_id"
 LETTER_TEMPLATE_ID "valid letter_template_id"
 SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a valid number"
 API_SENDING_KEY "API_whitelist_key for sending an SMS to a receiving number"
-INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
+INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages - leave blank for local development as cannot test locally"
 ```
 
 The `./scripts/run_integration_tests.py` script will run the integration tests.

@@ -901,20 +901,30 @@ personalisation={
 
 </details>
 
-## Get all received text messages
+## Get received text messages with pagination
+
+This will return one page of text messages (250) per call. Use the `get_received_texts_iterator` to retrieve all received texts unpaginated. 
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
 
 ```python
 
 response = client.get_received_texts(older_than)
 
 ```
+</details>
 
+#### Response
+
+If the request is successful, `response` will be a `dict`.
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
-
-If the request is successful, `response` will be a `dict`:
 
 ```python
 {
@@ -939,13 +949,42 @@ If the request is successful, `response` will be a `dict`:
 
 </details>
 
+#### Arguments
+
 <details>
 <summary>
-Arguments
+Click here to expand for more information.
 </summary>
 	
 #### `older_than`
 
 If omitted all messages are returned. Otherwise you can filter to retrieve all received text messages older than the given id.
 
+</details>
+
+## Get received text messages without pagination
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+response = get_received_texts_iterator()
+```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `<generator object>` that will yield all received texts. 
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+<generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
+```
 </details>
