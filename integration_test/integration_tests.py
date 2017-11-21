@@ -200,7 +200,8 @@ def test_integration():
     get_all_templates_for_type(client, EMAIL_TYPE)
     get_all_templates_for_type(client, SMS_TYPE)
 
-    get_received_text_messages()
+    if (os.environ['INBOUND_SMS_QUERY_KEY']):
+        get_received_text_messages()
 
     print("notifications-python-client integration tests are successful")
 
