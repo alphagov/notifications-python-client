@@ -539,7 +539,7 @@ You can omit this argument to ignore the filter.
 
 ##### `older_than`
 
-If omitted all notifications are returned. Otherwise you can filter to retrieve all received text messages older than the given Notification.notificationId.
+If omitted first 250 notifications are returned. Otherwise you can filter to retrieve the next 250 notifications older than the given Notification.notificationId.
 
 </details>
 
@@ -958,7 +958,7 @@ Click here to expand for more information.
 	
 #### `older_than`
 
-If omitted all messages are returned. Otherwise you can filter to retrieve all received text messages older than the given id.
+If omitted first 250 received text messages are returned. Otherwise the next 250 received text messages older than the given id are returned.
 
 </details>
 

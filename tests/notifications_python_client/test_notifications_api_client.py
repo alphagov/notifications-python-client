@@ -52,7 +52,7 @@ def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_
         json={"status": "success"},
         status_code=200)
 
-    list(notifications_client.get_received_texts())
+    list(notifications_client.get_received_texts_iterator())
     assert rmock.called
 
 

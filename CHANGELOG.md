@@ -2,12 +2,9 @@
 
 * Added `NotificationsAPIClient.get_received_texts()`
     * an optional `older_than` argument can be specified to retrieve all received texts older than the last
-    received text id. If omitted up to 250, the api limit, received texts will be returned, with links indicating
-    how to retrieve the next page of results.
+    received text id. If omitted the first 250, the api limit, received texts will be returned, with links indicating how to retrieve the next page of results.
 * Added `NotificationsAPIClient.get_received_texts_iterator()`
     * returns all received texts by a generator object.
-* Update to `NotificationsAPIClient.send_sms_notification()`
-    * updated sending for SMS select sender id test in order to send to an inbound number using a whitelist API key.
 
 ## 4.6.0
 
