@@ -1,3 +1,11 @@
+## 4.7.0
+
+* Added `NotificationsAPIClient.get_received_texts()`
+    * an optional `older_than` argument can be specified to retrieve all received texts older than the last
+    received text id. If omitted the first 250, the api limit, received texts will be returned, with links indicating how to retrieve the next page of results.
+* Added `NotificationsAPIClient.get_received_texts_iterator()`
+    * returns all received texts by a generator object.
+
 ## 4.6.0
 
 ### Changed

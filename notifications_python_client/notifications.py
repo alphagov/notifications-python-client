@@ -69,6 +69,26 @@ class NotificationsAPIClient(BaseAPIClient):
             data=notification
         )
 
+    def get_received_texts(self, older_than=None):
+        if older_than:
+            query_string = '?older_than={}'.format(older_than)
+        else:
+            query_string = ''
+
+        return self.get('/v2/received-text-messages{}'.format(query_string))
+
+    def get_received_texts_iterator(self, older_than=None):
+        result = self.get_received_texts(older_than=older_than)
+        received_texts = result.get('received_text_messages')
+        while received_texts:
+            for received_text in received_texts:
+                yield received_text
+            next_link = result['links'].get('next')
+            received_text_id = re.search(
+                "[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
+            result = self.get_received_texts_iterator(older_than=received_text_id)
+            received_texts = result.get('received_text_messages')
+
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
 

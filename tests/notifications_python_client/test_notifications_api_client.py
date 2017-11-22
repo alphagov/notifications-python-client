@@ -20,6 +20,42 @@ def test_get_notification_by_id(notifications_client, rmock):
     assert rmock.called
 
 
+def test_get_received_texts(notifications_client, rmock):
+    endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_received_texts()
+    assert rmock.called
+
+
+def test_get_received_texts_older_than(notifications_client, rmock):
+    endpoint = "{0}/v2/received-text-messages?older_than={1}".format(TEST_HOST, "older_id")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_received_texts(older_than="older_id")
+    assert rmock.called
+
+
+def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_client, rmock):
+    endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    list(notifications_client.get_received_texts_iterator())
+    assert rmock.called
+
+
 def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?status={1}&template_type={2}".format(TEST_HOST, "status", "type")
     rmock.request(

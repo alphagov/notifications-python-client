@@ -446,8 +446,8 @@ Click here to expand for more information.
       "line_5": "Some county", # optional
       "line_6": "Something else", # optional
       "postcode": "postcode", # required for letter
-      "type": "sms | letter | email", # required
-      "status": sending | delivered | permanent-failure | temporary-failure | technical-failure # required
+      "type": "sms" | "letter" | "email", # required
+      "status": "sending" | "delivered" | "permanent-failure" | "temporary-failure" | "technical-failure" # required
       "template": {
         "version": 1 # template version num # required
         "id": 1 # template id # required
@@ -456,8 +456,8 @@ Click here to expand for more information.
       "body": "Body of the notification",
       "subject": "Subject of an email notification or None if an sms message"
       "created_at": "created at", # required
-      "sent_at": " sent to provider at", # optional
-      "completed_at:" "date the notification is delivered or failed" # optional
+      "sent_at": "sent to provider at", # optional
+      "completed_at": "date the notification is delivered or failed" # optional
     },
     …
   ],
@@ -539,9 +539,7 @@ You can omit this argument to ignore the filter.
 
 ##### `older_than`
 
-You can get the notifications older than a given Notification.notificationId.
-
-You can omit this argument to ignore the filter.
+If omitted first 250 notifications are returned. Otherwise you can filter to retrieve the next 250 notifications older than the given Notification.notificationId.
 
 </details>
 
@@ -901,4 +899,92 @@ personalisation={
 }
 ```
 
+</details>
+
+## Get received text messages with pagination
+
+This will return one page of text messages (250) per call. Use the `get_received_texts_iterator` to retrieve all received texts unpaginated. 
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+
+response = client.get_received_texts(older_than)
+
+```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `dict`.
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+{
+  "received_text_messages":
+  [
+    {
+      "id": "notify_id", # required
+      "user_number": "user number", # required user number
+      "notify_number": "notify number", # receiving number 
+      "created_at": "created at", # required
+      "service_id": "service id", # required service id
+      "content": "text content" # required text content
+    },
+    …
+  ],
+  "links": {
+    "current": "/received-text-messages",
+    "next": "/received-text-messages?other_than=last_id_in_list"
+  }
+}
+```
+
+</details>
+
+#### Arguments
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+	
+#### `older_than`
+
+If omitted first 250 received text messages are returned. Otherwise the next 250 received text messages older than the given id are returned.
+
+</details>
+
+## Get received text messages without pagination
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+response = get_received_texts_iterator()
+```
+</details>
+
+#### Response
+
+If the request is successful, `response` will be a `<generator object>` that will yield all received texts. 
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```python
+<generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
+```
 </details>
