@@ -905,7 +905,7 @@ personalisation={
 
 ## Get received text messages with pagination
 
-This will return one page of the latest received text messages (250) per call. Use the `get_received_texts_iterator` to retrieve all received texts unpaginated. 
+This will return 250 of the most recently received text messages. Use the `get_received_texts_iterator` to retrieve all received texts unpaginated. 
 #### Method
 
 <details>
@@ -960,7 +960,7 @@ Click here to expand for more information.
 	
 #### `older_than`
 
-If omitted 250 of the latest received text messages are returned. Otherwise the next 250 received text messages older than the given id are returned.
+If omitted 250 of the most recently received text messages are returned. Otherwise the next 250 received text messages older than the given id are returned.
 
 </details>
 
