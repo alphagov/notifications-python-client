@@ -1,6 +1,6 @@
 # GOV.UK Notify Python client
 
-This documentation is for developers interested in using this python client to integrate their government service with GOV.UK Notify.
+This documentation is for developers interested in using this Python client to integrate their government service with GOV.UK Notify.
 
 ## Table of Contents
 
