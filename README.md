@@ -14,6 +14,8 @@ This documentation is for developers interested in using this Python client to i
 * [Get a template by ID and version](#get-a-template-by-id-and-version)
 * [Get all templates](#get-all-templates)
 * [Generate a preview template](#generate-a-preview-template)
+* [Get received text messages with pagination](#get-received-text-messages-with-pagination)
+* [Get received text messages without pagination](#get-received-text-messages-without-pagination)
 
 ## Installation
 
