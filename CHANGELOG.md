@@ -1,3 +1,7 @@
+## 4.7.1
+
+* Fixed PyJWT security issue. [#91](https://github.com/alphagov/notifications-python-client/pull/91)
+
 ## 4.7.0
 
 * Added `NotificationsAPIClient.get_received_texts()`

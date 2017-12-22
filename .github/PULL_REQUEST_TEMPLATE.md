@@ -9,12 +9,12 @@
 - [x] I’ve used the pull request template
 - [ ] I’ve written unit tests for these changes
 - [ ] I’ve update the documentation in
-  - `README.md`
-  - `CHANGELOG.md`
+  - [ ] `README.md`
+  - [ ] `CHANGELOG.md`
 - [ ] I’ve bumped the version number in
-  - `notifications_python_client/__init__.py`
-  - `notifications_python_client/test_base_api_client.py`, function `test_user_agent_is_set`
+  - [ ] `notifications_python_client/__init__.py`
+  - [ ] `notifications_python_client/test_base_api_client.py`, function `test_user_agent_is_set`
 - [ ] I've added new environment variables to
-  - `notifications-python-client/scripts/generate_docker_env.sh`
-  - `notifications-python-client/tox.ini`
-  - `CONTRIBUTING.md`
+  - [ ] `notifications-python-client/scripts/generate_docker_env.sh`
+  - [ ] `notifications-python-client/tox.ini`
+  - [ ] `CONTRIBUTING.md`
