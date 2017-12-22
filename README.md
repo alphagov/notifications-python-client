@@ -118,12 +118,12 @@ You can omit this argument if you do not require a reference for the notificatio
 
 ##### `personalisation`
 
-If a template has placeholders, you need to provide their values, for example:
+If a template has placeholders, you need to provide their values. You can pass in variable length lists of values, for example:
 
 ```python
 personalisation={
     'first_name': 'Amala',
-    'reference_number': '300241',
+    'reference_numbers': ['300241', '123456', 'abcdef', '1a2b3c']
 }
 ```
 ##### `sms_sender_id`
