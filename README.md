@@ -1,6 +1,6 @@
 # GOV.UK Notify Python client
 
-This documentation is for developers interested in using this python client to integrate their government service with GOV.UK Notify.
+This documentation is for developers interested in using this Python client to integrate their government service with GOV.UK Notify.
 
 ## Table of Contents
 
@@ -206,9 +206,9 @@ Find by clicking **API info** for the template you want to send.
 
 ##### `reference`
 
-Optional. Specifies the identifier of the email reply-to address to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Email reply to addresses'. 
+An optional identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
 
-If you omit this argument your default email reply-to address will be set for the notification.
+You can omit this argument if you do not require a reference for the notification.
 
 ##### `personalisation`
 
@@ -223,7 +223,7 @@ personalisation={
 
 ##### `email_reply_to_id`
 
-An optional identifier that you can get from the service email_reply_to ids found  in the service settings / manage email reply to addresses page.
+An optional identifier that you can get from the service email_reply_to ids found in the service settings / manage email reply to addresses page.
 
 You can omit this argument if you want to use the default service email reply to otherwise add the id from the list of email_reply_to ids associated with the service.
 
