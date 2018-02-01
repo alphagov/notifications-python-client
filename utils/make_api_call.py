@@ -131,7 +131,7 @@ def get_template_version(notifications_client):
     return notifications_client.get_template_version(template_id, version)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # noqa
     arguments = docopt(__doc__)
 
     client = NotificationsAPIClient(
