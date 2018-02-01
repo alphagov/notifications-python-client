@@ -1,5 +1,5 @@
 -r requirements.txt
-pep8>=1.7.0
+flake8==3.5.0
 pytest>=3.0.2
 pytest-mock>=1.2
 pytest-cov>=2.3.1
