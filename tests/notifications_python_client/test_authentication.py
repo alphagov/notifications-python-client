@@ -7,7 +7,6 @@ from future import standard_library
 standard_library.install_aliases()
 import calendar
 import time
-from datetime import datetime, timedelta
 
 import jwt
 import pytest
