@@ -10,6 +10,8 @@ Options:
     --personalisation=<{}>
     --reference=<''>
     --sms_sender_id=<''>
+    --content=<''>
+    --filename=<''>
 
 Example:
     ./make_api_call.py http://api my_service super_secret \
@@ -25,7 +27,8 @@ from notifications_python_client.notifications import NotificationsAPIClient
 
 
 def create_notification(notifications_client, **kwargs):
-    notification_type = kwargs['--type'] or input("enter type email|sms|letter: ")
+    notification_type = kwargs['--type'] or input(
+        "enter type email|sms|letter|precompiled_letter|precompiled_letter_file: ")
 
     if notification_type == 'sms':
         return create_sms_notification(notifications_client, **kwargs)
@@ -33,6 +36,10 @@ def create_notification(notifications_client, **kwargs):
         return create_email_notification(notifications_client, **kwargs)
     if notification_type == 'letter':
         return create_letter_notification(notifications_client, **kwargs)
+    if notification_type == 'precompiled_letter':
+        return create_precompiled_letter_notification(notifications_client, **kwargs)
+    if notification_type == 'precompiled_letter_file':
+        return create_precompiled_letter_notification_from_file(notifications_client, **kwargs)
     print("Invalid type: {}, exiting".format(notification_type))
     sys.exit(1)
 
@@ -76,6 +83,23 @@ def create_letter_notification(notifications_client, **kwargs):
     return notifications_client.send_letter_notification(
         template_id=template_id, personalisation=personalisation, reference=reference
     )
+
+
+def create_precompiled_letter_notification(notifications_client, **kwargs):
+    reference = kwargs['--reference'] or input("reference string for notification: ")
+    content = kwargs['--content'] or input("content (base64 encoded): ")
+    return notifications_client.send_precompiled_letter_notification(
+        reference=reference, content=content
+    )
+
+
+def create_precompiled_letter_notification_from_file(notifications_client, **kwargs):
+    reference = kwargs['--reference'] or input("reference string for notification: ")
+    filename = kwargs['--filename'] or input("filename (pdf): ")
+    with open(filename, "rb") as pdf_file:
+        return notifications_client.send_precompiled_letter_notification(
+            reference=reference, pdf_file=pdf_file
+        )
 
 
 def get_notification(notifications_client):

@@ -1,3 +1,4 @@
+import base64
 import os
 import uuid
 
@@ -8,12 +9,13 @@ from integration_test.schemas.v2.notification_schemas import (
     post_sms_response,
     post_email_response,
     post_letter_response,
+    post_precompiled_letter_response,
     get_notification_response,
     get_notifications_response
 )
 from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
 from integration_test.schemas.v2.templates_schemas import get_all_template_response
-from integration_test.enums import SMS_TYPE, EMAIL_TYPE
+from integration_test.enums import SMS_TYPE, EMAIL_TYPE, LETTER_TYPE
 
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -70,11 +72,36 @@ def send_letter_notification_test_response(python_client):
     return response['id']
 
 
+def send_precompiled_letter_notification_test_response(python_client):
+    unique_name = str(uuid.uuid4())
+    response = python_client.send_precompiled_letter_notification(
+        reference=unique_name,
+        content=base64.b64encode('test_files/one_page_pdf.pdf').decode('utf-8')
+    )
+    validate(response, post_precompiled_letter_response)
+    assert unique_name in response['reference']
+    return response['id']
+
+
+def send_precompiled_letter_notification_file_test_response(python_client):
+    unique_name = str(uuid.uuid4())
+    with open('test_files/one_page_pdf.pdf', "rb") as pdf_file:
+        response = python_client.send_precompiled_letter_notification(
+            reference=unique_name,
+            pdf_file=pdf_file
+        )
+    validate(response, post_precompiled_letter_response)
+    assert unique_name in response['reference']
+    return response['id']
+
+
 def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
     if notification_type == EMAIL_TYPE:
         validate(response, get_notification_response)
     elif notification_type == SMS_TYPE:
+        validate(response, get_notification_response)
+    elif notification_type == LETTER_TYPE:
         validate(response, get_notification_response)
     else:
         raise KeyError("notification type should be email|sms")
@@ -180,12 +207,14 @@ def test_integration():
     email_id = send_email_notification_test_response(client)
     email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
+    precompiled_letter_id = send_precompiled_letter_notification_test_response(client)
 
     get_notification_by_id(client, sms_id, SMS_TYPE)
     get_notification_by_id(client, sms_with_sender_id, SMS_TYPE)
     get_notification_by_id(client, email_id, EMAIL_TYPE)
     get_notification_by_id(client, email_with_reply_id, EMAIL_TYPE)
-    get_notification_by_id(client, letter_id, EMAIL_TYPE)
+    get_notification_by_id(client, letter_id, LETTER_TYPE)
+    get_notification_by_id(client, precompiled_letter_id, LETTER_TYPE)
 
     get_all_notifications(client)
 
@@ -200,7 +229,8 @@ def test_integration():
     get_all_templates_for_type(client, EMAIL_TYPE)
     get_all_templates_for_type(client, SMS_TYPE)
 
-    if (os.environ['INBOUND_SMS_QUERY_KEY']):
+    if (len(os.environ['INBOUND_SMS_QUERY_KEY']) > 0):
+        print('received_text', os.environ['INBOUND_SMS_QUERY_KEY'])
         get_received_text_messages()
 
     print("notifications-python-client integration tests are successful")
