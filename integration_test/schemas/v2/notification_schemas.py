@@ -182,7 +182,7 @@ letter_content = {
     "type": "object",
     "title": "notification letter content",
     "properties": {
-        "body": {"type": "string"},
+        "body": {"type": ["string", "null"]},
         "subject": {"type": "string"}
     },
     "required": ["body", "subject"]

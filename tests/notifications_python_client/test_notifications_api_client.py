@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
+import base64
 from future import standard_library
+from mock import Mock
 standard_library.install_aliases()
 from tests.conftest import TEST_HOST
 
@@ -279,6 +281,47 @@ def test_create_letter_notification_with_reference(notifications_client, rmock):
             'postcode': 'Baz'
         },
         'reference': 'Baz'
+    }
+
+
+def test_send_precompiled_letter_notification(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.send_precompiled_letter_notification(
+        reference='Baz',
+        content='base64encoding'
+    )
+
+    assert rmock.last_request.json() == {
+        'reference': 'Baz',
+        'content': 'base64encoding'
+    }
+
+
+def test_send_precompiled_letter_notification_with_file(notifications_client, rmock, mocker):
+    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+    mock_file = Mock(
+        read=Mock(return_value=b'file_contents'),
+    )
+
+    notifications_client.send_precompiled_letter_notification(
+        reference='Baz',
+        pdf_file=mock_file
+    )
+
+    assert rmock.last_request.json() == {
+        'reference': 'Baz',
+        'content': base64.b64encode(b'file_contents').decode('utf-8')
     }
 
 
