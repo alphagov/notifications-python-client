@@ -218,6 +218,7 @@ post_precompiled_letter_response = {
     "required": ["id", "content", "uri", "template"]
 }
 
+
 def create_post_sms_response_from_notification(notification, body, from_number, url_root):
     return {"id": notification.id,
             "reference": notification.client_reference,
