@@ -1,4 +1,4 @@
-## 4.7.3
+## 4.8.0
 
 * Added `NotificationsAPIClient.send_precompiled_letter_notification()`
     * The client can now send PDF files which conform to the Notify printing template
