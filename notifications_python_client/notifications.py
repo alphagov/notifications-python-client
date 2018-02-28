@@ -70,12 +70,8 @@ class NotificationsAPIClient(BaseAPIClient):
             data=notification
         )
 
-    def send_precompiled_letter_notification(self, reference, content=None, pdf_file=None):
-        if pdf_file:
-            content = base64.b64encode(pdf_file.read()).decode('utf-8')
-        elif not content:
-            raise Exception('base64 encoded string or file object required for precompiled letter notifications')
-
+    def send_precompiled_letter_notification(self, reference, pdf_file):
+        content = base64.b64encode(pdf_file.read()).decode('utf-8')
         notification = {
             "reference": reference,
             "content": content

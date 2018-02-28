@@ -343,9 +343,7 @@ Click here to expand for more information.
 ```python
 response = notifications_client.send_precompiled_letter_notification(
     reference,      # Reference to identify the notification
-    # content or pdf_file is required
-    content=None,   # base64 encoded string
-    pdf_file=None   # pdf file object
+    pdf_file        # PDF File object
 )
 ```
 </details>
@@ -398,15 +396,16 @@ Otherwise the client will raise a `HTTPError`:
 
 A required identifier you generate. The `reference` can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
 
-#### `content` or `pdf_file` is required 
-
-##### `content`
-
-A base64 encoded string containing the file to be sent as a letter.
-
 #### `pdf_file`
 
-A PDF File object
+A required PDF File object that you generate.
+
+```python
+with open("[path to your pdf]", "rb") as pdf_file:
+    notification = notifications_client.send_precompiled_letter_notification(
+        reference=[your reference], pdf_file=pdf_file
+    )
+```
 
 </details>
 

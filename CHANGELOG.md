@@ -2,7 +2,7 @@
 
 * Added `NotificationsAPIClient.send_precompiled_letter_notification()`
     * The client can now send PDF files which conform to the Notify printing template
-    Send a File object or a base64 encoded string
+    * Send a File object
     * 'reference' must be provided to identify the document
 
 ## 4.7.2

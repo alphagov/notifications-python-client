@@ -284,26 +284,7 @@ def test_create_letter_notification_with_reference(notifications_client, rmock):
     }
 
 
-def test_send_precompiled_letter_notification(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
-
-    notifications_client.send_precompiled_letter_notification(
-        reference='Baz',
-        content='base64encoding'
-    )
-
-    assert rmock.last_request.json() == {
-        'reference': 'Baz',
-        'content': 'base64encoding'
-    }
-
-
-def test_send_precompiled_letter_notification_with_file(notifications_client, rmock, mocker):
+def test_send_precompiled_letter_notification(notifications_client, rmock, mocker):
     endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
     rmock.request(
         "POST",
