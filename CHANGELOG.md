@@ -1,3 +1,13 @@
+## 4.8.0
+
+* Added `NotificationsAPIClient.send_precompiled_letter_notification()`
+    * The client can now send PDF files which conform to the Notify printing template
+    * Send a File object
+    * 'reference' must be provided to identify the document
+
+## 4.7.2
+* Use Flake 8 rather than Pep 8
+
 ## 4.7.1
 
 * Fixed PyJWT security issue. [#91](https://github.com/alphagov/notifications-python-client/pull/91)

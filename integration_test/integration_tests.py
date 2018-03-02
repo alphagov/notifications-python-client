@@ -13,7 +13,7 @@ from integration_test.schemas.v2.notification_schemas import (
 )
 from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
 from integration_test.schemas.v2.templates_schemas import get_all_template_response
-from integration_test.enums import SMS_TYPE, EMAIL_TYPE
+from integration_test.enums import SMS_TYPE, EMAIL_TYPE, LETTER_TYPE
 
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -70,11 +70,25 @@ def send_letter_notification_test_response(python_client):
     return response['id']
 
 
+def send_precompiled_letter_notification_test_response(python_client):
+    unique_name = str(uuid.uuid4())
+    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
+        response = python_client.send_precompiled_letter_notification(
+            reference=unique_name,
+            pdf_file=pdf_file
+        )
+    validate(response, post_letter_response)
+    assert unique_name in response['reference']
+    return response['id']
+
+
 def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
     if notification_type == EMAIL_TYPE:
         validate(response, get_notification_response)
     elif notification_type == SMS_TYPE:
+        validate(response, get_notification_response)
+    elif notification_type == LETTER_TYPE:
         validate(response, get_notification_response)
     else:
         raise KeyError("notification type should be email|sms")
@@ -180,12 +194,14 @@ def test_integration():
     email_id = send_email_notification_test_response(client)
     email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
+    precompiled_letter_id = send_precompiled_letter_notification_test_response(client)
 
     get_notification_by_id(client, sms_id, SMS_TYPE)
     get_notification_by_id(client, sms_with_sender_id, SMS_TYPE)
     get_notification_by_id(client, email_id, EMAIL_TYPE)
     get_notification_by_id(client, email_with_reply_id, EMAIL_TYPE)
-    get_notification_by_id(client, letter_id, EMAIL_TYPE)
+    get_notification_by_id(client, letter_id, LETTER_TYPE)
+    get_notification_by_id(client, precompiled_letter_id, LETTER_TYPE)
 
     get_all_notifications(client)
 

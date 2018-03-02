@@ -4,6 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
 standard_library.install_aliases()
+import base64
 import logging
 import re
 
@@ -64,6 +65,18 @@ class NotificationsAPIClient(BaseAPIClient):
         }
         if reference:
             notification.update({'reference': reference})
+        return self.post(
+            '/v2/notifications/letter',
+            data=notification
+        )
+
+    def send_precompiled_letter_notification(self, reference, pdf_file):
+        content = base64.b64encode(pdf_file.read()).decode('utf-8')
+        notification = {
+            "reference": reference,
+            "content": content
+        }
+
         return self.post(
             '/v2/notifications/letter',
             data=notification
