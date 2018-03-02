@@ -402,9 +402,9 @@ A required identifier you generate. The `reference` can be used as a unique refe
 A required PDF File object that you generate.
 
 ```python
-with open("[path to your pdf]", "rb") as pdf_file:
+with open("path/to/pdf_file", "rb") as pdf_file:
     notification = notifications_client.send_precompiled_letter_notification(
-        reference=[your reference], pdf_file=pdf_file
+        reference="your reference", pdf_file=pdf_file
     )
 ```
 
