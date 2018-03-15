@@ -203,6 +203,18 @@ post_letter_response = {
     "required": ["id", "content", "uri", "template"]
 }
 
+post_precompiled_letter_response = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "POST letter notification response schema",
+    "type": "object",
+    "title": "response v2/notifications/letter",
+    "properties": {
+        "id": uuid,
+        "reference": {"type": ["string", "null"]},
+    },
+    "required": ["id", "reference"]
+}
+
 
 def create_post_sms_response_from_notification(notification, body, from_number, url_root):
     return {"id": notification.id,

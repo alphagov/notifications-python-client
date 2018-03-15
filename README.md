@@ -333,6 +333,8 @@ personalisation={
 
 ### Precompiled Letter
 
+This is an invitation only feature, for more information contact us via[https://www.notifications.service.gov.uk/support](https://www.notifications.service.gov.uk/support).
+
 #### Method
 
 <details>
@@ -359,18 +361,7 @@ Click here to expand for more information.
 ```python
 {
   "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
-  "reference": "your-letter-reference",
-  "content": {
-    "subject": "Licence renewal",
-    "body": "Dear Bill, your licence is due for renewal on 3 January 2016.",
-  },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
-  "template": {
-    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": 1,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
-  }
-  "scheduled_for": None
+  "reference": "your-letter-reference"
 }
 ```
 

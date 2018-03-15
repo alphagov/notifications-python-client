@@ -9,8 +9,8 @@ from integration_test.schemas.v2.notification_schemas import (
     post_email_response,
     post_letter_response,
     get_notification_response,
-    get_notifications_response
-)
+    get_notifications_response,
+    post_precompiled_letter_response)
 from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
 from integration_test.schemas.v2.templates_schemas import get_all_template_response
 from integration_test.enums import SMS_TYPE, EMAIL_TYPE, LETTER_TYPE
@@ -72,12 +72,12 @@ def send_letter_notification_test_response(python_client):
 
 def send_precompiled_letter_notification_test_response(python_client):
     unique_name = str(uuid.uuid4())
-    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
+    with open('test_files/one_page_pdf.pdf', "rb") as pdf_file:
         response = python_client.send_precompiled_letter_notification(
             reference=unique_name,
             pdf_file=pdf_file
         )
-    validate(response, post_letter_response)
+    validate(response, post_precompiled_letter_response)
     assert unique_name in response['reference']
     return response['id']
 

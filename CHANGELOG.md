@@ -1,3 +1,8 @@
+## 4.8.1
+
+* Added post_precompiled_letter_response and updated integration tests
+    * The API now only returns notification id and client reference, so updated the response scheme to match
+
 ## 4.8.0
 
 * Added `NotificationsAPIClient.send_precompiled_letter_notification()`
