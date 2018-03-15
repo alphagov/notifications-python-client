@@ -72,7 +72,7 @@ def send_letter_notification_test_response(python_client):
 
 def send_precompiled_letter_notification_test_response(python_client):
     unique_name = str(uuid.uuid4())
-    with open('integrations_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
+    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
         response = python_client.send_precompiled_letter_notification(
             reference=unique_name,
             pdf_file=pdf_file
