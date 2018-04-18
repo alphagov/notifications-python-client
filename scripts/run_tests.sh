@@ -28,7 +28,7 @@ if [ -d venv ]; then
   source ./venv/bin/activate
 fi
 
-flake8 .
+tox -e flake8
 
 display_result $? 1 "Code style check"
 
@@ -36,5 +36,5 @@ display_result $? 1 "Code style check"
 #py.test --cov=client tests/
 #display_result $? 2 "Code coverage"
 
-py.test -v -x tests/
+tox -e py35
 display_result $? 3 "Unit tests"

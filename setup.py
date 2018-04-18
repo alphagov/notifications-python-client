@@ -6,8 +6,6 @@ For usage and documentation see https://github.com/alphagov/notifications-python
 """
 import re
 import ast
-import pip.download
-from pip.req import parse_requirements
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
@@ -17,18 +15,6 @@ _version_re = re.compile(r'__version__\s+=\s+(.*)')
 with open('notifications_python_client/__init__.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
-
-
-def get_reqs(requirement_file):
-    requirements = list(parse_requirements(requirement_file, session=pip.download.PipSession()))
-    return [str(r.req) for r in requirements]
-
-
-install_requires = get_reqs('requirements.txt')
-tests_require = get_reqs('requirements_for_test.txt')
-# for running pytest as `python setup.py test`, see
-# http://doc.pytest.org/en/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner
-setup_requires = ['pytest-runner']
 
 
 class IntegrationTestCommand(TestCommand):
@@ -68,8 +54,17 @@ setup(
     packages=find_packages(),
     include_package_data=True,
 
-    install_requires=install_requires,
-    setup_requires=setup_requires,
-    tests_require=tests_require,
+    install_requires=[
+        'requests>=2.0.0',
+        'PyJWT>=1.5.1',
+        'docopt>=0.3.0',
+        'monotonic>=0.1',
+        'future',
+    ],
+    # for running pytest as `python setup.py test`, see
+    # http://doc.pytest.org/en/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner
+    setup_requires=[
+        'pytest-runner'
+    ],
     cmdclass={'integration_test': IntegrationTestCommand},
 )
