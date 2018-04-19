@@ -25,7 +25,7 @@ Setting up a Virtualenv for python3
 
 Install the dependencies
 ```python
-    pip3 install -r requirements_for_test.txt
+    python setup.py develop
 ```
 
 ## Tests

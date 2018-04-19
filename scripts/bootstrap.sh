@@ -26,4 +26,4 @@ if [ ! $VIRTUAL_ENV ]; then
 fi
 
 # Install Python development dependencies
-pip3 install --upgrade -r requirements_for_test.txt
+python setup.py develop

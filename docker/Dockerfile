@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 ARG HTTP_PROXY
 ARG HTTPS_PROXY
@@ -15,16 +15,16 @@ RUN \
 		make \
 		git \
 		python2.7 \
-		python3.4 \
-		python-pip \
+		python3.5 \
 		python3-pip \
+		python3-setuptools \
+		python-pip \
+		python-setuptools \
 	&& echo "Clean up" \
 	&& rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN \
 	echo "Install global pip packages" \
-	&& pip install \
-		tox
-
+	&& python3.5 -m pip install tox
 
 WORKDIR /var/project

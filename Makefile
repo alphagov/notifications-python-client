@@ -23,7 +23,7 @@ venv/bin/activate:
 .PHONY: dependencies
 dependencies: venv ## Install build dependencies
 	mkdir -p ${PIP_ACCEL_CACHE}
-	PIP_ACCEL_CACHE=${PIP_ACCEL_CACHE} ./venv/bin/pip-accel install --upgrade -r requirements_for_test.txt
+	PIP_ACCEL_CACHE=${PIP_ACCEL_CACHE} ./venv/bin/pip-accel install --upgrade .
 
 .PHONY: build
 build: dependencies ## Build project
