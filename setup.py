@@ -1,8 +1,8 @@
 # this restructured text docstring is displayed on https://pypi.python.org/pypi/notifications-python-client/
 """
-Python API client for GOV.UK Notify - see https://www.notifications.service.gov.uk/ for more information.
+Python API client for GOV.UK Notify - see https://www.notifications.service.gov.uk for more information.
 
-For usage and documentation see https://github.com/alphagov/notifications-python-client.
+For usage and documentation see https://docs.notifications.service.gov.uk/python.html
 """
 import re
 import ast
