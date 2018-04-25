@@ -106,4 +106,4 @@ def test_user_agent_is_set(base_client, rmock):
 
     base_client.request('GET', '/')
 
-    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/4.8.1"
+    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/4.8.2"

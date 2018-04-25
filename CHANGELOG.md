@@ -1,3 +1,7 @@
+## 4.8.2
+
+* Fix issues when installing with pip 10.0.0
+
 ## 4.8.1
 
 * Added post_precompiled_letter_response and updated integration tests
