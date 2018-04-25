@@ -9,7 +9,7 @@
 - [x] I’ve used the pull request template
 - [ ] I’ve written unit tests for these changes
 - [ ] I’ve update the documentation in
-  - [ ] `README.md`
+  - [ ] `DOCUMENTATION.md`
   - [ ] `CHANGELOG.md`
 - [ ] I’ve bumped the version number in
   - [ ] `notifications_python_client/__init__.py`
