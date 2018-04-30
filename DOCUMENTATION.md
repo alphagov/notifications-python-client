@@ -200,8 +200,8 @@ If the request to the client is successful, you will receive the following `dict
     "version": INTEGER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
-  }
-  ```
+}
+```
 
 
 ### Error codes
@@ -392,9 +392,9 @@ If the request to the client is successful, you will receive the following `dict
   },
   "body": "STRING", # required string - body of notification
   "subject": "STRING" # required string for email - subject of email
-	"created_at": "STRING", # required string - date and time notification created
-	"sent_at": "STRING", # optional string - date and time notification sent to provider
-	"completed_at:" "STRING" # optional string - date and time notification delivered or failed
+  "created_at": "STRING", # required string - date and time notification created
+  "sent_at": "STRING", # optional string - date and time notification sent to provider
+  "completed_at:" "STRING" # optional string - date and time notification delivered or failed
 }
 ```
 
