@@ -412,7 +412,7 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 ## Get the status of all messages
 
-This API call returns the status of all messages. You can either get the status of all messages in one call, or one page of up to 250 messages.
+This API call returns the status of all messages. You can either get the status of all messages in one call, or one page of up to 250 messages. Only messages sent in the last 7 days are included.
 
 ### Method
 
