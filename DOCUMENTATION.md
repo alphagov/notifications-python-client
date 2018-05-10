@@ -110,7 +110,7 @@ If the request to the client is successful, you will receive the following `dict
 
 If you are using the [test API key](#test), all your messages will come back as delivered.
 
-All successfully delivered messages will appear on your dashboard.
+All messages sent using the [team and whitelist](#team-and-whitelist) or [live](#live) keys will appear on your dashboard.
 
 ### Error codes
 
@@ -351,6 +351,10 @@ The only failure status that applies to letters is `technical-failure` - Notify 
 ### Accepted
 
 Notify is printing and posting the letter.
+
+### Received
+
+The provider has received the letter to deliver.
 
 ## Get the status of one message
 
