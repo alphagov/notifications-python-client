@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from future import standard_library
 standard_library.install_aliases()
 import base64
+import io
 import logging
 import re
 
@@ -49,6 +50,12 @@ class NotificationsAPIClient(BaseAPIClient):
             "template_id": template_id
         }
         if personalisation:
+            personalisation = personalisation.copy()
+            for key in personalisation:
+                if isinstance(personalisation[key], io.IOBase):
+                    personalisation[key] = {
+                        'file': base64.b64encode(personalisation[key].read()).decode('ascii')
+                    }
             notification.update({'personalisation': personalisation})
         if reference:
             notification.update({'reference': reference})

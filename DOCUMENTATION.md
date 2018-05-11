@@ -158,6 +158,17 @@ personalisation={
 }
 ```
 
+If your service has a permission to upload documents you can pass file objects as values for the personalisation keys:
+
+```python
+with open('file.pdf', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'document': f,
+    }
+```
+
 #### reference (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.

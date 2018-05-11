@@ -3,6 +3,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 import base64
+import io
 from future import standard_library
 from mock import Mock
 standard_library.install_aliases()
@@ -233,6 +234,35 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
 
     assert rmock.last_request.json() == {
         'template_id': '456', 'email_address': 'to@example.com', 'personalisation': {'name': 'chris'}
+    }
+
+
+def test_create_email_notification_with_document_upload(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    if hasattr(io, 'BytesIO'):
+        mock_file = io.BytesIO(b'file-contents')
+    else:
+        mock_file = io.StringIO('file-contents')
+
+    notifications_client.send_email_notification(
+        email_address="to@example.com", template_id="456", personalisation={
+            'name': 'chris',
+            'doc': mock_file
+        }
+    )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456', 'email_address': 'to@example.com',
+        'personalisation': {
+            'name': 'chris',
+            'doc': {'file': 'ZmlsZS1jb250ZW50cw=='}
+        }
     }
 
 
