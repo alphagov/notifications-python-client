@@ -181,26 +181,24 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 If you omit this argument, the client will set your default email reply-to address for the notification.
 
-### Attach a document
+### Upload a document
 
-You can attach a document to an email notification.
+You can upload a document to link to from an email notification.
 
-Contact the GOV.UK Notify team on the support page or through the Slack channel to enable this function for your service.
+The document must be a PDF file smaller than 2MB.
 
-The document must be a PDF file smaller than 2MB. To attach the document, you must:
-
-1. Define the PDF as a file object.
-1. Pass the file object as a value into the personalisation argument. For example:
+To upload the document, pass the file object as a value into the personalisation argument. For example:
 
         ```python
-        with open('file.pdf', 'rb') as DOCUMENT_NAME:
+        with open('file.pdf', 'rb') as f:
             ...
             personalisation={
               'first_name': 'Amala',
               'application_date': '2018-01-01',
-              'document': DOCUMENT_NAME,
+              'document': f,
             }
         ```
+Contact the GOV.UK Notify team on the support page or through the Slack channel to enable this function for your service.
 
 ### Response
 
