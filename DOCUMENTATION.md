@@ -181,6 +181,25 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 If you omit this argument, the client will set your default email reply-to address for the notification.
 
+### Upload a document
+
+You can upload a document to link to from an email notification.
+
+The document must be a PDF file smaller than 2MB.
+
+To upload the document, pass the file object as a value into the personalisation argument. For example:
+
+        ```python
+        with open('file.pdf', 'rb') as f:
+            ...
+            personalisation={
+              'first_name': 'Amala',
+              'application_date': '2018-01-01',
+              'document': f,
+            }
+        ```
+Contact the GOV.UK Notify team on the support page or through the Slack channel to enable this function for your service.
+
 ### Response
 
 If the request to the client is successful, you will receive the following `dict` response:
@@ -203,7 +222,6 @@ If the request to the client is successful, you will receive the following `dict
 }
 ```
 
-
 ### Error codes
 
 If the request is not successful, the client will raise an `HTTPError`.
@@ -212,6 +230,8 @@ If the request is not successful, the client will raise an `HTTPError`.
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](#api-keys) for more information|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported document type '{}'. Supported types are: {}"`<br>`}]`|The attached document must be a PDF file|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document didn't pass the virus scan"`<br>`}]`|The attached document must be virus free|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|

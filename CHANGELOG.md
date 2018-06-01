@@ -1,3 +1,7 @@
+## 4.9.0
+
+* Add support for document uploads in `send_email_notification`
+
 ## 4.8.2
 
 * Fix issues when installing with pip 10.0.0
