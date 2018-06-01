@@ -110,7 +110,7 @@ If the request to the client is successful, you will receive the following `dict
 
 If you are using the [test API key](#test), all your messages will come back as delivered.
 
-All successfully delivered messages will appear on your dashboard.
+All messages sent using the [team and whitelist](#team-and-whitelist) or [live](#live) keys will appear on your dashboard.
 
 ### Error codes
 
@@ -372,6 +372,10 @@ The only failure status that applies to letters is `technical-failure` - Notify 
 
 Notify is printing and posting the letter.
 
+### Received
+
+The provider has received the letter to deliver.
+
 ## Get the status of one message
 
 ### Method
@@ -502,6 +506,7 @@ You can filter by:
 |`temporary-failure`|The provider was unable to deliver message, email inbox was full or phone was turned off; you can try to send the message again|Yes|Yes||
 |`technical-failure`|Email or text message: Notify had a technical failure; you can try to send the message again. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can omit this argument to ignore this filter.|Yes|Yes||
 |`accepted`|Notify is printing and posting the letter|||Yes|
+|`received`|The provider has received the letter to deliver|||Yes|
 
 #### reference (optional)
 
