@@ -12,7 +12,7 @@ Run the following code in the command line:
 pip install notifications-python-client
 ```
 
-Refer to the [client change log](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the client version number and the latest updates.
+Refer to the [client changelog](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the client version number and the latest updates.
 
 ## Create a new instance of the client
 
@@ -24,7 +24,7 @@ from notifications_python_client.notifications import NotificationsAPIClient
 notifications_client = NotificationsAPIClient(api_key)
 ```
 
-To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. You can find more information in the [API keys](#api-keys) section.
+To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the __API integration__ page. You can find more information in the [API keys](#api-keys) section.
 
 # Send a message
 
@@ -72,14 +72,17 @@ reference='STRING', # optional string - identifies notification(s)
 
 #### sms_sender_id (optional)
 
-A unique identifier of the sender of the text message notification. To set this up:
+A unique identifier of the sender of the text message notification. To find this information, go to the __Text Message sender__ settings screen:
 
 1. Sign into your GOV.UK Notify account.
 1. Go to __Settings__.
-1. Go to the __Text Messages__ section and select __Manage__ on the "Text Message sender" row.
-1. You can do one of the following:
-  - copy the ID of the sender you want to use and paste it into the method
-  - select __Change__ to change the default sender that the service will use, and select __Save__
+1. If you need to change to another service, select __Switch service__ in the top right corner of the screen and select the correct one
+1. Go to the __Text Messages__ section and select __Manage__ on the __Text Message sender__ row.
+
+In this screen, you can then either:
+
+- copy the sender ID that you want to use and paste it into the method
+- select __Change__ to change the default sender that the service will use, and select __Save__
 
 ```python
 sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
@@ -89,7 +92,7 @@ If you omit this argument from your method, the client will set the default `sms
 
 ### Response
 
-If the request to the client is successful, you will receive the following `dict` response:
+If the request to the client is successful, the client will return a `dict`:
 
 ```python
 {
@@ -114,12 +117,12 @@ All messages sent using the [team and whitelist](#team-and-whitelist) or [live](
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`.
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code.
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](#api-keys) for more information|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
@@ -172,7 +175,8 @@ This is an email reply-to address specified by you to receive replies from your 
 
 1. Sign into your GOV.UK Notify account.
 1. Go to __Settings__.
-1. Go to the Email section and select __Manage__ on the "Email reply to addresses" row.
+1. If you need to change to another service, select __Switch service__ in the top right corner of the screen and select the correct one.
+1. Go to the Email section and select __Manage__ on the __Email reply to addresses__ row.
 1. Select __Change__ to specify the email address to receive replies, and select __Save__.
 
 ```python
@@ -202,7 +206,7 @@ Contact the GOV.UK Notify team on the support page or through the Slack channel 
 
 ### Response
 
-If the request to the client is successful, you will receive the following `dict` response:
+If the request to the client is successful, the client will return a `dict`:
 
 ```python
 {
@@ -224,16 +228,16 @@ If the request to the client is successful, you will receive the following `dict
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`.
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code.
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](#api-keys) for more information|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported document type '{}'. Supported types are: {}"`<br>`}]`|The attached document must be a PDF file|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document didn't pass the virus scan"`<br>`}]`|The attached document must be virus free|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
@@ -304,7 +308,7 @@ personalisation={
 
 ### Response
 
-If the request to the client is successful, you will receive the following `dict` response:
+If the request to the client is successful, the client will return a `dict`:
 
 ```python
 {
@@ -326,12 +330,12 @@ If the request to the client is successful, you will receive the following `dict
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`.
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code.
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](#api-keys) for more information|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personlisation](#send-a-letter-arguments-personalisation-optional) for more information.|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -342,13 +346,17 @@ If the request is not successful, the client will raise an `HTTPError`.
 
 # Get message status
 
-The possible status of a message depends on the message type.
+Message status depends on the type of message that you have sent.
 
 ## Status - text and email
 
+### Created
+
+The message is queued to be sent to the provider. The notification usually remains in this state for a few seconds.
+
 ### Sending
 
-The message is queued to be sent by the provider.
+The message is queued to be sent by the provider, and GOV.UK Notify are waiting for delivery information.
 
 ### Delivered
 
@@ -366,11 +374,11 @@ This covers all failure statuses:
 
 ### Failed
 
-The only failure status that applies to letters is `technical-failure` - Notify had an unexpected error while sending to our printing provider.
+The only failure status that applies to letters is `technical-failure`. Notify had an unexpected error while sending to our printing provider.
 
 ### Accepted
 
-Notify is printing and posting the letter.
+GOV.UK Notify is printing and posting the letter.
 
 ### Received
 
@@ -392,7 +400,7 @@ The ID of the notification.
 
 ### Response
 
-If the request to the client is successful, you will receive the following `dict` response:
+If the request to the client is successful, the client will return a `dict`:
 
 ```python
 {
@@ -424,9 +432,9 @@ If the request to the client is successful, you will receive the following `dict
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
@@ -499,7 +507,8 @@ You can filter by:
 
 | status | description | text | email | letter |
 |:--- |:--- |:--- |:--- |:--- |
-|`sending` |The message is queued to be sent by the provider|Yes|Yes||
+|`created` |The message is queued to be sent to the provider|Yes|Yes||
+|`sending` |The message is queued to be sent to the recipient by the provider|Yes|Yes||
 |`delivered`|The message was successfully delivered|Yes|Yes||
 |`failed`|This will return all failure statuses:<br>- `permanent-failure`<br>- `temporary-failure`<br>- `technical-failure`|Yes|Yes||
 |`permanent-failure`|The provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list|Yes|Yes||
@@ -528,7 +537,7 @@ If this argument is omitted, the method returns the most recent 250 notification
 
 ### Response
 
-If the request to the client is successful, you will receive a `dict` response.
+If the request to the client is successful, the client will return a `dict`.
 
 #### All messages
 
@@ -577,9 +586,9 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|Contact the Notify team|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Contact the Notify team|
@@ -609,7 +618,7 @@ The ID of the template. You can find this by signing into GOV.UK Notify and goin
 
 ### Response
 
-If the request to the client is successful, you will receive a `dict` response.
+If the request to the client is successful, the client will return a `dict`.
 
 ```python
 {
@@ -626,9 +635,9 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -660,7 +669,7 @@ The version number of the template.
 
 ### Response
 
-If the request to the client is successful, you will receive a `dict` response.
+If the request to the client is successful, the client will return a `dict`.
 
 ```python
 {
@@ -677,9 +686,9 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
-|`error.status_code`|`error.message`|How to fix|
+|error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -710,7 +719,7 @@ If omitted, the method returns all templates. Otherwise you can filter by:
 
 ### Response
 
-If the request to the client is successful, you will receive a `dict` response.
+If the request to the client is successful, the client will return a `dict`.
 
 ```python
 {
@@ -732,7 +741,7 @@ If the request to the client is successful, you will receive a `dict` response.
 }
 ```
 
-If no templates exist for a template type or there no templates for a service, you will receive a `dict` response with an empty `templates` list element:
+If no templates exist for a template type or there no templates for a service, the client will return a a `dict` with an empty `templates` list element:
 
 ```python
 {
@@ -792,9 +801,9 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
-|`error.status_code`|`error.message`|Notes|
+|error.status_code|error.message|Notes|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [PERSONALISATION FIELD]"`<br>`}]`|Check that the personalisation arguments in the method match the placeholder fields in the template|
 |`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the [template ID](#generate-a-preview-template-arguments-template-id-required)|
@@ -818,7 +827,7 @@ response = get_received_texts_iterator()
 
 ### Response
 
-If the request to the client is successful, you will receive a `<generator object>` response that will return all received text messages.
+If the request to the client is successful, the client will return a `<generator object>` that will return all received text messages.
 
 ```python
 <generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
@@ -850,7 +859,7 @@ If this argument is omitted, the method returns the most recent 250 text message
 
 ### Response
 
-If the request to the client is successful, you will receive a `dict` response.
+If the request to the client is successful, the client will return a `dict`.
 
 ```python
 {
