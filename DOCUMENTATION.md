@@ -35,7 +35,7 @@ You can use GOV.UK Notify to send text messages, emails and letters.
 ### Method
 
 ```python
-response = notifications_client.send_email_notification(
+response = notifications_client.send_sms_notification(
     phone_number='+447900900123', # required string
     template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
 )
