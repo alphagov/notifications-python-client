@@ -193,15 +193,16 @@ The document must be a PDF file smaller than 2MB.
 
 To upload the document, pass the file object as a value into the personalisation argument. For example:
 
-        ```python
-        with open('file.pdf', 'rb') as f:
-            ...
-            personalisation={
-              'first_name': 'Amala',
-              'application_date': '2018-01-01',
-              'document': f,
-            }
-        ```
+```python
+with open('file.pdf', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'application_date': '2018-01-01',
+      'document': f,
+    }
+```
+
 Contact the GOV.UK Notify team on the support page or through the Slack channel to enable this function for your service.
 
 ### Response
