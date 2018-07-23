@@ -426,6 +426,7 @@ If the request to the client is successful, the client will return a `dict`:
   "body": "STRING", # required string - body of notification
   "subject": "STRING" # required string for email - subject of email
   "created_at": "STRING", # required string - date and time notification created
+  "created_by_name": "STRING", # optional string - name of the person who sent the notification if sent manually
   "sent_at": "STRING", # optional string - date and time notification sent to provider
   "completed_at:" "STRING" # optional string - date and time notification delivered or failed
 }
@@ -567,8 +568,9 @@ If the request to the client is successful, the client will return a `dict`.
       "body": "STRING", # required string - body of notification
       "subject": "STRING" # required string for email - subject of email
       "created_at": "STRING", # required string - date and time notification created
+      "created_by_name": "STRING", # optional string - name of the person who sent the notification if sent manually
       "sent_at": " STRING", # optional string - date and time notification sent to provider
-      "Completed_at": "STRING" # optional string - date and time notification delivered or failed
+      "completed_at": "STRING" # optional string - date and time notification delivered or failed
     },
     …
   ],
