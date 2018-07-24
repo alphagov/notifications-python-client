@@ -38,7 +38,8 @@ get_notification_response = {
         "subject": {"type": ["string", "null"]},
         "created_at": {"type": "string"},
         "sent_at": {"type": ["string", "null"]},
-        "completed_at": {"type": ["string", "null"]}
+        "completed_at": {"type": ["string", "null"]},
+        "created_by_name": {"type": ["string", "null"]}
     },
     "required": [
         # technically, all keys are required since we always have all of them

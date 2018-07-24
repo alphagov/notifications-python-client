@@ -1,3 +1,8 @@
+## 4.10.0
+
+* Added `created_by_name` to the response for `NotificationsAPIClient.get_notification_by_id()` and `NotificationsAPIClient.get_all_notifications()`
+    * If the notification was sent manually, this will be the name of the sender. If the notification was sent through the API this will be `None`.
+
 ## 4.9.0
 
 * Add support for document uploads in `send_email_notification`
