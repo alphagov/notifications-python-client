@@ -237,7 +237,7 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
     }
 
 
-def test_create_email_notification_with_document_upload(notifications_client, rmock):
+def test_create_email_notification_with_document_stream_upload(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
     rmock.request(
         "POST",
@@ -262,6 +262,31 @@ def test_create_email_notification_with_document_upload(notifications_client, rm
         'personalisation': {
             'name': 'chris',
             'doc': {'file': 'ZmlsZS1jb250ZW50cw=='}
+        }
+    }
+
+
+def test_create_email_notification_with_document_file_upload(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    with open('tests/test_files/test.pdf', 'rb') as f:
+        notifications_client.send_email_notification(
+            email_address="to@example.com", template_id="456", personalisation={
+                'name': 'chris',
+                'doc': f
+            }
+        )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456', 'email_address': 'to@example.com',
+        'personalisation': {
+            'name': 'chris',
+            'doc': {'file': 'JVBERi0xLjUgdGVzdAo='}
         }
     }
 

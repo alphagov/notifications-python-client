@@ -50,12 +50,18 @@ class NotificationsAPIClient(BaseAPIClient):
             "template_id": template_id
         }
         if personalisation:
+            try:
+                filetypes = (io.IOBase, file)
+            except NameError:
+                filetypes = io.IOBase
             personalisation = personalisation.copy()
+
             for key in personalisation:
-                if isinstance(personalisation[key], io.IOBase):
+                if isinstance(personalisation[key], filetypes):
                     personalisation[key] = {
                         'file': base64.b64encode(personalisation[key].read()).decode('ascii')
                     }
+
             notification.update({'personalisation': personalisation})
         if reference:
             notification.update({'reference': reference})
