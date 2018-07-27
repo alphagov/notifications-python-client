@@ -9,6 +9,8 @@ from mock import Mock
 standard_library.install_aliases()
 from tests.conftest import TEST_HOST
 
+from notifications_python_client import prepare_upload
+
 
 def test_get_notification_by_id(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/{1}".format(TEST_HOST, "123")
@@ -253,7 +255,7 @@ def test_create_email_notification_with_document_stream_upload(notifications_cli
     notifications_client.send_email_notification(
         email_address="to@example.com", template_id="456", personalisation={
             'name': 'chris',
-            'doc': mock_file
+            'doc': prepare_upload(mock_file)
         }
     )
 
@@ -278,7 +280,7 @@ def test_create_email_notification_with_document_file_upload(notifications_clien
         notifications_client.send_email_notification(
             email_address="to@example.com", template_id="456", personalisation={
                 'name': 'chris',
-                'doc': f
+                'doc': prepare_upload(f)
             }
         )
 
