@@ -1,3 +1,7 @@
+## 5.0.0
+
+* Changed the way documents are added to the personalisation data. A new `prepare_upload` function has to be called for each document upload to prepare the file data to be sent to the Notify API.
+
 ## 4.10.0
 
 * Added `created_by_name` to the response for `NotificationsAPIClient.get_notification_by_id()` and `NotificationsAPIClient.get_all_notifications()`
