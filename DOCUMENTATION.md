@@ -194,12 +194,14 @@ The document must be a PDF file smaller than 2MB.
 To upload the document, pass the file object as a value into the personalisation argument. For example:
 
 ```python
+from notifications_python_client import prepare_upload
+
 with open('file.pdf', 'rb') as f:
     ...
     personalisation={
       'first_name': 'Amala',
       'application_date': '2018-01-01',
-      'document': f,
+      'document': prepare_upload(f),
     }
 ```
 
