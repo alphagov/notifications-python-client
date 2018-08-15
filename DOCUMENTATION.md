@@ -185,13 +185,19 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 If you omit this argument, the client will set your default email reply-to address for the notification.
 
-### Upload a document
+### Send a document by email
 
-You can upload a document to link to from an email notification.
+Send files without the need for email attachments.
 
-The document must be a PDF file smaller than 2MB.
+Upload a document, then send recipients a link to download it.
 
-To upload the document, pass the file object as a value into the personalisation argument. For example:
+To enable this function for your service [contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support).
+
+####Upload a document
+
+The document you upload must be a PDF file smaller than 2MB.
+
+Pass the file object as a value into the personalisation argument. For example:
 
 ```python
 from notifications_python_client import prepare_upload
@@ -205,7 +211,9 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-Contact the GOV.UK Notify team on the support page or through the Slack channel to enable this function for your service.
+####Add a link to the email
+
+To include a link to the document in your email notification, add a placeholder to the template in Notify.
 
 ### Response
 
@@ -339,7 +347,7 @@ If the request is not successful, the client will return an `HTTPError` containi
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personlisation](#send-a-letter-arguments-personalisation-optional) for more information.|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#send-a-letter-arguments-personalisation-optional) for more information.|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
