@@ -187,13 +187,11 @@ If you omit this argument, the client will set your default email reply-to addre
 
 ### Send a document by email
 
-Send files without the need for email attachments.
-
-Upload a document, then send recipients a link to download it in an email notification.
+You can send files without the need for email attachments. First upload a document, then send recipients a link to download it.
 
 To enable this function for your service [contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support).
 
-####Upload a document
+####Upload your document
 
 The document you upload must be a PDF file smaller than 2MB.
 
@@ -211,7 +209,7 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-####Add a link to the email
+####Add a link to the email template
 
 To include a link to the document in your email notification, add a placeholder to the template in Notify.
 
