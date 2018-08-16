@@ -189,7 +189,7 @@ If you omit this argument, the client will set your default email reply-to addre
 
 Send files without the need for email attachments.
 
-Upload a document, then send recipients a link to download it.
+Upload a document, then send recipients a link to download it in an email notification.
 
 To enable this function for your service [contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support).
 
