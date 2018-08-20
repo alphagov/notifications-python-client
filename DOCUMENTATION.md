@@ -193,7 +193,7 @@ The placeholder field contains a secure link to download the document instead of
 
 [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
 
-####Upload your document
+#### Upload your document
 
 The document you upload must be a PDF file smaller than 2MB.
 
@@ -211,7 +211,7 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-####Add a link to the email template
+#### Add a link to the email template
 
 To include a link to the document in your email notification, add a placeholder field to the template in Notify.
 
