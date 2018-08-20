@@ -187,7 +187,9 @@ If you omit this argument, the client will set your default email reply-to addre
 
 ### Send a document by email
 
-You can send files without the need for email attachments. First upload a document, then send recipients a link to download it.
+To send a document by email, upload a file then add a placeholder field to the template.
+
+The placeholder field contains a secure link to download the document instead of an attachment.
 
 [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
 
@@ -211,7 +213,7 @@ with open('file.pdf', 'rb') as f:
 
 ####Add a link to the email template
 
-To include a link to the document in your email notification, add a placeholder to the template in Notify.
+To include a link to the document in your email notification, add a placeholder field to the template in Notify.
 
 ### Response
 
