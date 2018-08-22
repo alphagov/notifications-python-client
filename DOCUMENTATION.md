@@ -211,9 +211,11 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-#### Add a link to the email template
+#### Add a placeholder field to the email template
 
-To include a link to the document in your email notification, add a placeholder field to the template in Notify.
+To include a link to the document in your email notification, add a placeholder field to the template in Notify. For example:
+
+"Open this link to download your document: ((link_to_document))"
 
 ### Response
 
