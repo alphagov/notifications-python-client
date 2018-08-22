@@ -176,7 +176,7 @@ This is an email reply-to address specified by you to receive replies from your 
 1. Sign into your GOV.UK Notify account.
 1. Go to __Settings__.
 1. If you need to change to another service, select __Switch service__ in the top right corner of the screen and select the correct one.
-1. Go to the Email section and select __Manage__ on the __Email reply to addresses__ row.
+1. Go to the Email section and select __Manage__ on the __Email reply-to addresses__ row.
 1. Select __Change__ to specify the email address to receive replies, and select __Save__.
 
 ```python
