@@ -194,12 +194,17 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 You can leave out this argument if your service only has one email reply-to address, or you want to use the default email address.
 
 ### Send a document by email
+Send files without the need for email attachments.
 
-To send a document by email, upload a file then add a placeholder field to the template.
-
-The placeholder field contains a secure link to download the document instead of an attachment.
+To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
 
 [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+
+#### Add a placeholder field to the template
+
+In Notify, use double brackets to add a placeholder field to the email template. For example:
+
+"Download your document at: ((link_to_document))"
 
 #### Upload your document
 
@@ -218,12 +223,6 @@ with open('file.pdf', 'rb') as f:
       'link_to_document': prepare_upload(f),
     }
 ```
-
-#### Add a placeholder field to the email template
-
-To include a link to the document in your email notification, add a placeholder field to the template in Notify. For example:
-
-"Download your document at: ((link_to_document))"
 
 ### Response
 
