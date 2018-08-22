@@ -191,7 +191,7 @@ For example:
 email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 ```
 
-You can leave out this argument if your service only has one email reply to address, or you want to use the default email address.
+You can leave out this argument if your service only has one email reply-to address, or you want to use the default email address.
 
 ### Send a document by email
 
