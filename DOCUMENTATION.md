@@ -269,8 +269,8 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 When your service first signs up to GOV.UK Notify, you’ll start in trial mode. You can only send letters in live mode. You must ask GOV.UK Notify to make your service live.
 
 1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/).
-1. Select Using Notify.
-1. Select requesting to go live.
+1. Select __Using Notify__.
+1. Select __requesting to go live__.
 
 ### Method
 
