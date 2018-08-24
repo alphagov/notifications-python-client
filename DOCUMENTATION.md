@@ -643,7 +643,7 @@ response = notifications_client.get_template(
 
 #### template_id (required)
 
-The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page to find this. 
+The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page to find this.
 
 ### Response
 
@@ -652,6 +652,7 @@ If the request to the client is successful, the client returns a `dict`.
 ```python
 {
     "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
+    "name": "My template", # required string
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
@@ -690,7 +691,7 @@ response = notifications_client.get_template_version(
 
 #### template_id (required)
 
-The ID of the template. Sign in to GOV.UK Notify and go to the __Templates__ page to find this. 
+The ID of the template. Sign in to GOV.UK Notify and go to the __Templates__ page to find this.
 
 #### version (required)
 
@@ -703,6 +704,7 @@ If the request to the client is successful, the client returns a `dict`.
 ```python
 {
     "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
+    "name": "My template", # required string
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
@@ -755,16 +757,17 @@ If the request to the client is successful, the client returns a `dict`.
     "templates": [
         {
             "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
-    		"type": "sms / email / letter" , # required string
-    		"created_at": "STRING", # required string - date and time template created
-    		"updated_at": "STRING", # required string - date and time template last updated
-    		"version": NUMBER, # required string - template version
-    		"created_by": "someone@example.com", # required string
-    		"body": "STRING", # required string - body of notification
-    		"subject": "STRING" # required string for email - subject of email
+            "name": "My template", # required string
+            "type": "sms / email / letter" , # required string
+            "created_at": "STRING", # required string - date and time template created
+            "updated_at": "STRING", # required string - date and time template last updated
+            "version": NUMBER, # required string - template version
+            "created_by": "someone@example.com", # required string
+            "body": "STRING", # required string - body of notification
+            "subject": "STRING" # required string for email - subject of email
         },
         {
-            ...another template
+          ...another template
         }
     ]
 }

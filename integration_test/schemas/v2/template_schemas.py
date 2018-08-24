@@ -21,6 +21,7 @@ get_template_by_id_response = {
     "title": "reponse v2/template",
     "properties": {
         "id": uuid,
+        "name": {"type": "string"},
         "type": {"enum": TEMPLATE_TYPES},
         "created_at": {
             "format": "date-time",
@@ -37,7 +38,7 @@ get_template_by_id_response = {
         "body": {"type": "string"},
         "subject": {"type": ["string", "null"]}
     },
-    "required": ["id", "type", "created_at", "updated_at", "version", "created_by", "body"]
+    "required": ["id", "name", "type", "created_at", "updated_at", "version", "created_by", "body"]
 }
 
 post_template_preview_request = {
