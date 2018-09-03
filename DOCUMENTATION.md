@@ -649,7 +649,8 @@ If the request to the client is successful, the client returns a `dict`.
 
 ```python
 {
-    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a', # required string - template ID
+    "name": "STRING", # required string - template name
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
@@ -700,7 +701,8 @@ If the request to the client is successful, the client returns a `dict`.
 
 ```python
 {
-    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a', # required string - template ID
+    "name": "STRING", # required string - template name
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
@@ -752,14 +754,15 @@ If the request to the client is successful, the client returns a `dict`.
 {
     "templates": [
         {
-            "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
-    		"type": "sms / email / letter" , # required string
-    		"created_at": "STRING", # required string - date and time template created
-    		"updated_at": "STRING", # required string - date and time template last updated
-    		"version": NUMBER, # required string - template version
-    		"created_by": "someone@example.com", # required string
-    		"body": "STRING", # required string - body of notification
-    		"subject": "STRING" # required string for email - subject of email
+            "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a', # required string - template ID
+            "name": "STRING", # required string - template name
+            "type": "sms / email / letter" , # required string
+            "created_at": "STRING", # required string - date and time template created
+            "updated_at": "STRING", # required string - date and time template last updated
+            "version": NUMBER, # required string - template version
+            "created_by": "someone@example.com", # required string
+            "body": "STRING", # required string - body of notification
+            "subject": "STRING" # required string for email - subject of email
         },
         {
             ...another template
