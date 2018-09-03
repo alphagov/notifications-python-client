@@ -1,3 +1,7 @@
+## 5.0.1
+
+* Change `BaseAPIClient.request` method to only add use the `data` and `params` arguments if they are not `None`, in order to avoid sending GET requests with a body of `'null'`, since these are rejected by Cloudfront.
+
 ## 5.0.0
 
 * Changed the way documents are added to the personalisation data. A new `prepare_upload` function has to be called for each document upload to prepare the file data to be sent to the Notify API.
