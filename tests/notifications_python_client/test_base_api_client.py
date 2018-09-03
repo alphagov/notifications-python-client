@@ -97,6 +97,17 @@ def test_invalid_json_raises_api_error(base_client, rmock):
     assert e.value.status_code == 200
 
 
+def test_get_is_not_sent_with_body(base_client, rmock):
+    rmock.request(
+        "GET",
+        "http://test-host/",
+        json={},
+        status_code=200)
+
+    base_client.request('GET', '/')
+    assert rmock.last_request.body is None
+
+
 def test_user_agent_is_set(base_client, rmock):
     rmock.request(
         "GET",
