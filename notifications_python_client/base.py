@@ -65,12 +65,20 @@ class BaseAPIClient(object):
 
         logger.debug("API request {} {}".format(method, url))
 
-        payload = json.dumps(data)
-
         api_token = create_jwt_token(
             self.api_key,
             self.service_id
         )
+
+        kwargs = {
+            "headers": self.generate_headers(api_token),
+        }
+
+        if data is not None:
+            kwargs.update(data=json.dumps(data))
+
+        if params is not None:
+            kwargs.update(params=params)
 
         url = urllib.parse.urljoin(str(self.base_url), str(url))
 
@@ -79,9 +87,7 @@ class BaseAPIClient(object):
             response = requests.request(
                 method,
                 url,
-                headers=self.generate_headers(api_token),
-                data=payload,
-                params=params
+                **kwargs
             )
             response.raise_for_status()
         except requests.RequestException as e:
