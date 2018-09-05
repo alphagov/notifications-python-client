@@ -368,6 +368,62 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 
 
+## Send a precompiled Letter
+
+This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information.
+
+### Method
+
+```python
+response = notifications_client.send_precompiled_letter_notification(
+    reference,      # Reference to identify the notification
+    pdf_file        # PDF File object
+)
+```
+
+### Arguments
+
+##### `reference` (required)
+
+A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
+
+#### `pdf_file` (required)
+
+The precompiled letter must be a PDF file.
+
+```python
+with open("path/to/pdf_file", "rb") as pdf_file:
+    notification = notifications_client.send_precompiled_letter_notification(
+        reference="your reference", pdf_file=pdf_file
+    )
+```
+
+### Response
+
+If the request to the client is successful, the client returns a `dict`:
+
+```python
+{
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": "your-letter-reference"
+}
+```
+
+### Error codes
+
+If the request is not successful, the client returns an HTTPError containing the relevant error code.
+ 
+|error.status_code|error.message|How to fix|
+|:---|:---|:---|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send precompiled letters"`<br>`]}`|This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information| 
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Letter content is not a valid PDF"`<br>`]}`|PDF file format is required|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "reference is a required property"`<br>`}]`|Add a `reference` argument to the method call|
+
+
 # Get message status
 
 Message status depends on the type of message that you have sent.
@@ -397,6 +453,13 @@ You can only get the status of messages that are 7 days old or less.
 |Failed|The only failure status that applies to letters is `technical-failure`. GOV.UK Notify had an unexpected error while sending to our printing provider.|
 |Accepted|GOV.UK Notify is printing and posting the letter.|
 |Received|The provider has received the letter to deliver.|
+
+## Status - pre-compiled letter
+
+|Status|information|
+|:---|:---|
+|pending-virus-check|GOV.UK Notify virus scan of the pre-compiled letter file is not yet complete.|
+|virus-scan-failed|GOV.UK Notify virus scan has identified a potential virus in the pre-compiled letter file.|
 
 ## Get the status of one message
 
