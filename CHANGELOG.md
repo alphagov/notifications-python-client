@@ -1,3 +1,8 @@
+## 5.1.0
+
+* Added `name` to the response for `NotificationsAPIClient.get_template_by_id()` and `NotificationsAPIClient.get_template_version()`
+    * These functions now return the template name
+
 ## 5.0.1
 
 * Change `BaseAPIClient.request` method to only add use the `data` and `params` arguments if they are not `None`, in order to avoid sending GET requests with a body of `'null'`, since these are rejected by Cloudfront.
