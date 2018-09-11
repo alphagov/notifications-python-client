@@ -383,11 +383,11 @@ response = notifications_client.send_precompiled_letter_notification(
 
 ### Arguments
 
-##### `reference` (required)
+##### reference (required)
 
 A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
 
-#### `pdf_file` (required)
+#### pdf_file (required)
 
 The precompiled letter must be a PDF file.
 
