@@ -369,7 +369,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 
 
-## Send a precompiled Letter
+## Send a pre-compiled letter
 
 This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information.
 
@@ -384,11 +384,11 @@ response = notifications_client.send_precompiled_letter_notification(
 
 ### Arguments
 
-##### `reference` (required)
+##### reference (required)
 
 A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
 
-#### `pdf_file` (required)
+#### pdf_file (required)
 
 The precompiled letter must be a PDF file.
 
