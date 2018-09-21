@@ -1,3 +1,7 @@
+## 5.2.0
+
+* Add a document size check to `prepare_upload`. Will raise `ValueError` when trying to upload a document larger than 2MB.
+
 ## 5.1.0
 
 * Added `name` to the response for `NotificationsAPIClient.get_template_by_id()` and `NotificationsAPIClient.get_template_version()`
