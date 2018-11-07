@@ -193,7 +193,8 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 You can leave out this argument if your service only has one email reply-to address, or you want to use the default email address.
 
-### Send a document by email
+## Send a document by email
+
 Send files without the need for email attachments.
 
 To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
@@ -202,7 +203,9 @@ To send a document by email, add a placeholder field to the template then upload
 
 #### Add a placeholder field to the template
 
-In Notify, use double brackets to add a placeholder field to the email template. For example:
+1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/). 
+1. Go to the __Templates__ page and select the relevant email template.
+1. Add a placeholder field to the email template using double brackets. For example:
 
 "Download your document at: ((link_to_document))"
 
