@@ -429,7 +429,7 @@ If the request is not successful, the client returns an HTTPError containing the
 
 Message status depends on the type of message that you have sent.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ## Status - text and email
 
@@ -532,7 +532,7 @@ If the request is not successful, the client will return an `HTTPError` containi
 
 This API call returns one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `older_than` argument.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ### Method
 
@@ -623,7 +623,7 @@ older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notificati
 
 If you leave out this argument, the method returns the most recent 250 notifications.
 
-The client only returns notifications that are 7 days old or less. If the notification specified in this argument is older than 7 days, the client returns an empty response.
+The client only returns notifications that are 7 days old or newer. If the notification specified in this argument is older than 7 days, the client returns an empty response.
 
 ### Response
 
@@ -909,7 +909,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 This API call returns one page of up to 250 received text messages. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the older_than argument.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ## Get all received text messages
 
