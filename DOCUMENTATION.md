@@ -430,9 +430,9 @@ If the request is not successful, the client returns an HTTPError containing the
 
 # Get message status
 
-Message status depends on the type of message that you have sent.
+Message status depends on the type of message you have sent.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ## Status - text and email
 
@@ -462,8 +462,8 @@ You can only get the status of messages that are 7 days old or less.
 
 |Status|information|
 |:---|:---|
-|pending-virus-check|GOV.UK Notify virus scan of the pre-compiled letter file is not yet complete.|
-|virus-scan-failed|GOV.UK Notify virus scan has identified a potential virus in the pre-compiled letter file.|
+|Pending virus check|GOV.UK Notify virus scan of the pre-compiled letter file is not yet complete.|
+|Virus scan failed|GOV.UK Notify virus scan has identified a potential virus in the pre-compiled letter file.|
 
 ## Get the status of one message
 
