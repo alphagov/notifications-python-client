@@ -66,7 +66,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING', # optional string - identifies notification(s)
@@ -167,7 +167,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications.
+A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING', # optional string - identifies notification(s)
@@ -315,7 +315,7 @@ personalisation={
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING' # optional string - identifies notification(s)
@@ -389,7 +389,7 @@ response = notifications_client.send_precompiled_letter_notification(
 
 ##### reference (required)
 
-A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
+A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. 
 
 #### pdf_file (required)
 
@@ -535,7 +535,7 @@ If the request is not successful, the client will return an `HTTPError` containi
 
 This API call returns one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `older_than` argument.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ### Method
 
@@ -610,7 +610,7 @@ You can filter by:
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications.
+A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING' # optional string - identifies notification(s)
@@ -626,7 +626,7 @@ older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notificati
 
 If you leave out this argument, the method returns the most recent 250 notifications.
 
-The client only returns notifications that are 7 days old or less. If the notification specified in this argument is older than 7 days, the client returns an empty response.
+The client only returns notifications that are 7 days old or newer. If the notification specified in this argument is older than 7 days, the client returns an empty response.
 
 ### Response
 
@@ -912,7 +912,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 This API call returns one page of up to 250 received text messages. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the older_than argument.
 
-You can only get the status of messages that are 7 days old or less.
+You can only get the status of messages that are 7 days old or newer.
 
 ## Get all received text messages
 
