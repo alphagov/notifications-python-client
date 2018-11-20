@@ -744,8 +744,6 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 ### Method
 
-This returns the latest version of the template.
-
 ```python
 response = notifications_client.get_template_version(
     'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
