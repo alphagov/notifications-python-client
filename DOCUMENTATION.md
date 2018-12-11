@@ -463,8 +463,8 @@ You can only get the status of messages that are 7 days old or newer.
 
 |Status|information|
 |:---|:---|
-|Pending virus check|GOV.UK Notify has not completed a virus scan of the pre-compiled letter file.|
-|Virus scan failed|GOV.UK Notify has found a potential virus in the pre-compiled letter file.|
+|Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
+|Virus scan failed|GOV.UK Notify has found a potential virus in the precompiled letter file.|
 
 ## Get the status of one message
 
