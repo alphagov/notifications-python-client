@@ -456,8 +456,8 @@ You can only get the status of messages that are 7 days old or newer.
 |Status|information|
 |:---|:---|
 |Failed|The only failure status that applies to letters is `technical-failure`. GOV.UK Notify had an unexpected error while sending to our printing provider.|
-|Accepted|GOV.UK Notify has placed the letter in a queue, ready to be sent to the provider.|
-|Received|GOV.UK Notify has sent the letter to the provider. The provider has printed and dispatched the letter.|
+|Accepted|GOV.UK Notify has sent your letter to the provider to be printed.|
+|Received|The provider has printed and dispatched the letter.|
 
 ## Status - precompiled letter
 
