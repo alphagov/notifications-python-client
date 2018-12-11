@@ -608,10 +608,10 @@ You can filter by:
 |`permanent-failure`|The provider could not deliver the message because the email address or phone number was wrong. You should remove these email addresses or phone numbers from your database. You’ll still be charged for text messages to numbers that do not exist.|Yes|Yes|||
 |`temporary-failure`|The provider could not deliver the message after trying for 72 hours. This can happen when the recipient's inbox is full, or their phone is off. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|Yes|Yes|||
 |`technical-failure`|Email / Text: Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can leave out this argument to ignore this filter.|Yes|Yes|||
-|`accepted`|GOV.UK Notify has placed the letter in a queue, ready to be sent to the provider.|||Yes||
-|`received`|GOV.UK Notify has sent the letter to the provider. The provider has printed and dispatched the letter.|||Yes||
-|`pending virus check`|GOV.UK Notify has not completed a virus scan of the pre-compiled letter file.||||Yes|
-|`virus scan failed`|GOV.UK Notify has found a potential virus in the pre-compiled letter file.||||Yes|
+|`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|||Yes||
+|`received`|The provider has printed and dispatched the letter.|||Yes||
+|`pending virus check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.||||Yes|
+|`virus scan failed`|GOV.UK Notify has found a potential virus in the precompiled letter file.||||Yes|
 
 #### reference (optional)
 
