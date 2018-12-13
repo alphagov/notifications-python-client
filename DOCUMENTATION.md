@@ -449,7 +449,7 @@ You can only get the status of messages that are 7 days old or newer.
 |Status|Information|
 |:---|:---|
 |Pending|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient's device has not yet responded. Another callback from the provider determines the final status of the notification.|
-|Sent|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|
+|Sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|
 
 ## Status - letter
 
