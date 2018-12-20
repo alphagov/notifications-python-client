@@ -449,7 +449,7 @@ You can only get the status of messages that are 7 days old or newer.
 |Status|Information|
 |:---|:---|
 |Pending|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient's device has not yet responded. Another callback from the provider determines the final status of the notification.|
-|Sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|
+|Sent / Sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information. The GOV.UK Notify client API returns this status as `sent`. The The GOV.UK Notify client app returns this status as `Sent internationally`.|
 
 ## Status - letter
 
@@ -602,7 +602,7 @@ You can filter by:
 |`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|Yes|Yes|||
 |`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient. GOV.UK Notify is waiting for delivery information.|Yes|Yes|||
 |`delivered`|The message was successfully delivered|Yes|Yes|||
-|`sent`|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|Yes||||
+|`sent` / `Sent internationally`|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|Yes||||
 |`pending`|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient's device has not yet responded. Another callback from the provider determines the final status of the notification.|Yes||||
 |`failed`|This returns all failure statuses:<br>- `permanent-failure`<br>- `temporary-failure`<br>- `technical-failure`|Yes|Yes|||
 |`permanent-failure`|The provider could not deliver the message because the email address or phone number was wrong. You should remove these email addresses or phone numbers from your database. You’ll still be charged for text messages to numbers that do not exist.|Yes|Yes|||
