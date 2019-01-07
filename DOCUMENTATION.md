@@ -465,7 +465,7 @@ You can only get the status of messages that are 7 days old or newer.
 |:---|:---|
 |Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|Validation failed|The precompiled letter file has an invalid layout.|
+|Validation failed|Content in the precompiled letter file is outside the printable area.|
 
 ## Get the status of one message
 
@@ -613,7 +613,7 @@ You can filter by:
 |`received`|The provider has printed and dispatched the letter.|||Yes||
 |`pending virus check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.||||Yes|
 |`virus scan failed`|GOV.UK Notify found a potential virus in the precompiled letter file.||||Yes|
-|`validation failed`|The precompiled letter file has an invalid layout.||||Yes|
+|`validation failed`|Content in the precompiled letter file is outside the printable area.||||Yes|
 
 #### reference (optional)
 
