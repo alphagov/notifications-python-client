@@ -611,9 +611,9 @@ You can filter by:
 |`technical-failure`|Email / Text: Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can leave out this argument to ignore this filter.|Yes|Yes|||
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|||Yes||
 |`received`|The provider has printed and dispatched the letter.|||Yes||
-|`pending virus check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.||||Yes|
-|`virus scan failed`|GOV.UK Notify found a potential virus in the precompiled letter file.||||Yes|
-|`validation failed`|Content in the precompiled letter file is outside the printable area.||||Yes|
+|`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.||||Yes|
+|`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.||||Yes|
+|`validation-failed`|Content in the precompiled letter file is outside the printable area.||||Yes|
 
 #### reference (optional)
 
