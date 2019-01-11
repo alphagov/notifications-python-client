@@ -82,6 +82,19 @@ def send_precompiled_letter_notification_test_response(python_client):
     return response['id']
 
 
+def send_precompiled_letter_notification_set_postage_test_response(python_client):
+    unique_name = str(uuid.uuid4())
+    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
+        response = python_client.send_precompiled_letter_notification(
+            reference=unique_name,
+            pdf_file=pdf_file,
+            postage="first"
+        )
+    validate(response, post_precompiled_letter_response)
+    assert "first" in response['postage']
+    return response['id']
+
+
 def get_notification_by_id(python_client, id, notification_type):
     response = python_client.get_notification_by_id(id)
     if notification_type == EMAIL_TYPE:
@@ -195,6 +208,7 @@ def test_integration():
     email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
     precompiled_letter_id = send_precompiled_letter_notification_test_response(client)
+    precompiled_letter_with_postage_id = send_precompiled_letter_notification_set_postage_test_response(client)
 
     get_notification_by_id(client, sms_id, SMS_TYPE)
     get_notification_by_id(client, sms_with_sender_id, SMS_TYPE)
@@ -202,6 +216,7 @@ def test_integration():
     get_notification_by_id(client, email_with_reply_id, EMAIL_TYPE)
     get_notification_by_id(client, letter_id, LETTER_TYPE)
     get_notification_by_id(client, precompiled_letter_id, LETTER_TYPE)
+    get_notification_by_id(client, precompiled_letter_with_postage_id, LETTER_TYPE)
 
     get_all_notifications(client)
 
