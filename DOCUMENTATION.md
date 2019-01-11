@@ -201,7 +201,7 @@ This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www
 
 To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
 
-#### Add a placeholder field to the template
+### Add a placeholder field to the template
 
 1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/). 
 1. Go to the __Templates__ page and select the relevant email template.
@@ -209,7 +209,7 @@ To send a document by email, add a placeholder field to the template then upload
 
 "Download your document at: ((link_to_document))"
 
-#### Upload your document
+### Upload your document
 
 The document you upload must be a PDF file smaller than 2MB.
 
@@ -388,7 +388,7 @@ response = notifications_client.send_precompiled_letter_notification(
 
 ### Arguments
 
-##### reference (required)
+#### reference (required)
 
 A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. 
 
