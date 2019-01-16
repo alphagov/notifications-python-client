@@ -1,3 +1,8 @@
+## 5.3.0
+
+* Add an optional `postage` argument to `send_precompiled_letter_notification` method.
+* Add postage to the response of `send_precompiled_letter_notification`
+
 ## 5.2.0
 
 * Add a document size check to `prepare_upload`. Will raise `ValueError` when trying to upload a document larger than 2MB.
