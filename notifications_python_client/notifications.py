@@ -70,12 +70,15 @@ class NotificationsAPIClient(BaseAPIClient):
             data=notification
         )
 
-    def send_precompiled_letter_notification(self, reference, pdf_file):
+    def send_precompiled_letter_notification(self, reference, pdf_file, postage=None):
         content = base64.b64encode(pdf_file.read()).decode('utf-8')
         notification = {
             "reference": reference,
             "content": content
         }
+
+        if postage:
+            notification["postage"] = postage
 
         return self.post(
             '/v2/notifications/letter',

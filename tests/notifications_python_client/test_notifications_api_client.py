@@ -363,6 +363,30 @@ def test_send_precompiled_letter_notification(notifications_client, rmock, mocke
     }
 
 
+def test_send_precompiled_letter_notification_sets_postage(notifications_client, rmock, mocker):
+    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+    mock_file = Mock(
+        read=Mock(return_value=b'file_contents'),
+    )
+
+    notifications_client.send_precompiled_letter_notification(
+        reference='Baz',
+        pdf_file=mock_file,
+        postage='first'
+    )
+
+    assert rmock.last_request.json() == {
+        'reference': 'Baz',
+        'content': base64.b64encode(b'file_contents').decode('utf-8'),
+        'postage': 'first'
+    }
+
+
 def test_get_all_notifications_iterator_calls_get_notifications(notifications_client, rmock):
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
     rmock.request(

@@ -34,7 +34,7 @@ The `./scripts/run_tests.py` script will run all the tests.
 [`py.test`](http://pytest.org/latest/) is used for testing.
 
 Running the script will also check for conformance with
-[`pep8`](https://www.python.org/dev/peps/pep-0008/).
+[`flake8`](https://pypi.org/project/flake8/).
 
 Additionally code coverage is checked via `pytest-cov`.
 
