@@ -193,13 +193,13 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 You can leave out this argument if your service only has one email reply-to address, or you want to use the default email address.
 
-## Send a document by email
+## Send a file by email
 
 Send files without the need for email attachments.
 
-This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) to enable this function for your service.
 
-To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
+To send a file by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the file.
 
 #### Add a placeholder field to the template
 
