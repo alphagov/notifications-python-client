@@ -207,11 +207,11 @@ To send a file by email, add a placeholder field to the template then upload a f
 1. Go to the __Templates__ page and select the relevant email template.
 1. Add a placeholder field to the email template using double brackets. For example:
 
-"Download your document at: ((link_to_document))"
+"Download your file at: ((link_to_document))"
 
-#### Upload your document
+#### Upload your file
 
-The document you upload must be a PDF file smaller than 2MB.
+The file you upload must be a PDF file smaller than 2MB.
 
 Pass the file object as a value into the personalisation argument. For example:
 
