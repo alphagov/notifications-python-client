@@ -2,8 +2,6 @@
 
 This documentation is for developers interested in using the GOV.UK Notify Python client to send emails, text messages or letters. Notify supports Python 3.x and 2.7.
 
-We recommend that you use this client library rather than use the [GOV.UK Notify API](https://github.com/alphagov/notifications-api) directly, as there is no documentation for using the API in this way. 
-
 # Set up the client
 
 ## Install the client
