@@ -7,6 +7,7 @@ standard_library.install_aliases()
 import base64
 import logging
 import re
+from io import BytesIO
 
 from notifications_python_client.base import BaseAPIClient
 
@@ -107,6 +108,15 @@ class NotificationsAPIClient(BaseAPIClient):
 
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
+
+    def get_letter_pdf(self, id):
+        url = '/v2/notifications/{}/pdf'.format(id)
+        logger.debug("API request {} {}".format('GET', url))
+        url, kwargs = self._create_request_objects(url, data=None, params=None)
+
+        response = self._perform_request('GET', url, kwargs)
+
+        return BytesIO(response.content)
 
     def get_all_notifications(self, status=None, template_type=None, reference=None, older_than=None):
         data = {}
