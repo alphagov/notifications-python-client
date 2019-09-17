@@ -110,12 +110,12 @@ def get_notification_by_id(python_client, id, notification_type):
         raise KeyError("notification type should be email|sms")
 
 
-def get_letter_pdf(python_client, id):
+def get_pdf_for_letter(python_client, id):
     # this might fail if the pdf file hasn't been created/virus scanned yet, so check a few times.
     count = 0
     while True:
         try:
-            response = python_client.get_letter_pdf(id)
+            response = python_client.get_pdf_for_letter(id)
             break
         except HTTPError as exc:
             if exc.message[0]['error'] != 'PDFNotReadyError':
@@ -256,8 +256,8 @@ def test_integration():
     get_all_templates_for_type(client, EMAIL_TYPE)
     get_all_templates_for_type(client, SMS_TYPE)
 
-    get_letter_pdf(client, letter_id)
-    get_letter_pdf(client, precompiled_letter_id)
+    get_pdf_for_letter(client, letter_id)
+    get_pdf_for_letter(client, precompiled_letter_id)
 
     if (os.environ['INBOUND_SMS_QUERY_KEY']):
         get_received_text_messages()

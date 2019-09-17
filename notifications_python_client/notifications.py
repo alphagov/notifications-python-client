@@ -109,7 +109,7 @@ class NotificationsAPIClient(BaseAPIClient):
     def get_notification_by_id(self, id):
         return self.get('/v2/notifications/{}'.format(id))
 
-    def get_letter_pdf(self, id):
+    def get_pdf_for_letter(self, id):
         url = '/v2/notifications/{}/pdf'.format(id)
         logger.debug("API request {} {}".format('GET', url))
         url, kwargs = self._create_request_objects(url, data=None, params=None)

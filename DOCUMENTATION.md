@@ -711,7 +711,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 This returns the pdf contents of a letter notification.
 
 ```python
-pdf_file = notifications_client.get_letter_pdf(
+pdf_file = notifications_client.get_pdf_for_letter(
   'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - notification ID
 )
 ```
@@ -740,8 +740,9 @@ If the request is not successful, the client will return an `HTTPError` containi
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letter, try again later"`<br>`}]`|Wait for the notification to finish processing. This usually takes a few seconds|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in status virus-scan-failed"`<br>`}]`|You cannot retrieve the contents of a letter notification that contains a virus|
+|`400`|`[{`<br>`"error": "PDFNotReadyError",`<br>`"message": "PDF not available yet, try again later"`<br>`}]`|Wait for the notification to finish processing. This usually takes a few seconds|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document did not pass the virus scan"`<br>`}]`|You cannot retrieve the contents of a letter notification that contains a virus|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in technical-failure"`<br>`}]`|You cannot retrieve the contents of a letter notification in technical-failure|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Notification is not a letter"`<br>`}]`|Check that you are looking up the correct notification|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|

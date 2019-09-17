@@ -1,6 +1,6 @@
 ## 5.4.0
 
-* Add `NotificationsAPIClient.get_letter_pdf(id)`
+* Add `NotificationsAPIClient.get_pdf_for_letter(id)`
     * Returns a `BytesIO`
     * Will raise a BadRequestError if the PDF is not available
 
