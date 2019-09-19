@@ -504,6 +504,21 @@ def test_get_all_templates_by_type(notifications_client, rmock):
     assert rmock.called
 
 
+def test_get_pdf_for_letter(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/{1}/pdf".format(TEST_HOST, "123")
+    rmock.request(
+        "GET",
+        endpoint,
+        content=b'foo',
+        status_code=200)
+
+    response = notifications_client.get_pdf_for_letter('123')
+
+    assert response.read() == b'foo'
+
+    assert rmock.called
+
+
 def _generate_response(next_link_uuid, notifications=[]):
     return {
         'json': {

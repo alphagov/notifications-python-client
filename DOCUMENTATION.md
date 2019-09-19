@@ -205,7 +205,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 #### Add a placeholder field to the template
 
-1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/). 
+1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/).
 1. Go to the __Templates__ page and select the relevant email template.
 1. Add a placeholder field to the email template using double brackets. For example:
 
@@ -330,9 +330,9 @@ The following parameters in the letter recipient's address are optional:
 
 ```python
 personalisation={
-    'address_line_3': '123 High Street', 	
-    'address_line_4': 'Richmond upon Thames', 	
-    'address_line_5': 'London', 		
+    'address_line_3': '123 High Street',
+    'address_line_4': 'Richmond upon Thames',
+    'address_line_5': 'London',
     'address_line_6': 'Middlesex',
 }
 ```
@@ -391,7 +391,7 @@ response = notifications_client.send_precompiled_letter_notification(
 
 #### reference (required)
 
-A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. 
+A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
 
 #### pdf_file (required)
 
@@ -425,10 +425,10 @@ If the request to the client is successful, the client returns a `dict`:
 ### Error codes
 
 If the request is not successful, the client returns an HTTPError containing the relevant error code.
- 
+
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)| 
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Letter content is not a valid PDF"`<br>`]}`|PDF file format is required|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "reference is a required property"`<br>`}]`|Add a `reference` argument to the method call|
@@ -704,6 +704,50 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 
 
+## Get a PDF for a letter notification
+
+### Method
+
+This returns the pdf contents of a letter notification.
+
+```python
+pdf_file = notifications_client.get_pdf_for_letter(
+  'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - notification ID
+)
+```
+
+### Arguments
+
+#### notification_id (required)
+
+The ID of the notification. You can find the notification ID in the response to the [original notification method call](/python.html#get-the-status-of-one-message-response).
+
+You can also find it in your [GOV.UK Notify Dashboard](https://www.notifications.service.gov.uk).
+
+1. Sign into GOV.UK Notify and select __Dashboard__.
+1. Select __letters sent__.
+1. Select the relevant notification.
+1. Copy the notification ID from the end of the page URL, for example `https://www.notifications.service.gov.uk/services/af90d4cb-ae88-4a7c-a197-5c30c7db423b/notification/ID`.
+
+### Response
+
+If the request to the client is successful, the client will return a `io.BytesIO` object containing the raw PDF data.
+
+### Error codes
+
+If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
+
+|error.status_code|error.message|How to fix|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
+|`400`|`[{`<br>`"error": "PDFNotReadyError",`<br>`"message": "PDF not available yet, try again later"`<br>`}]`|Wait for the notification to finish processing. This usually takes a few seconds|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document did not pass the virus scan"`<br>`}]`|You cannot retrieve the contents of a letter notification that contains a virus|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in technical-failure"`<br>`}]`|You cannot retrieve the contents of a letter notification in technical-failure|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Notification is not a letter"`<br>`}]`|Check that you are looking up the correct notification|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the notification ID|
+
 # Get a template
 
 ## Get a template by ID
@@ -722,7 +766,7 @@ response = notifications_client.get_template(
 
 #### template_id (required)
 
-The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page to find this. 
+The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page to find this.
 
 ### Response
 
@@ -768,7 +812,7 @@ response = notifications_client.get_template_version(
 
 #### template_id (required)
 
-The ID of the template. Sign in to GOV.UK Notify and go to the __Templates__ page to find this. 
+The ID of the template. Sign in to GOV.UK Notify and go to the __Templates__ page to find this.
 
 #### version (required)
 
@@ -946,7 +990,7 @@ If the request to the client is successful, the client will return a `<generator
 
 ## Get one page of received text messages
 
-This will return one page of up to 250 text messages.  
+This will return one page of up to 250 text messages.
 
 ### Method
 

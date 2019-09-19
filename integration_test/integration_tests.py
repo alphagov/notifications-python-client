@@ -1,3 +1,5 @@
+from io import BytesIO
+import time
 import os
 import uuid
 
@@ -16,6 +18,7 @@ from integration_test.schemas.v2.templates_schemas import get_all_template_respo
 from integration_test.enums import SMS_TYPE, EMAIL_TYPE, LETTER_TYPE
 
 from notifications_python_client.notifications import NotificationsAPIClient
+from notifications_python_client.errors import HTTPError
 
 
 def validate(json_to_validate, schema):
@@ -105,6 +108,28 @@ def get_notification_by_id(python_client, id, notification_type):
         validate(response, get_notification_response)
     else:
         raise KeyError("notification type should be email|sms")
+
+
+def get_pdf_for_letter(python_client, id):
+    # this might fail if the pdf file hasn't been created/virus scanned yet, so check a few times.
+    count = 0
+    while True:
+        try:
+            response = python_client.get_pdf_for_letter(id)
+            break
+        except HTTPError as exc:
+            if exc.message[0]['error'] != 'PDFNotReadyError':
+                raise
+
+            count += 1
+            if count > 6:  # total time slept at this point is 21 seconds
+                print('pdf not ready after 21 seconds')
+                raise
+            else:
+                time.sleep(count)
+
+    assert type(response) == BytesIO
+    assert len(response.read()) != 0
 
 
 def get_received_text_messages():
@@ -230,6 +255,9 @@ def test_integration():
     get_all_templates(client)
     get_all_templates_for_type(client, EMAIL_TYPE)
     get_all_templates_for_type(client, SMS_TYPE)
+
+    get_pdf_for_letter(client, letter_id)
+    get_pdf_for_letter(client, precompiled_letter_id)
 
     if (os.environ['INBOUND_SMS_QUERY_KEY']):
         get_received_text_messages()

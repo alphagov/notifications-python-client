@@ -62,9 +62,14 @@ class BaseAPIClient(object):
         }
 
     def request(self, method, url, data=None, params=None):
-
         logger.debug("API request {} {}".format(method, url))
+        url, kwargs = self._create_request_objects(url, data, params)
 
+        response = self._perform_request(method, url, kwargs)
+
+        return self._process_json_response(response)
+
+    def _create_request_objects(self, url, data, params):
         api_token = create_jwt_token(
             self.api_key,
             self.service_id
@@ -82,6 +87,9 @@ class BaseAPIClient(object):
 
         url = urllib.parse.urljoin(str(self.base_url), str(url))
 
+        return url, kwargs
+
+    def _perform_request(self, method, url, kwargs):
         start_time = monotonic()
         try:
             response = requests.request(
@@ -90,6 +98,7 @@ class BaseAPIClient(object):
                 **kwargs
             )
             response.raise_for_status()
+            return response
         except requests.RequestException as e:
             api_error = HTTPError.create(e)
             logger.error(
@@ -105,6 +114,7 @@ class BaseAPIClient(object):
             elapsed_time = monotonic() - start_time
             logger.debug("API {} request on {} finished in {}".format(method, url, elapsed_time))
 
+    def _process_json_response(self, response):
         try:
             if response.status_code == 204:
                 return

@@ -1,3 +1,10 @@
+## 5.4.0
+
+* Add `NotificationsAPIClient.get_pdf_for_letter(id)`
+    * Returns a `BytesIO`
+    * Will raise a BadRequestError if the PDF is not available
+
+
 ## 5.3.0
 
 * Add an optional `postage` argument to `send_precompiled_letter_notification` method.
