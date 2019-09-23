@@ -1,3 +1,4 @@
+from datetime import datetime
 from io import BytesIO
 import time
 import os
@@ -122,8 +123,8 @@ def get_pdf_for_letter(python_client, id):
                 raise
 
             count += 1
-            if count > 6:  # total time slept at this point is 21 seconds
-                print('pdf not ready after 21 seconds')
+            if count > 36:
+                print('pdf {} not ready at {} after 36 seconds'.format(id, datetime.utcnow()))
                 raise
             else:
                 time.sleep(count)
