@@ -9,6 +9,7 @@ RUN \
 	&& apt-get install -y --no-install-recommends \
 		make \
 		git \
+		gnupg \
 		python2.7 \
 		python3.5 \
 		python3-pip \
