@@ -85,7 +85,7 @@
 
 * Added `NotificationsAPIClient.send_letter_notification()`:
   * functions similarly to `send_sms_notification` and `send_email_notification`, however, address details are provided
-    in the personalisation dict.
+    in the personalisation dict
   * See more details in the [README](https://github.com/alphagov/notifications-python-client#letter)
 
 ## 4.3.0
