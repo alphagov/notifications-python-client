@@ -1,8 +1,6 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-PIP_ACCEL_CACHE ?= ${CURDIR}/.cache/pip-accel
-
 DOCKER_BUILDER_IMAGE_NAME = govuk/notify-python-client-runner
 
 BUILD_TAG ?= notifications-python-client-manual
@@ -18,12 +16,10 @@ venv: venv/bin/activate ## Create virtualenv if it does not exist
 
 venv/bin/activate:
 	test -d venv || virtualenv venv -p python3
-	./venv/bin/pip install pip-accel
 
 .PHONY: dependencies
 dependencies: venv ## Install build dependencies
-	mkdir -p ${PIP_ACCEL_CACHE}
-	PIP_ACCEL_CACHE=${PIP_ACCEL_CACHE} ./venv/bin/pip-accel install --upgrade .
+	pip install --upgrade .
 
 .PHONY: build
 build: dependencies ## Build project

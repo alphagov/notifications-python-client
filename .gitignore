@@ -57,9 +57,10 @@ docs/_build/
 
 # PyBuilder
 target/
-
+.vscode
 .idea/
 .DS_Store
 
 environment.sh
 docker.env
+.envrc
