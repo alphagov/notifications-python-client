@@ -78,8 +78,9 @@ You can leave out this argument if you do not have a reference.
 
 #### sms_sender_id (optional)
 
-A unique identifier of the sender of the text message notification. You can find this information on the __Text Message sender__ settings page:
+A unique identifier of the sender of the text message notification. 
 
+To find the text message sender:
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
 1. In the __Text Messages__ section, select __Manage__ on the __Text Message sender__ row.
