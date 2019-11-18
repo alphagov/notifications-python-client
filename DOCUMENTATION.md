@@ -50,6 +50,7 @@ The phone number of the recipient of the text message. This can be a UK or inter
 #### template_id (required)
 
 To find the template ID:
+
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
@@ -81,6 +82,7 @@ You can leave out this argument if you do not have a reference.
 A unique identifier of the sender of the text message notification. 
 
 To find the text message sender:
+
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
 1. In the __Text Messages__ section, select __Manage__ on the __Text Message sender__ row.
@@ -155,6 +157,7 @@ The email address of the recipient.
 #### template_id (required)
 
 To find the template ID:
+
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
@@ -186,6 +189,7 @@ You can leave out this argument if you do not have a reference.
 This is an email address specified by you to receive replies from your users. You must add at least one email reply-to address before your service can go live.
 
 To add a reply-to address:
+
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
 1. In the Email section, select __Manage__ on the __Email reply-to addresses__ row.
@@ -305,6 +309,7 @@ To send Notify a request to go live:
 #### template_id (required)
 
 To find the template ID:
+
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
