@@ -186,13 +186,13 @@ You can leave out this argument if you do not have a reference.
 
 #### email_reply_to_id (optional)
 
-This is an email address specified by you to receive replies from your users. You must add at least one email reply-to address before your service can go live.
+This is an email address specified by you to receive replies from your users. You must add at least one reply-to email address before your service can go live.
 
-To add a reply-to address:
+To add a reply-to email address:
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
-1. In the Email section, select __Manage__ on the __Email reply-to addresses__ row.
+1. In the __Email__ section, select __Manage__ on the __Reply-to email addresses__ row.
 1. Select __Add reply-to address__.
 1. Enter the email address you want to use, and select __Add__.
 
@@ -202,7 +202,7 @@ For example:
 email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 ```
 
-You can leave out this argument if your service only has one email reply-to address, or you want to use the default email address.
+You can leave out this argument if your service only has one reply-to email address, or you want to use the default email address.
 
 ## Send a file by email
 
