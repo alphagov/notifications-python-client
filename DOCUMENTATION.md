@@ -79,7 +79,7 @@ You can leave out this argument if you do not have a reference.
 
 #### sms_sender_id (optional)
 
-A unique identifier of the sender of the text message notification. 
+A unique identifier of the sender of the text message notification.
 
 To find the text message sender:
 
@@ -225,7 +225,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 #### Upload your file
 
-The file you upload must be a PDF file smaller than 2MB.
+The file you upload must be a PDF or CSV file smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
 Pass the file object as a value into the personalisation argument. For example:
 
