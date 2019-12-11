@@ -14,7 +14,8 @@ from notifications_python_client.errors import (
     TokenDecodeError,
     TokenExpiredError,
     TokenIssuerError,
-    TokenIssuedAtError
+    TokenIssuedAtError,
+    TokenAlgorithmError,
 )
 
 __algorithm__ = "HS256"
@@ -100,25 +101,31 @@ def decode_jwt_token(token, secret):
             algorithms=[__algorithm__],
             leeway=__bound__
         )
-        # token has all the required fields
-        if 'iss' not in decoded_token:
-            raise TokenIssuerError
-        if 'iat' not in decoded_token:
-            raise TokenIssuedAtError
-
-        # check iat time is within bounds
-        now = epoch_seconds()
-        iat = int(decoded_token['iat'])
-        if now > (iat + __bound__):
-            raise TokenExpiredError("Token has expired", decoded_token)
-        if iat > (now + __bound__):
-            raise TokenExpiredError("Token can not be in the future", decoded_token)
-
-        return True
+        return validate_jwt_token(decoded_token)
     except jwt.InvalidIssuedAtError:
         raise TokenExpiredError("Token has invalid iat field", decode_token(token))
     except jwt.DecodeError:
         raise TokenDecodeError
+    except jwt.InvalidAlgorithmError:
+        raise TokenAlgorithmError
+
+
+def validate_jwt_token(decoded_token):
+    # token has all the required fields
+    if 'iss' not in decoded_token:
+        raise TokenIssuerError
+    if 'iat' not in decoded_token:
+        raise TokenIssuedAtError
+
+    # check iat time is within bounds
+    now = epoch_seconds()
+    iat = int(decoded_token['iat'])
+    if now > (iat + __bound__):
+        raise TokenExpiredError("Token has expired", decoded_token)
+    if iat > (now + __bound__):
+        raise TokenExpiredError("Token can not be in the future", decoded_token)
+
+    return True
 
 
 def decode_token(token):
