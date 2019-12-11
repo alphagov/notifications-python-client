@@ -15,7 +15,7 @@ from freezegun import freeze_time
 from notifications_python_client.authentication import (
     create_jwt_token, decode_jwt_token, get_token_issuer)
 from notifications_python_client.errors import (
-    TokenExpiredError, TokenDecodeError, TokenIssuerError, TokenIssuedAtError)
+    TokenExpiredError, TokenDecodeError, TokenIssuerError, TokenIssuedAtError, TokenAlgorithmError)
 
 
 # helper method to directly decode token
@@ -154,6 +154,18 @@ def test_decode_should_handle_invalid_token_with_missing_field(missing_field, ex
     )
 
     with pytest.raises(exc_class):
+        decode_jwt_token(token, 'bar')
+
+
+def test_decode_should_handle_invalid_token_with_non_hs256_algorithm():
+    payload = {'iss': '1234', 'iat': '1234'}
+    token = jwt.encode(
+        payload=payload,
+        key='bar',
+        headers={'typ': 'JWT', 'alg': 'HS512'}
+    )
+
+    with pytest.raises(TokenAlgorithmError):
         decode_jwt_token(token, 'bar')
 
 

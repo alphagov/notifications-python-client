@@ -35,6 +35,11 @@ class TokenIssuedAtError(TokenDecodeError):
         super().__init__('Invalid token: iat field not provided')
 
 
+class TokenAlgorithmError(TokenDecodeError):
+    def __init__(self):
+        super().__init__('Invalid token: algorithm used is not HS256')
+
+
 class APIError(Exception):
     def __init__(self, response=None, message=None):
         self.response = response
