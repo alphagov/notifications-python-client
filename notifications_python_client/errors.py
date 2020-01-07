@@ -16,13 +16,18 @@ class TokenError(Exception):
         self.token = token
 
 
+class TokenExpiredError(TokenError):
+    pass
+
+
+class TokenAlgorithmError(TokenError):
+    def __init__(self):
+        super().__init__('Invalid token: algorithm used is not HS256')
+
+
 class TokenDecodeError(TokenError):
     def __init__(self, message=None):
         super().__init__(message or 'Invalid token: signature')
-
-
-class TokenExpiredError(TokenError):
-    pass
 
 
 class TokenIssuerError(TokenDecodeError):
@@ -33,11 +38,6 @@ class TokenIssuerError(TokenDecodeError):
 class TokenIssuedAtError(TokenDecodeError):
     def __init__(self):
         super().__init__('Invalid token: iat field not provided')
-
-
-class TokenAlgorithmError(TokenDecodeError):
-    def __init__(self):
-        super().__init__('Invalid token: algorithm used is not HS256')
 
 
 class APIError(Exception):
