@@ -10,12 +10,20 @@ import time
 
 import jwt
 import pytest
+import mock
 from freezegun import freeze_time
 
 from notifications_python_client.authentication import (
     create_jwt_token, decode_jwt_token, get_token_issuer)
 from notifications_python_client.errors import (
-    TokenExpiredError, TokenDecodeError, TokenIssuerError, TokenIssuedAtError, TokenAlgorithmError)
+    TokenExpiredError,
+    TokenDecodeError,
+    TokenIssuerError,
+    TokenIssuedAtError,
+    TokenAlgorithmError,
+    TokenError,
+    TOKEN_ERROR_GENERIC_MESSAGE,
+)
 
 
 # helper method to directly decode token
@@ -47,6 +55,24 @@ def test_token_should_fail_to_decode_if_wrong_key():
     with pytest.raises(jwt.DecodeError) as err:
         decode_token(token, "wrong key")
     assert str(err.value) == "Signature verification failed"
+
+
+@pytest.mark.parametrize('exc_class', [
+    jwt.InvalidAudienceError,
+    jwt.ImmatureSignatureError,
+    jwt.InvalidIssuerError,
+    jwt.ExpiredSignatureError,
+
+])
+@mock.patch('notifications_python_client.authentication.jwt.decode')
+def test_decode_jwt_token_raises_token_error_if_jwt_invalid_token_error_exception(decode_mock, exc_class):
+    token = create_jwt_token("key", "client_id")
+    decode_mock.side_effect = exc_class
+
+    with pytest.raises(TokenError) as err:
+        decode_jwt_token(token, "key")
+
+    assert str(err.value.message) == TOKEN_ERROR_GENERIC_MESSAGE
 
 
 def test_token_should_contain_correct_claim_keys():

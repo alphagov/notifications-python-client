@@ -5,14 +5,17 @@ from __future__ import absolute_import
 from builtins import super
 from future import standard_library
 standard_library.install_aliases()
+
 REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"
+
+TOKEN_ERROR_GENERIC_MESSAGE = "Invalid token: See our requirements for JSON Web Tokens at https://docs.notifications.service.gov.uk/rest-api.html#authorisation-header"  # noqa
 
 
 class TokenError(Exception):
 
-    def __init__(self, message, token=None):
-        self.message = message
+    def __init__(self, message=None, token=None):
+        self.message = message if message else TOKEN_ERROR_GENERIC_MESSAGE
         self.token = token
 
 
