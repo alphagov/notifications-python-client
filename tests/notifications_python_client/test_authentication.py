@@ -57,7 +57,7 @@ def test_token_should_fail_to_decode_if_wrong_key():
     assert str(err.value) == "Signature verification failed"
 
 
-@pytest.mark.parametrize('exc_class', [
+@pytest.mark.parametrize('exception_class', [
     jwt.InvalidAudienceError,
     jwt.ImmatureSignatureError,
     jwt.InvalidIssuerError,
@@ -65,9 +65,9 @@ def test_token_should_fail_to_decode_if_wrong_key():
 
 ])
 @mock.patch('notifications_python_client.authentication.jwt.decode')
-def test_decode_jwt_token_raises_token_error_if_jwt_invalid_token_error_exception(decode_mock, exc_class):
+def test_decode_jwt_token_raises_token_error_if_jwt_invalid_token_error_exception(decode_mock, exception_class):
     token = create_jwt_token("key", "client_id")
-    decode_mock.side_effect = exc_class
+    decode_mock.side_effect = exception_class
 
     with pytest.raises(TokenError) as err:
         decode_jwt_token(token, "key")
@@ -170,11 +170,11 @@ def test_get_token_issuer_should_handle_invalid_token_with_no_iss():
     assert "Invalid token: iss field not provided. See our requirements" in e.value.message
 
 
-@pytest.mark.parametrize('missing_field,exc_class', [
+@pytest.mark.parametrize('missing_field,exception_class', [
     ('iss', TokenIssuerError),
     ('iat', TokenIssuedAtError),
 ])
-def test_decode_should_handle_invalid_token_with_missing_field(missing_field, exc_class):
+def test_decode_should_handle_invalid_token_with_missing_field(missing_field, exception_class):
     payload = {'iss': '1234', 'iat': '1234'}
     payload.pop(missing_field)
     token = jwt.encode(
@@ -183,7 +183,7 @@ def test_decode_should_handle_invalid_token_with_missing_field(missing_field, ex
         headers={'typ': 'JWT', 'alg': 'HS256'}
     )
 
-    with pytest.raises(exc_class):
+    with pytest.raises(exception_class):
         decode_jwt_token(token, 'bar')
 
 
