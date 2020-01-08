@@ -1,3 +1,7 @@
+## 5.5.0
+
+* Improve error messages for errors related to JSON Web Tokens
+
 ## 5.4.0
 
 * Add `NotificationsAPIClient.get_pdf_for_letter(id)`
