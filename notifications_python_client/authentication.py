@@ -16,6 +16,7 @@ from notifications_python_client.errors import (
     TokenIssuerError,
     TokenIssuedAtError,
     TokenAlgorithmError,
+    TokenError,
 )
 
 __algorithm__ = "HS256"
@@ -90,7 +91,10 @@ def decode_jwt_token(token, secret):
     :return boolean: True if valid token, False otherwise
     :raises TokenIssuerError: if iss field not present
     :raises TokenIssuedAtError: if iat field not present
-    :raises jwt.DecodeError: If signature validation fails
+    :raises TokenExpiredError: If the iat value expires this token
+    :raises TokenDecodeError: If the token cannot be decoded because it failed validation
+    :raises TokenAlgorithmError: If the algorithm is not recognised
+    :raises TokenError: If any other type of jwt exception is raised when trying jwt.decode
     """
     try:
         # check signature of the token
@@ -108,6 +112,14 @@ def decode_jwt_token(token, secret):
         raise TokenDecodeError
     except jwt.InvalidAlgorithmError:
         raise TokenAlgorithmError
+    except jwt.InvalidTokenError:
+        # At this point, we have not caught a specific exception we care about enough to show
+        # a precise error message (ie something to do with the iat, iss or alg fields).
+        # If there is a different reason our token is invalid we will throw a generic error as we
+        # don't wish to provide exact messages for every type of error that jwt might encounter.
+        # https://github.com/jpadilla/pyjwt/blob/master/jwt/exceptions.py
+        # https://pyjwt.readthedocs.io/en/latest/api.html#exceptions
+        raise TokenError
 
 
 def validate_jwt_token(decoded_token):
