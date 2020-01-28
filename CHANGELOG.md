@@ -1,3 +1,7 @@
+## 5.5.1
+
+* change error message to refer to file rather than document
+
 ## 5.5.0
 
 * Improve error messages for errors related to JSON Web Tokens
