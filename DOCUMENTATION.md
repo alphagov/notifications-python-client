@@ -222,7 +222,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant email template.
 1. Select __Edit__.
-1. Add a placeholder field to the email template using double brackets. For example:
+1. Add a placeholder to the email template using double brackets. For example:
 
 "Download your file at: ((link_to_file))"
 
