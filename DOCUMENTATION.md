@@ -228,7 +228,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 ### Upload your file
 
-The file you upload must be a PDF, CSV, text file or Microsoft Word document smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
+You can upload PDF, CSV, .odt, .txt and MS Word Document files. Your file must be smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
 Pass the file object as a value into the personalisation argument. For example:
 
