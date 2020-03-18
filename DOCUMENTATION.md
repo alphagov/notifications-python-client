@@ -323,7 +323,7 @@ The personalisation argument always contains the following required parameters f
 
 - `address_line_1`
 - `address_line_2`
-- `postcode`
+- `postcode` (this needs to be a real UK postcode)
 
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
 
@@ -527,7 +527,7 @@ If the request to the client is successful, the client will return a `dict`:
   "line_4": "ADDRESS LINE 4", # optional string for letter
   "line_5": "ADDRESS LINE 5", # optional string for letter
   "line_6": "ADDRESS LINE 6", # optional string for letter
-  "postcode": "STRING", # required string for letter
+  "postcode": "A REAL UK POSTCODE", # required string for letter
   "type": "sms / letter / email", # required string
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
@@ -678,7 +678,7 @@ If the request to the client is successful, the client returns a `dict`.
       "line_4": "ADDRESS LINE 4", # optional string for letter
       "line_5": "ADDRESS LINE 5", # optional string for letter
       "line_6": "ADDRESS LINE 6", # optional string for letter
-      "postcode": "STRING", # required for string letter
+      "postcode": "A REAL UK POSTCODE", # required string for letter
       "type": "sms / letter / email", # required string
       "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
       "template": {

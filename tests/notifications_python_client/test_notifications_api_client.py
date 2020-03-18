@@ -303,7 +303,7 @@ def test_create_letter_notification(notifications_client, rmock):
 
     notifications_client.send_letter_notification(
         template_id="456",
-        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'Baz'}
+        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'SW1 1AA'}
     )
 
     assert rmock.last_request.json() == {
@@ -311,7 +311,7 @@ def test_create_letter_notification(notifications_client, rmock):
         'personalisation': {
             'address_line_1': 'Foo',
             'address_line_2': 'Bar',
-            'postcode': 'Baz'
+            'postcode': 'SW1 1AA'
         }
     }
 
@@ -326,7 +326,7 @@ def test_create_letter_notification_with_reference(notifications_client, rmock):
 
     notifications_client.send_letter_notification(
         template_id="456",
-        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'Baz'},
+        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'SW1 1AA'},
         reference='Baz'
     )
 
@@ -335,7 +335,7 @@ def test_create_letter_notification_with_reference(notifications_client, rmock):
         'personalisation': {
             'address_line_1': 'Foo',
             'address_line_2': 'Bar',
-            'postcode': 'Baz'
+            'postcode': 'SW1 1AA'
         },
         'reference': 'Baz'
     }

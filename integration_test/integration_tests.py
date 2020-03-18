@@ -63,7 +63,7 @@ def send_letter_notification_test_response(python_client):
     personalisation = {
         'address_line_1': unique_name,
         'address_line_2': 'foo',
-        'postcode': 'bar'
+        'postcode': 'SW1 1AA'
     }
     response = python_client.send_letter_notification(
         template_id=template_id,
