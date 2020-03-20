@@ -323,7 +323,7 @@ The personalisation argument always contains the following required parameters f
 
 - `address_line_1`
 - `address_line_2`
-- `postcode`
+- `postcode` (this needs to be a real UK postcode)
 
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
 
@@ -389,6 +389,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#send-a-letter-arguments-personalisation-optional) for more information.|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Must be a real UK postcode"`<br>`}]`|Ensure that the value for the postcode field in your letter is a real UK postcode|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#rate-limits) for more information|
@@ -527,7 +528,7 @@ If the request to the client is successful, the client will return a `dict`:
   "line_4": "ADDRESS LINE 4", # optional string for letter
   "line_5": "ADDRESS LINE 5", # optional string for letter
   "line_6": "ADDRESS LINE 6", # optional string for letter
-  "postcode": "STRING", # required string for letter
+  "postcode": "A REAL UK POSTCODE", # required string for letter
   "type": "sms / letter / email", # required string
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
@@ -678,7 +679,7 @@ If the request to the client is successful, the client returns a `dict`.
       "line_4": "ADDRESS LINE 4", # optional string for letter
       "line_5": "ADDRESS LINE 5", # optional string for letter
       "line_6": "ADDRESS LINE 6", # optional string for letter
-      "postcode": "STRING", # required for string letter
+      "postcode": "A REAL UK POSTCODE", # required string for letter
       "type": "sms / letter / email", # required string
       "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
       "template": {
