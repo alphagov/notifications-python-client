@@ -244,6 +244,23 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
+#### CSV Files
+
+Uploads for CSV files should use the `is_csv` parameter
+on the `prepare_upload()` utility.  For example:
+
+```python
+from notifications_python_client import prepare_upload
+
+with open('file.csv', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'application_date': '2018-01-01',
+      'link_to_file': prepare_upload(f, is_csv=True),
+    }
+```
+
 ### Response
 
 If the request to the client is successful, the client returns a `dict`:
