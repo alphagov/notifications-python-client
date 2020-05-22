@@ -263,7 +263,7 @@ def test_create_email_notification_with_document_stream_upload(notifications_cli
         'template_id': '456', 'email_address': 'to@example.com',
         'personalisation': {
             'name': 'chris',
-            'doc': {'file': 'ZmlsZS1jb250ZW50cw=='}
+            'doc': {'file': 'ZmlsZS1jb250ZW50cw==', 'is_csv': False}
         }
     }
 
@@ -288,7 +288,32 @@ def test_create_email_notification_with_document_file_upload(notifications_clien
         'template_id': '456', 'email_address': 'to@example.com',
         'personalisation': {
             'name': 'chris',
-            'doc': {'file': 'JVBERi0xLjUgdGVzdAo='}
+            'doc': {'file': 'JVBERi0xLjUgdGVzdAo=', 'is_csv': False}
+        }
+    }
+
+
+def test_create_email_notification_with_csv_file_upload(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    rmock.request(
+        "POST",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    with open('tests/test_files/test.csv', 'rb') as f:
+        notifications_client.send_email_notification(
+            email_address="to@example.com", template_id="456", personalisation={
+                'name': 'chris',
+                'doc': prepare_upload(f, is_csv=True)
+            }
+        )
+
+    assert rmock.last_request.json() == {
+        'template_id': '456', 'email_address': 'to@example.com',
+        'personalisation': {
+            'name': 'chris',
+            'doc': {'file': 'VGhpcyBpcyBhIGNzdiwK', 'is_csv': True}
         }
     }
 
