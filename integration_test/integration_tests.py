@@ -211,7 +211,7 @@ def test_integration():
         base_url=os.environ['NOTIFY_API_URL'],
         api_key=os.environ['API_KEY']
     )
-    client_using_whitelist_key = NotificationsAPIClient(
+    client_using_team_key = NotificationsAPIClient(
         base_url=os.environ['NOTIFY_API_URL'],
         api_key=os.environ['API_SENDING_KEY']
     )
@@ -229,7 +229,7 @@ def test_integration():
     version_number = 1
 
     sms_id = send_sms_notification_test_response(client)
-    sms_with_sender_id = send_sms_notification_test_response(client_using_whitelist_key, sms_sender_id)
+    sms_with_sender_id = send_sms_notification_test_response(client_using_team_key, sms_sender_id)
     email_id = send_email_notification_test_response(client)
     email_with_reply_id = send_email_notification_test_response(client, email_reply_to_id)
     letter_id = send_letter_notification_test_response(client)
