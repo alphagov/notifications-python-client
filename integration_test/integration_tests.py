@@ -123,8 +123,8 @@ def get_pdf_for_letter(python_client, id):
                 raise
 
             count += 3
-            if count > 36:
-                print('pdf {} not ready at {} after 36 seconds'.format(id, datetime.utcnow()))
+            if count > 45:
+                print('pdf {} not ready at {} after 45 seconds'.format(id, datetime.utcnow()))
                 raise
             else:
                 time.sleep(3)
