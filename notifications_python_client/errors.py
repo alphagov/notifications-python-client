@@ -50,7 +50,21 @@ class APIError(Exception):
         self._message = message
 
     def __str__(self):
-        return "{} - {}".format(self.status_code, self.message)
+        return "{} - {}".format(self.status_code, self.error_message)
+
+    @property
+    def errors(self):
+        try:
+            return self.response.json().get('errors', [self.response.json()])
+        except (TypeError, ValueError, AttributeError, KeyError):
+            return [{'message': self._message or REQUEST_ERROR_MESSAGE}]
+
+    @property
+    def error_message(self):
+        try:
+            return self.response.json()['errors'][0]['message']
+        except (TypeError, ValueError, AttributeError, IndexError, KeyError):
+            return self.message
 
     @property
     def message(self):
