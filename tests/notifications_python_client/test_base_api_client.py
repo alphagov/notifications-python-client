@@ -71,7 +71,7 @@ def test_non_2xx_response_raises_api_error(base_client, rmock):
     rmock.request(
         "GET",
         "http://test-host/",
-        json={"errors": "Not found"},
+        json={"message": "Not found"},
         status_code=404)
 
     with pytest.raises(HTTPError) as e:
