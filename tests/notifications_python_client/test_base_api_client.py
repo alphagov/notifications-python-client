@@ -82,6 +82,31 @@ def test_non_2xx_response_raises_api_error(base_client, rmock):
     assert e.value.status_code == 404
 
 
+def test_exception_parses_errors_response(rmock, base_client):
+    """Test parsing of error response"""
+    rmock.request(
+        "GET",
+        "http://test-host",
+        json={
+            "errors": [{
+                "error": "AuthError",
+                "message": "Unauthorized: authentication token must be provided"
+            }],
+            "status_code": 401
+        },
+        status_code=401
+    )
+
+    with pytest.raises(HTTPError) as e:
+        base_client.request("GET", "/")
+
+    assert str(e.value) == "401 - Unauthorized: authentication token must be provided"
+    assert e.value.errors == [{"error": "AuthError", "message": "Unauthorized: authentication token must be provided"}]
+    assert e.value.message == [{"error": "AuthError", "message": "Unauthorized: authentication token must be provided"}]
+    assert e.value.error_message == "Unauthorized: authentication token must be provided"
+    assert e.value.status_code == 401
+
+
 def test_invalid_json_raises_api_error(base_client, rmock):
     rmock.request(
         "GET",
