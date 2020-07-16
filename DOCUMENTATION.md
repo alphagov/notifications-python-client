@@ -700,7 +700,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 ## Email status descriptions
 
-|Status|Information|
+|Status|Description|
 |:---|:---|
 |Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
 |Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
@@ -709,7 +709,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 ## Text message status descriptions
 
-|Status|Information|
+|Status|Description|
 |:---|:---|
 |Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
 |Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
@@ -720,15 +720,17 @@ If the request is not successful, the client returns an `HTTPError` containing t
 
 ## Letter status descriptions
 
-|Status|information|
+|Status|Description|
 |:---|:---|
 |Failed|The only failure status that applies to letters is `technical-failure`. GOV.UK Notify had an unexpected error while sending to our printing provider.|
 |Accepted|GOV.UK Notify has sent the letter to the provider to be printed.|
 |Received|The provider has printed and dispatched the letter.|
+|Cancelled|Sending cancelled. The letter will not be printed or dispatched.|
+|Returned letter|The letter could not be delivered and was returned to the provider. Returned mail is destroyed.|
 
 ## Precompiled letter status descriptions
 
-|Status|information|
+|Status|Description|
 |:---|:---|
 |Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
