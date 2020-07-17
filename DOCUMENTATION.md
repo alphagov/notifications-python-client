@@ -729,7 +729,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
 |`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |`received`|The provider has printed and dispatched the letter.|
-|`technical-failure`|GOV.UK Notify had an unexpected error while sending to our printing provider.|
+|`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
 
 ## Precompiled letter status descriptions
 
@@ -741,7 +741,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
 |`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |`received`|The provider has printed and dispatched the letter.|
-|`technical-failure`|GOV.UK Notify had an unexpected error while sending to our printing provider.|
+|`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
 
 ## Get a PDF for a letter
 
