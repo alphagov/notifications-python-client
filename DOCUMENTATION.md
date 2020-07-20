@@ -693,7 +693,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|Change the [status argument](#status-optional)|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Change or leave out the [template_type argument](#template-type-optional)|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Change the [template_type argument](#template-type-optional)|
 
 ## Email status descriptions
 
