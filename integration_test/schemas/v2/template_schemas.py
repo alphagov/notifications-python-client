@@ -36,7 +36,8 @@ get_template_by_id_response = {
         "created_by": {"type": "string"},
         "version": {"type": "integer"},
         "body": {"type": "string"},
-        "subject": {"type": ["string", "null"]}
+        "subject": {"type": ["string", "null"]},
+        "letter_contact_block": {"type": ["string", "null"]}
     },
     "required": ["id", "type", "created_at", "updated_at", "version", "created_by", "body"]
 }

@@ -808,6 +808,7 @@ If the request to the client is successful, the client returns a `dict`.
     "created_by": "someone@example.com", # required string
     "body": "STRING", # required string - body of notification
     "subject": "STRING" # required string for email - subject of email
+    "letter_contact_block": "STRING" # optional string - None if not a letter template or contact block not set
 }
 ```
 
@@ -858,6 +859,7 @@ If the request to the client is successful, the client returns a `dict`.
     "created_by": "someone@example.com", # required string
     "body": "STRING", # required string - body of notification
     "subject": "STRING" # required string for email - subject of email
+    "letter_contact_block": "STRING" # optional string - None if not a letter template or contact block not set
 }
 ```
 
@@ -911,6 +913,7 @@ If the request to the client is successful, the client returns a `dict`.
             "created_by": "someone@example.com", # required string
             "body": "STRING", # required string - body of notification
             "subject": "STRING" # required string for email - subject of email
+            "letter_contact_block": "STRING" # optional string - None if not a letter template or contact block not set
         },
         {
             ...another template
