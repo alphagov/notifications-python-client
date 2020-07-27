@@ -154,11 +154,18 @@ def get_template_by_id(python_client, template_id, notification_type):
 
     if notification_type == EMAIL_TYPE:
         validate(response, get_template_by_id_response)
+    elif notification_type == LETTER_TYPE:
+        validate(response, get_template_by_id_response)
+        expected_conact_block = (
+            "Government Digital Service\nThe White Chapel Building\n10 Whitechapel High "
+            "Street\nLondon\nE1 8QS\nUnited Kingdom"
+        )
+        assert response['letter_contact_block'] == expected_conact_block
     elif notification_type == SMS_TYPE:
         validate(response, get_template_by_id_response)
         assert response['subject'] is None
     else:
-        raise KeyError("template type should be email|sms")
+        raise KeyError("template type should be email|letter|sms")
 
     assert template_id == response['id']
 
@@ -220,6 +227,7 @@ def test_integration():
     sms_sender_id = os.environ['SMS_SENDER_ID']
     email_template_id = os.environ['EMAIL_TEMPLATE_ID']
     email_reply_to_id = os.environ['EMAIL_REPLY_TO_ID']
+    letter_template_id = os.environ['LETTER_TEMPLATE_ID']
 
     assert sms_template_id
     assert sms_sender_id
@@ -248,6 +256,7 @@ def test_integration():
 
     get_template_by_id(client, sms_template_id, SMS_TYPE)
     get_template_by_id(client, email_template_id, EMAIL_TYPE)
+    get_template_by_id(client, letter_template_id, LETTER_TYPE)
     get_template_by_id_and_version(client, sms_template_id, version_number, SMS_TYPE)
     get_template_by_id_and_version(client, email_template_id, version_number, EMAIL_TYPE)
     post_template_preview(client, sms_template_id, SMS_TYPE)
