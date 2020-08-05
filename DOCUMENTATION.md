@@ -528,6 +528,13 @@ If the request to the client is successful, the client will return a `dict`:
 }
 ```
 
+For more information, see the:
+
+* [email status descriptions](#status-email)
+* [text message status descriptions](#status-text-message)
+* [letter status descriptions](#status-letter)
+* [precompiled letter status descriptions](#status-precompiled-letter)
+
 ### Error codes
 
 If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
@@ -685,6 +692,13 @@ If the request to the client is successful, the client returns a `dict`.
 ```python
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
 ```
+
+For more information, see the:
+
+* [email status descriptions](#status-email)
+* [text message status descriptions](#status-text-message)
+* [letter status descriptions](#status-letter)
+* [precompiled letter status descriptions](#status-precompiled-letter)
 
 ### Error codes
 
