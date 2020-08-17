@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 
 ENV PYTHONUNBUFFERED=1 \
 	DEBIAN_FRONTEND=noninteractive
@@ -8,10 +8,12 @@ RUN \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		make \
+		gcc \
 		git \
 		gnupg \
 		python2.7 \
-		python3.5 \
+		python3.7 \
+		python3-dev \
 		python3-pip \
 		python3-setuptools \
 		python-pip \
@@ -21,6 +23,6 @@ RUN \
 
 RUN \
 	echo "Install global pip packages" \
-	&& python3.5 -m pip install tox
+	&& python3.7 -m pip install tox
 
 WORKDIR /var/project
