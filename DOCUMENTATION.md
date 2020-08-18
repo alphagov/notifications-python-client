@@ -621,7 +621,6 @@ You can filter by each:
 
 If you filter by `failed` it will return all 3 failure statuses: `permanent-failure`, `temporary-failure` and `technical-failure`.
 
-
 You can leave out this argument to ignore this filter.
 
 #### reference (optional)
