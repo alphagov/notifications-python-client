@@ -70,7 +70,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique message or a batch of messages. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING', # optional string - identifies notification(s)
@@ -79,7 +79,7 @@ You can leave out this argument if you do not have a reference.
 
 #### sms_sender_id (optional)
 
-A unique identifier of the sender of the text message notification.
+A unique identifier of the sender of the text message.
 
 To find the text message sender:
 
@@ -130,12 +130,12 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this text message in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#daily-limits) for the limit number|
-|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your text message.|
 
 ## Send an email
 
@@ -176,7 +176,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique email or a batch of emails. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING', # optional string - identifies notification(s)
@@ -290,7 +290,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this email in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported file type '(FILE TYPE)'. Supported types are: '(ALLOWED TYPES)'"`<br>`}]`|Wrong file type. You can only upload .pdf, .csv, .txt, .doc, .docx or .odt files|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "File did not pass the virus scan"`<br>`}]`|The file contains a virus|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Send files by email has not been set up - add contact details for your service at https://www.notifications.service.gov.uk/services/(SERVICE ID)/service-settings/send-files-by-email"`<br>`}]`|See how to [add contact details to the file download page](#add-contact-details-to-the-file-download-page)|
@@ -298,7 +298,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#daily-limits) for the limit number|
-|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your email.|
 |-|`ValueError('File is larger than 2MB')`|The file is too big. Files must be smaller than 2MB.|
 
 ## Send a letter
@@ -356,7 +356,7 @@ personalisation={
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique letter or a batch of letters. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING' # optional string - identifies notification(s)
@@ -404,14 +404,14 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this letter in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#send-a-letter-arguments-personalisation-optional) for more information.|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Must be a real UK postcode"`<br>`}]`|Ensure that the value for the postcode field in your letter is a real UK postcode|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#daily-limits) for the limit number|
-|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your letter.|
 
 
 ## Send a precompiled letter
@@ -430,7 +430,7 @@ response = notifications_client.send_precompiled_letter_notification(
 
 #### reference (required)
 
-A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
+A unique identifier you create. This reference identifies a single unique precompiled letter or a batch of precompiled letters. It must not contain any personal information such as name or postal address.
 
 #### pdf_file (required)
 
@@ -469,7 +469,7 @@ If the request is not successful, the client returns an HTTPError containing the
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Letter content is not a valid PDF"`<br>`]}`|PDF file format is required|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this precompiled letter in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "reference is a required property"`<br>`}]`|Add a `reference` argument to the method call|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "postage invalid. It must be either first or second."`<br>`}]`|Change the value of `postage` argument in the method call to either 'first' or 'second'|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -477,47 +477,9 @@ If the request is not successful, the client returns an HTTPError containing the
 
 # Get message status
 
-Message status depends on the type of message you have sent.
-
-You can only get the status of messages that are 7 days old or newer.
-
-## Status - email
-
-|Status|Information|
-|:---|:---|
-|Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
-|Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
-|Delivered|The message was successfully delivered.|
-|Failed|This covers all failure statuses:<br>- `permanent-failure` - "The provider could not deliver the message because the email address was wrong. You should remove these email addresses from your database."<br>- `temporary-failure` - "The provider could not deliver the message. This can happen when the recipient’s inbox is full. You can try to send the message again."<br>- `technical-failure` - "Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again."|
-
-## Status - text message
-
-|Status|Information|
-|:---|:---|
-|Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
-|Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
-|Pending|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient’s device has not yet responded. Another callback from the provider determines the final status of the notification.|
-|Sent / Sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information. The GOV.UK Notify client API returns this status as `sent`. The GOV.UK Notify client app returns this status as `Sent internationally`.|
-|Delivered|The message was successfully delivered.|
-|Failed|This covers all failure statuses:<br>- `permanent-failure` - "The provider could not deliver the message. This can happen if the phone number was wrong or if the network operator rejects the message. If you’re sure that these phone numbers are correct, you should [contact GOV.UK Notify support](https://www.notifications.service.gov.uk/support). If not, you should remove them from your database. You’ll still be charged for text messages that cannot be delivered."<br>- `temporary-failure` - "The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages."<br>- `technical-failure` - "Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure."|
-
-## Status - letter
-
-|Status|information|
-|:---|:---|
-|Failed|The only failure status that applies to letters is `technical-failure`. GOV.UK Notify had an unexpected error while sending to our printing provider.|
-|Accepted|GOV.UK Notify has sent the letter to the provider to be printed.|
-|Received|The provider has printed and dispatched the letter.|
-
-## Status - precompiled letter
-
-|Status|information|
-|:---|:---|
-|Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
-|Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
-
 ## Get the status of one message
+
+You can only get the status of messages sent within the retention period. The default retention period is 7 days.
 
 ### Method
 
@@ -529,7 +491,7 @@ response = notifications_client.get_notification_by_id(notification_id)
 
 #### notification_id (required)
 
-The ID of the notification. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+The ID of the message. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
 
 You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
 
@@ -566,6 +528,13 @@ If the request to the client is successful, the client will return a `dict`:
 }
 ```
 
+For more information, see the:
+
+* [email status descriptions](#status-email)
+* [text message status descriptions](#status-text-message)
+* [letter status descriptions](#status-letter)
+* [precompiled letter status descriptions](#status-precompiled-letter)
+
 ### Error codes
 
 If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
@@ -575,14 +544,14 @@ If the request is not successful, the client will return an `HTTPError` containi
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the notification ID|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check when your message was sent. If it was sent before the retention period, it has been deleted. You can no longer get the status of this message. The default retention period is 7 days.|
 
 
 ## Get the status of multiple messages
 
 This API call returns one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `older_than` argument.
 
-You can only get the status of messages that are 7 days old or newer.
+You can only get the status of messages sent within the retention period. The default retention period is 7 days.
 
 ### Method
 
@@ -618,7 +587,7 @@ You must set the [`status`](#status-optional) argument to `sending`.
 
 To get older messages:
 
-1. Get the ID of an older notification.
+1. Get the ID of an older message.
 1. Add the following code to your application, with the older notification ID in the [`older_than`](#older-than-optional) argument.
 
 ```python
@@ -631,8 +600,6 @@ This method will return the next oldest messages from the specified notification
 
 ### Arguments
 
-You can omit any of these arguments to ignore these filters.
-
 #### template_type (optional)
 
 You can filter by:
@@ -640,6 +607,8 @@ You can filter by:
 * `email`
 * `sms`
 * `letter`
+
+You can leave out this argument to ignore this filter.
 
 #### status (optional)
 
@@ -650,27 +619,31 @@ You can filter by each:
 * [letter status](#status-letter)
 * [precompiled letter status](#status-precompiled-letter)
 
+If you filter by `failed` it will return all 3 failure statuses: `permanent-failure`, `temporary-failure` and `technical-failure`.
+
 You can leave out this argument to ignore this filter.
 
 #### reference (optional)
 
-A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
+A unique identifier you can create if necessary. This reference identifies a single unique message or a batch of messages. It must not contain any personal information such as name or postal address. For example:
 
 ```python
 reference='STRING' # optional string - identifies notification(s)
 ```
 
+You can leave out this argument to ignore this filter.
+
 #### older_than (optional)
 
-Input the ID of a notification into this argument. If you use this argument, the method returns the next 250 received notifications older than the given ID.
+Input a notification ID into this argument. If you use this argument, the method returns the next 250 received messages older than the given ID.
 
 ```python
 older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
-If you leave out this argument, the method returns the most recent 250 notifications.
+If you leave out this argument, the method returns the most recent 250 messages.
 
-The client only returns notifications that are 7 days old or newer. If the notification specified in this argument is older than 7 days, the client returns an empty response.
+The client only returns messages sent within the retention period. The default retention period is 7 days. If the message specified in this argument was sent before the retention period, the client returns an empty response.
 
 ### Response
 
@@ -722,23 +695,72 @@ If the request to the client is successful, the client returns a `dict`.
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
 ```
 
+For more information, see the:
+
+* [email status descriptions](#status-email)
+* [text message status descriptions](#status-text-message)
+* [letter status descriptions](#status-letter)
+* [precompiled letter status descriptions](#status-precompiled-letter)
+
 ### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code:
 
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|Contact the GOV.UK Notify team|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Contact the GOV.UK Notify team|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "status ‘elephant’ is not one of [cancelled, created, sending, sent, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure, pending-virus-check, validation-failed, virus-scan-failed, returned-letter, accepted, received]"`<br>`}]`|Change the [status argument](#status-optional)|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "‘Apple’ is not one of [sms, email, letter]"`<br>`}]`|Change the [template_type argument](#template-type-optional)|
 
+## Email status descriptions
 
-## Get a PDF for a letter notification
+|Status|Description|
+|:---|:---|
+|`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
+|`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
+|`delivered`|The message was successfully delivered.|
+|`permanent-failure`|The provider could not deliver the message because the email address was wrong. You should remove these email addresses from your database.|
+|`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s inbox is full. You can try to send the message again.|
+|`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again.|
+
+## Text message status descriptions
+
+|Status|Description|
+|:---|:---|
+|`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
+|`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
+|`pending`|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient’s device has not yet responded. Another callback from the provider determines the final status of the text message.|
+|`sent`|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information. The GOV.UK Notify website displays this status as 'Sent internationally'.|
+|`delivered`|The message was successfully delivered.|
+|`permanent-failure`|The provider could not deliver the message. This can happen if the phone number was wrong or if the network operator rejects the message. If you’re sure that these phone numbers are correct, you should [contact GOV.UK Notify support](https://www.notifications.service.gov.uk/support). If not, you should remove them from your database. You’ll still be charged for text messages that cannot be delivered.
+|`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|
+|`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure.|
+
+## Letter status descriptions
+
+|Status|Description|
+|:---|:---|
+|`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
+|`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
+|`received`|The provider has printed and dispatched the letter.|
+|`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+
+## Precompiled letter status descriptions
+
+|Status|Description|
+|:---|:---|
+|`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
+|`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.|
+|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
+|`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
+|`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
+|`received`|The provider has printed and dispatched the letter.|
+|`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+
+## Get a PDF for a letter
 
 ### Method
 
-This returns the PDF contents of a letter notification.
+This returns the PDF contents of a letter.
 
 ```python
 pdf_file = notifications_client.get_pdf_for_letter(
@@ -750,7 +772,7 @@ pdf_file = notifications_client.get_pdf_for_letter(
 
 #### notification_id (required)
 
-The ID of the notification. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+The ID of the letter. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
 
 You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
 
@@ -765,9 +787,9 @@ If the request is not successful, the client will return an `HTTPError` containi
 |error.status_code|error.message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
-|`400`|`[{`<br>`"error": "PDFNotReadyError",`<br>`"message": "PDF not available yet, try again later"`<br>`}]`|Wait for the notification to finish processing. This usually takes a few seconds|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "File did not pass the virus scan"`<br>`}]`|You cannot retrieve the contents of a letter notification that contains a virus|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in technical-failure"`<br>`}]`|You cannot retrieve the contents of a letter notification in technical-failure|
+|`400`|`[{`<br>`"error": "PDFNotReadyError",`<br>`"message": "PDF not available yet, try again later"`<br>`}]`|Wait for the letter to finish processing. This usually takes a few seconds|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "File did not pass the virus scan"`<br>`}]`|You cannot retrieve the contents of a letter that contains a virus|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in technical-failure"`<br>`}]`|You cannot retrieve the contents of a letter in technical-failure|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Notification is not a letter"`<br>`}]`|Check that you are looking up the correct notification|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -890,7 +912,7 @@ response = notifications_client.get_all_templates(
 
 #### template_type (optional)
 
-If omitted, the method returns all templates. Otherwise you can filter by:
+If you leave out this argument, the method returns all templates. Otherwise you can filter by:
 
 - `email`
 - `sms`
@@ -1038,7 +1060,7 @@ Input the ID of a received text message into this argument. If you use this argu
 older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
-If this argument is omitted, the method returns the most recent 250 text messages.
+If you leave out this argument, the method returns the most recent 250 text messages.
 
 ### Response
 
