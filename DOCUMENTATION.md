@@ -319,7 +319,7 @@ To send Notify a request to go live:
         personalisation={
           'address_line_1': 'The Occupier' # required string,
           'address_line_2': '123 High Street' # required string,
-          'postcode': 'SW14 6BH' # required string,
+          'address_line_7': 'SW14 6BH' # required string,
         },
     )
 ```
@@ -341,6 +341,8 @@ The personalisation argument always contains the following required parameters f
 - `address_line_1`
 - `address_line_2`
 – `address_line_7` this needs to be a real UK postcode or the name of a country outside the UK
+
+Notify uses `address_line_7` to check for international addresses. This is so we can charge you the correct postage.
 
 The `postcode` personalisation argument has been replaced. If your template still uses `postcode`, Notify will treat it as `address_line_7`.
 
