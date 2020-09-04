@@ -344,7 +344,7 @@ The personalisation argument always contains the following required parameters f
 
 Notify uses `address_line_7` to check for international addresses. This is so we can charge you the correct postage.
 
-The `postcode` personalisation argument has been replaced. If your template still uses `postcode`, Notify will treat it as `address_line_7`.
+The `postcode` personalisation argument has been replaced. If your template still uses `postcode`, Notify will treat it as the last line of the address.
 
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
 
