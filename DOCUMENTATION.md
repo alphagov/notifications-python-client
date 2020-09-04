@@ -515,7 +515,7 @@ If the request to the client is successful, the client will return a `dict`:
   "line_4": "ADDRESS LINE 4", # optional string for letter
   "line_5": "ADDRESS LINE 5", # optional string for letter
   "line_6": "ADDRESS LINE 6", # optional string for letter
-  "line_7": "A REAL UK POSTCODE", # required string for letter
+  "line_7": "ADDRESS LINE 7", # required string for letter
   "type": "sms / letter / email", # required string
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
