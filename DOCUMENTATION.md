@@ -363,8 +363,6 @@ personalisation={
   'address_line_3': 'Richmond upon Thames',
   'address_line_4': 'Middlesex',
   'address_line_5': 'SW14 6BF',
-  'address_line_6': '',
-  'address_line_7': '',
   'name': 'John Smith',
   'application_id': '4134325'
 }
