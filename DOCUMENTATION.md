@@ -319,7 +319,7 @@ To send Notify a request to go live:
         personalisation={
           'address_line_1': 'The Occupier' # required string,
           'address_line_2': '123 High Street' # required string,
-          'address_line_7': 'SW14 6BH' # required string,
+          'address_line_3': 'SW14 6BH' # required string,
         },
     )
 ```
@@ -336,13 +336,21 @@ To find the template ID:
 
 #### personalisation (required)
 
-The personalisation argument always contains the following required parameters for the letter recipient’s address:
+The personalisation argument always contains the following parameters for the letter recipient’s address:
 
 - `address_line_1`
 - `address_line_2`
-– `address_line_7` this needs to be a real UK postcode or the name of a country outside the UK
+– `address_line_3` 
+– `address_line_4` 
+– `address_line_5` 
+– `address_line_6`
+– `address_line_7`
 
-Notify uses `address_line_7` to check for international addresses. This is so we can charge you the correct postage.
+The address must have at least 3 lines.
+
+The last line needs to be a real UK postcode or the name of a country outside the UK.
+
+Notify checks for international addresses and will automatically charge you the correct postage.
 
 The `postcode` personalisation argument has been replaced. If your template still uses `postcode`, Notify will treat it as the last line of the address.
 
@@ -352,7 +360,11 @@ Any other placeholder fields included in the letter template also count as requi
 personalisation={
   'address_line_1': 'The Occupier',
   'address_line_2': '123 High Street',
-  'address_line_7': 'SW14 6BF',
+  'address_line_3': 'Richmond upon Thames',
+  'address_line_4': 'Middlesex',
+  'address_line_5': 'SW14 6BF',
+  'address_line_6': '',
+  'address_line_7': '',
   'name': 'John Smith',
   'application_id': '4134325'
 }
@@ -364,19 +376,6 @@ A unique identifier you can create if necessary. This reference identifies a sin
 
 ```python
 reference='STRING' # optional string - identifies notification(s)
-```
-
-#### personalisation (optional)
-
-The following parameters in the letter recipient’s address are optional:
-
-```python
-personalisation={
-    'address_line_3': '123 High Street',
-    'address_line_4': 'Richmond upon Thames',
-    'address_line_5': 'London',
-    'address_line_6': 'Middlesex',
-}
 ```
 
 ### Response
