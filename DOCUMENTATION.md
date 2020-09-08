@@ -2,9 +2,9 @@
 
 This documentation is for developers interested in using the GOV.UK Notify Python client to send emails, text messages or letters. Notify supports Python 3.x and 2.7.
 
-# Set up the client
+## Set up the client
 
-## Install the client
+### Install the client
 
 Run the following code in the command line:
 
@@ -14,7 +14,7 @@ pip install notifications-python-client
 
 Refer to the [client changelog](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the client version number and the latest updates.
 
-## Create a new instance of the client
+### Create a new instance of the client
 
 Add this code to your application:
 
@@ -26,13 +26,13 @@ notifications_client = NotificationsAPIClient(api_key)
 
 To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page. You can find more information in the [API keys](#api-keys) section of this documentation.
 
-# Send a message
+## Send a message
 
 You can use GOV.UK Notify to send text messages, emails and letters.
 
-## Send a text message
+### Send a text message
 
-### Method
+#### Method
 
 ```python
 response = notifications_client.send_sms_notification(
@@ -41,13 +41,13 @@ response = notifications_client.send_sms_notification(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### phone_number (required)
+##### phone_number (required)
 
 The phone number of the recipient of the text message. This can be a UK or international number.
 
-#### template_id (required)
+##### template_id (required)
 
 To find the template ID:
 
@@ -55,7 +55,7 @@ To find the template ID:
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
 
-#### personalisation (optional)
+##### personalisation (optional)
 
 If a template has placeholder fields for personalised information such as name or reference number, you must provide their values in a dictionary with key value pairs. For example:
 
@@ -68,7 +68,7 @@ personalisation={
 
 You can leave out this argument if a template does not have any placeholder fields for personalised information.
 
-#### reference (optional)
+##### reference (optional)
 
 A unique identifier you can create if necessary. This reference identifies a single unique message or a batch of messages. It must not contain any personal information such as name or postal address. For example:
 
@@ -77,7 +77,7 @@ reference='STRING', # optional string - identifies notification(s)
 ```
 You can leave out this argument if you do not have a reference.
 
-#### sms_sender_id (optional)
+##### sms_sender_id (optional)
 
 A unique identifier of the sender of the text message.
 
@@ -98,7 +98,7 @@ sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 You can leave out this argument if your service only has one text message sender, or if you want to use the default sender.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`:
 
@@ -123,7 +123,7 @@ If you are using the [test API key](#test), all your messages will come back wit
 
 All messages sent using the [team and guest list](#team-and-guest-list) or [live](#live) keys will appear on your dashboard.
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
 
@@ -137,9 +137,9 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#daily-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your text message.|
 
-## Send an email
+### Send an email
 
-### Method
+#### Method
 
 ```python
 response = notifications_client.send_email_notification(
@@ -148,13 +148,13 @@ response = notifications_client.send_email_notification(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### email_address (required)
+##### email_address (required)
 
 The email address of the recipient.
 
-#### template_id (required)
+##### template_id (required)
 
 To find the template ID:
 
@@ -162,7 +162,7 @@ To find the template ID:
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
 
-#### personalisation (optional)
+##### personalisation (optional)
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
@@ -174,7 +174,7 @@ personalisation={
 ```
 You can leave out this argument if a template does not have any placeholder fields for personalised information.
 
-#### reference (optional)
+##### reference (optional)
 
 A unique identifier you can create if necessary. This reference identifies a single unique email or a batch of emails. It must not contain any personal information such as name or postal address. For example:
 
@@ -184,7 +184,7 @@ reference='STRING', # optional string - identifies notification(s)
 
 You can leave out this argument if you do not have a reference.
 
-#### email_reply_to_id (optional)
+##### email_reply_to_id (optional)
 
 This is an email address specified by you to receive replies from your users. You must add at least one reply-to email address before your service can go live.
 
@@ -204,20 +204,20 @@ email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 
 You can leave out this argument if your service only has one reply-to email address, or you want to use the default email address.
 
-## Send a file by email
+### Send a file by email
 
 To send a file by email, add a placeholder to the template then upload a file. The placeholder will contain a secure link to download the file.
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-### Add contact details to the file download page
+#### Add contact details to the file download page
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
 1. In the __Email__ section, select __Manage__ on the __Send files by email__ row.
 1. Enter the contact details you want to use, and select __Save__.
 
-### Add a placeholder to the template
+#### Add a placeholder to the template
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant email template.
@@ -226,7 +226,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 "Download your file at: ((link_to_file))"
 
-### Upload your file
+#### Upload your file
 
 You can upload PDF, CSV, .odt, .txt and MS Word Document files. Your file must be smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
@@ -244,7 +244,7 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-#### CSV Files
+##### CSV Files
 
 Uploads for CSV files should use the `is_csv` parameter
 on the `prepare_upload()` utility.  For example:
@@ -261,7 +261,7 @@ with open('file.csv', 'rb') as f:
     }
 ```
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`:
 
@@ -283,7 +283,7 @@ If the request to the client is successful, the client returns a `dict`:
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
 
@@ -301,7 +301,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your email.|
 |-|`ValueError('File is larger than 2MB')`|The file is too big. Files must be smaller than 2MB.|
 
-## Send a letter
+### Send a letter
 
 When you add a new service it will start in [trial mode](https://www.notifications.service.gov.uk/features/trial-mode). You can only send letters when your service is live.
 
@@ -311,7 +311,7 @@ To send Notify a request to go live:
 1. Go to the __Settings__ page.
 1. In the __Your service is in trial mode__ section, select __request to go live__.
 
-### Method
+#### Method
 
 ```python
     response = notifications_client.send_letter_notification(
@@ -324,9 +324,9 @@ To send Notify a request to go live:
     )
 ```
 
-### Arguments
+#### Arguments
 
-#### template_id (required)
+##### template_id (required)
 
 To find the template ID:
 
@@ -334,7 +334,7 @@ To find the template ID:
 1. Go to the __Templates__ page and select the relevant template.
 1. Select __Copy template ID to clipboard__.
 
-#### personalisation (required)
+##### personalisation (required)
 
 The personalisation argument always contains the following parameters for the letter recipient’s address:
 
@@ -368,7 +368,7 @@ personalisation={
 }
 ```
 
-#### reference (optional)
+##### reference (optional)
 
 A unique identifier you can create if necessary. This reference identifies a single unique letter or a batch of letters. It must not contain any personal information such as name or postal address. For example:
 
@@ -376,7 +376,7 @@ A unique identifier you can create if necessary. This reference identifies a sin
 reference='STRING' # optional string - identifies notification(s)
 ```
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`:
 
@@ -398,7 +398,7 @@ If the request to the client is successful, the client returns a `dict`:
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
 
@@ -416,9 +416,9 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your letter.|
 
 
-## Send a precompiled letter
+### Send a precompiled letter
 
-### Method
+#### Method
 
 ```python
 response = notifications_client.send_precompiled_letter_notification(
@@ -428,13 +428,13 @@ response = notifications_client.send_precompiled_letter_notification(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### reference (required)
+##### reference (required)
 
 A unique identifier you create. This reference identifies a single unique precompiled letter or a batch of precompiled letters. It must not contain any personal information such as name or postal address.
 
-#### pdf_file (required)
+##### pdf_file (required)
 
 The precompiled letter must be a PDF file which meets [the GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf).
 
@@ -445,13 +445,13 @@ with open("path/to/pdf_file", "rb") as pdf_file:
     )
 ```
 
-#### postage (optional)
+##### postage (optional)
 
 You can choose first or second class postage for your precompiled letter. Set the value to `first` for first class, or `second` for second class. If you do not pass in this argument, the postage will default to second class.
 
 
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`:
 
@@ -463,7 +463,7 @@ If the request to the client is successful, the client returns a `dict`:
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an HTTPError containing the relevant error code.
 
@@ -477,27 +477,27 @@ If the request is not successful, the client returns an HTTPError containing the
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|Refer to [service limits](#daily-limits) for the limit number|
 
-# Get message status
+## Get message status
 
-## Get the status of one message
+### Get the status of one message
 
 You can only get the status of messages sent within the retention period. The default retention period is 7 days.
 
-### Method
+#### Method
 
 ```python
 response = notifications_client.get_notification_by_id(notification_id)
 ```
 
-### Arguments
+#### Arguments
 
-#### notification_id (required)
+##### notification_id (required)
 
 The ID of the message. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
 
 You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client will return a `dict`:
 
@@ -537,7 +537,7 @@ For more information, see the:
 * [letter status descriptions](#status-letter)
 * [precompiled letter status descriptions](#status-precompiled-letter)
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
@@ -549,15 +549,15 @@ If the request is not successful, the client will return an `HTTPError` containi
 |`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check when your message was sent. If it was sent before the retention period, it has been deleted. You can no longer get the status of this message. The default retention period is 7 days.|
 
 
-## Get the status of multiple messages
+### Get the status of multiple messages
 
 This API call returns one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `older_than` argument.
 
 You can only get the status of messages sent within the retention period. The default retention period is 7 days.
 
-### Method
+#### Method
 
-#### All messages
+##### All messages
 
 This will return all your messages with statuses. They will display in pages of up to 250 messages each.
 
@@ -573,11 +573,11 @@ You can filter the returned messages by including the following optional argumen
 - [`older_than`](#older-than-optional)
 
 
-#### One page of up to 250 messages
+##### One page of up to 250 messages
 
 This will return one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the [`older_than`](#older-than-optional) argument.
 
-##### Most recent messages
+###### Most recent messages
 
 ```python
 response = get_all_notifications_iterator(status="sending")
@@ -585,7 +585,7 @@ response = get_all_notifications_iterator(status="sending")
 
 You must set the [`status`](#status-optional) argument to `sending`.
 
-##### Older messages
+###### Older messages
 
 To get older messages:
 
@@ -600,9 +600,9 @@ You must set the [`status`](#status-optional) argument to `sending`.
 
 This method will return the next oldest messages from the specified notification ID.
 
-### Arguments
+#### Arguments
 
-#### template_type (optional)
+##### template_type (optional)
 
 You can filter by:
 
@@ -612,7 +612,7 @@ You can filter by:
 
 You can leave out this argument to ignore this filter.
 
-#### status (optional)
+##### status (optional)
 
 You can filter by each:
 
@@ -625,7 +625,7 @@ If you filter by `failed` it will return all 3 failure statuses: `permanent-fail
 
 You can leave out this argument to ignore this filter.
 
-#### reference (optional)
+##### reference (optional)
 
 A unique identifier you can create if necessary. This reference identifies a single unique message or a batch of messages. It must not contain any personal information such as name or postal address. For example:
 
@@ -635,7 +635,7 @@ reference='STRING' # optional string - identifies notification(s)
 
 You can leave out this argument to ignore this filter.
 
-#### older_than (optional)
+##### older_than (optional)
 
 Input a notification ID into this argument. If you use this argument, the method returns the next 250 received messages older than the given ID.
 
@@ -647,11 +647,11 @@ If you leave out this argument, the method returns the most recent 250 messages.
 
 The client only returns messages sent within the retention period. The default retention period is 7 days. If the message specified in this argument was sent before the retention period, the client returns an empty response.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`.
 
-#### All messages
+##### All messages
 
 ```python
 {"notifications":
@@ -691,7 +691,7 @@ If the request to the client is successful, the client returns a `dict`.
 }
 ```
 
-#### One page of up to 250 messages
+##### One page of up to 250 messages
 
 ```python
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
@@ -704,7 +704,7 @@ For more information, see the:
 * [letter status descriptions](#status-letter)
 * [precompiled letter status descriptions](#status-precompiled-letter)
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code:
 
@@ -713,7 +713,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "status ‘elephant’ is not one of [cancelled, created, sending, sent, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure, pending-virus-check, validation-failed, virus-scan-failed, returned-letter, accepted, received]"`<br>`}]`|Change the [status argument](#status-optional)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "‘Apple’ is not one of [sms, email, letter]"`<br>`}]`|Change the [template_type argument](#template-type-optional)|
 
-## Email status descriptions
+### Email status descriptions
 
 |Status|Description|
 |:---|:---|
@@ -724,7 +724,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s inbox is full. You can try to send the message again.|
 |`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again.|
 
-## Text message status descriptions
+### Text message status descriptions
 
 |Status|Description|
 |:---|:---|
@@ -737,7 +737,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|
 |`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure.|
 
-## Letter status descriptions
+### Letter status descriptions
 
 |Status|Description|
 |:---|:---|
@@ -746,7 +746,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`received`|The provider has printed and dispatched the letter.|
 |`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
 
-## Precompiled letter status descriptions
+### Precompiled letter status descriptions
 
 |Status|Description|
 |:---|:---|
@@ -758,9 +758,9 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`received`|The provider has printed and dispatched the letter.|
 |`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
 
-## Get a PDF for a letter
+### Get a PDF for a letter
 
-### Method
+#### Method
 
 This returns the PDF contents of a letter.
 
@@ -770,19 +770,19 @@ pdf_file = notifications_client.get_pdf_for_letter(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### notification_id (required)
+##### notification_id (required)
 
 The ID of the letter. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
 
 You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client will return a `io.BytesIO` object containing the raw PDF data.
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client will return an `HTTPError` containing the relevant error code:
 
@@ -797,11 +797,11 @@ If the request is not successful, the client will return an `HTTPError` containi
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the notification ID|
 
-# Get a template
+## Get a template
 
-## Get a template by ID
+### Get a template by ID
 
-### Method
+#### Method
 
 This returns the latest version of the template.
 
@@ -811,13 +811,13 @@ response = notifications_client.get_template(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### template_id (required)
+##### template_id (required)
 
 The ID of the template. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __Templates__ page to find it.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`.
 
@@ -836,7 +836,7 @@ If the request to the client is successful, the client returns a `dict`.
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code:
 
@@ -847,9 +847,9 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](#get-a-template-by-id-arguments-template-id-required)|
 
 
-## Get a template by ID and version
+### Get a template by ID and version
 
-### Method
+#### Method
 
 ```python
 response = notifications_client.get_template_version(
@@ -858,17 +858,17 @@ response = notifications_client.get_template_version(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### template_id (required)
+##### template_id (required)
 
 The ID of the template. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __Templates__ page to find it.
 
-#### version (required)
+##### version (required)
 
 The version number of the template.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`.
 
@@ -887,7 +887,7 @@ If the request to the client is successful, the client returns a `dict`.
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code:
 
@@ -898,9 +898,9 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](#get-a-template-by-id-and-version-arguments-template-id-required) and [version](#version-required)|
 
 
-## Get all templates
+### Get all templates
 
-### Method
+#### Method
 
 This returns the latest version of all templates.
 
@@ -910,9 +910,9 @@ response = notifications_client.get_all_templates(
 )
 ```
 
-### Arguments
+#### Arguments
 
-#### template_type (optional)
+##### template_type (optional)
 
 If you leave out this argument, the method returns all templates. Otherwise you can filter by:
 
@@ -920,7 +920,7 @@ If you leave out this argument, the method returns all templates. Otherwise you 
 - `sms`
 - `letter`
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`.
 
@@ -954,9 +954,9 @@ If no templates exist for a template type or there no templates for a service, t
 }
 ```
 
-## Generate a preview template
+### Generate a preview template
 
-### Method
+#### Method
 
 This generates a preview version of a template.
 
@@ -973,13 +973,13 @@ response = notifications_client.post_template_preview(
 
 The parameters in the personalisation argument must match the placeholder fields in the actual template. The API notification client will ignore any extra fields in the method.
 
-### Arguments
+#### Arguments
 
-#### template_id (required)
+##### template_id (required)
 
 The ID of the template. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __Templates__ page to find it.
 
-#### personalisation (required)
+##### personalisation (required)
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
@@ -990,7 +990,7 @@ personalisation={
 }
 ```
 
-### Response
+#### Response
 
 If the request to the client is successful, you receive a `dict` response.
 
@@ -1004,7 +1004,7 @@ If the request to the client is successful, you receive a `dict` response.
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code:
 
@@ -1016,23 +1016,23 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 
 
-# Get received text messages
+## Get received text messages
 
 This API call returns one page of up to 250 received text messages. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the older_than argument.
 
 You can only get the status of messages that are 7 days old or newer.
 
-## Get all received text messages
+### Get all received text messages
 
 This method returns a `<generator object>` with all received text messages.
 
-### Method
+#### Method
 
 ```python
 response = get_received_texts_iterator()
 ```
 
-### Response
+#### Response
 
 If the request to the client is successful, the client will return a `<generator object>` that will return all received text messages.
 
@@ -1040,11 +1040,11 @@ If the request to the client is successful, the client will return a `<generator
 <generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
 ```
 
-## Get one page of received text messages
+### Get one page of received text messages
 
 This will return one page of up to 250 text messages.
 
-### Method
+#### Method
 
 ```python
 response = client.get_received_texts(older_than)
@@ -1052,9 +1052,9 @@ response = client.get_received_texts(older_than)
 
 You can specify which text messages to receive by inputting the ID of a received text message into the [`older_than`](#get-one-page-of-received-text-messages-arguments-older-than-optional) argument.
 
-### Arguments
+#### Arguments
 
-#### older_than (optional)
+##### older_than (optional)
 
 Input the ID of a received text message into this argument. If you use this argument, the method returns the next 250 received text messages older than the given ID.
 
@@ -1064,7 +1064,7 @@ older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notificati
 
 If you leave out this argument, the method returns the most recent 250 text messages.
 
-### Response
+#### Response
 
 If the request to the client is successful, the client returns a `dict`.
 
@@ -1089,7 +1089,7 @@ If the request to the client is successful, the client returns a `dict`.
 }
 ```
 
-### Error codes
+#### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
 
