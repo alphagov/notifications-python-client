@@ -406,7 +406,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this letter in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode).|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#send-a-letter-arguments-personalisation-optional) for more information.|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#personalisation-required) for more information.|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Must be a real UK postcode"`<br>`}]`|Ensure that the value for the last line of the address is a real UK postcode.|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Last line of address must be a real UK postcode or another country"`<br>`}]`|Ensure that the value for the last line of the address is a real UK postcode or the name of a country outside the UK.|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock.|
@@ -532,10 +532,10 @@ If the request to the client is successful, the client will return a `dict`:
 
 For more information, see the:
 
-* [email status descriptions](#status-email)
-* [text message status descriptions](#status-text-message)
-* [letter status descriptions](#status-letter)
-* [precompiled letter status descriptions](#status-precompiled-letter)
+* [email status descriptions](#email-status-descriptions)
+* [text message status descriptions](#text-message-status-descriptions)
+* [letter status descriptions](#letter-status-descriptions)
+* [precompiled letter status descriptions](#precompiled-letter-status-descriptions)
 
 ### Error codes
 
@@ -569,7 +569,7 @@ You can filter the returned messages by including the following optional argumen
 
 - [`template_type`](#template-type-optional)
 - [`status`](#status-optional)
-- [`reference`](#get-the-status-of-all-messages-arguments-reference-optional)
+- [`reference`](#get-the-status-of-multiple-messages-arguments-reference-optional)
 - [`older_than`](#older-than-optional)
 
 
@@ -616,10 +616,10 @@ You can leave out this argument to ignore this filter.
 
 You can filter by each:
 
-* [email status](#status-email)
-* [text message status](#status-text-message)
-* [letter status](#status-letter)
-* [precompiled letter status](#status-precompiled-letter)
+* [email status](#email-status-descriptions)
+* [text message status](#text-message-status-descriptions)
+* [letter status](#letter-status-descriptions)
+* [precompiled letter status](#precompiled-letter-status-descriptions)
 
 If you filter by `failed` it will return all 3 failure statuses: `permanent-failure`, `temporary-failure` and `technical-failure`.
 
@@ -699,10 +699,10 @@ If the request to the client is successful, the client returns a `dict`.
 
 For more information, see the:
 
-* [email status descriptions](#status-email)
-* [text message status descriptions](#status-text-message)
-* [letter status descriptions](#status-letter)
-* [precompiled letter status descriptions](#status-precompiled-letter)
+* [email status descriptions](#email-status-descriptions)
+* [text message status descriptions](#text-message-status-descriptions)
+* [letter status descriptions](#letter-status-descriptions)
+* [precompiled letter status descriptions](#precompiled-letter-status-descriptions)
 
 ### Error codes
 
