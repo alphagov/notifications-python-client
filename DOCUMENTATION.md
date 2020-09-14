@@ -340,9 +340,9 @@ The personalisation argument always contains the following parameters for the le
 
 - `address_line_1`
 - `address_line_2`
-- `address_line_3` 
-- `address_line_4` 
-- `address_line_5` 
+- `address_line_3`
+- `address_line_4`
+- `address_line_5`
 - `address_line_6`
 - `address_line_7`
 
@@ -752,7 +752,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |:---|:---|
 |`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
+|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf) for more information.|
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
 |`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |`received`|The provider has printed and dispatched the letter.|
