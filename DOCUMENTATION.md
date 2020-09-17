@@ -577,15 +577,13 @@ You can filter the returned messages by including the following optional argumen
 
 This will return one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the [`older_than`](#older-than-optional) argument.
 
-###### Most recent messages
+To get the most recent messages, add the following code to your application:
 
 ```python
 response = get_all_notifications_iterator(status="sending")
 ```
 
 You must set the [`status`](#status-optional) argument to `sending`.
-
-###### Older messages
 
 To get older messages:
 
