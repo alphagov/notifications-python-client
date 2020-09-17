@@ -340,9 +340,9 @@ The personalisation argument always contains the following parameters for the le
 
 - `address_line_1`
 - `address_line_2`
-- `address_line_3` 
-- `address_line_4` 
-- `address_line_5` 
+- `address_line_3`
+- `address_line_4`
+- `address_line_5`
 - `address_line_6`
 - `address_line_7`
 
@@ -406,7 +406,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this letter in  [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode).|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#send-a-letter-arguments-personalisation-optional) for more information.|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personalisation](#personalisation-required) for more information.|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Must be a real UK postcode"`<br>`}]`|Ensure that the value for the last line of the address is a real UK postcode.|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Last line of address must be a real UK postcode or another country"`<br>`}]`|Ensure that the value for the last line of the address is a real UK postcode or the name of a country outside the UK.|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock.|
@@ -493,9 +493,10 @@ response = notifications_client.get_notification_by_id(notification_id)
 
 #### notification_id (required)
 
-The ID of the message. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+The ID of the notification. To find the notification ID, you can either:
 
-You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
+* check the response to the [original notification method call](#response)
+* [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page
 
 ### Response
 
@@ -532,10 +533,10 @@ If the request to the client is successful, the client will return a `dict`:
 
 For more information, see the:
 
-* [email status descriptions](#status-email)
-* [text message status descriptions](#status-text-message)
-* [letter status descriptions](#status-letter)
-* [precompiled letter status descriptions](#status-precompiled-letter)
+* [email status descriptions](#email-status-descriptions)
+* [text message status descriptions](#text-message-status-descriptions)
+* [letter status descriptions](#letter-status-descriptions)
+* [precompiled letter status descriptions](#precompiled-letter-status-descriptions)
 
 ### Error codes
 
@@ -569,7 +570,7 @@ You can filter the returned messages by including the following optional argumen
 
 - [`template_type`](#template-type-optional)
 - [`status`](#status-optional)
-- [`reference`](#get-the-status-of-all-messages-arguments-reference-optional)
+- [`reference`](#get-the-status-of-multiple-messages-arguments-reference-optional)
 - [`older_than`](#older-than-optional)
 
 
@@ -616,10 +617,10 @@ You can leave out this argument to ignore this filter.
 
 You can filter by each:
 
-* [email status](#status-email)
-* [text message status](#status-text-message)
-* [letter status](#status-letter)
-* [precompiled letter status](#status-precompiled-letter)
+* [email status](#email-status-descriptions)
+* [text message status](#text-message-status-descriptions)
+* [letter status](#letter-status-descriptions)
+* [precompiled letter status](#precompiled-letter-status-descriptions)
 
 If you filter by `failed` it will return all 3 failure statuses: `permanent-failure`, `temporary-failure` and `technical-failure`.
 
@@ -699,10 +700,10 @@ If the request to the client is successful, the client returns a `dict`.
 
 For more information, see the:
 
-* [email status descriptions](#status-email)
-* [text message status descriptions](#status-text-message)
-* [letter status descriptions](#status-letter)
-* [precompiled letter status descriptions](#status-precompiled-letter)
+* [email status descriptions](#email-status-descriptions)
+* [text message status descriptions](#text-message-status-descriptions)
+* [letter status descriptions](#letter-status-descriptions)
+* [precompiled letter status descriptions](#precompiled-letter-status-descriptions)
 
 ### Error codes
 
@@ -752,7 +753,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |:---|:---|
 |`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
+|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf) for more information.|
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
 |`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |`received`|The provider has printed and dispatched the letter.|
@@ -774,9 +775,10 @@ pdf_file = notifications_client.get_pdf_for_letter(
 
 #### notification_id (required)
 
-The ID of the letter. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+The ID of the notification. To find the notification ID, you can either:
 
-You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
+* check the response to the [original notification method call](#get-the-status-of-one-message-response)
+* [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page
 
 ### Response
 
