@@ -436,7 +436,7 @@ A unique identifier you create. This reference identifies a single unique precom
 
 ##### pdf_file (required)
 
-The precompiled letter must be a PDF file which meets [the GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf).
+The precompiled letter must be a PDF file which meets [the GOV.UK Notify letter specification](https://www.notifications.service.gov.uk/using-notify/guidance/letter-specification).
 
 ```python
 with open("path/to/pdf_file", "rb") as pdf_file:
@@ -751,7 +751,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |:---|:---|
 |`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf) for more information.|
+|`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify letter specification](https://www.notifications.service.gov.uk/using-notify/guidance/letter-specification) for more information.|
 |`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
 |`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |`received`|The provider has printed and dispatched the letter.|
