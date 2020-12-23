@@ -28,7 +28,7 @@ from notifications_python_client.errors import (
 
 # helper method to directly decode token
 def decode_token(token, secret):
-    return jwt.decode(token, key=secret.encode(), verify=True, algorithms=['HS256'])
+    return jwt.decode(token, key=secret, options={"verify_signature": True}, algorithms=['HS256'])
 
 
 def test_should_reject_token_request_if_missing_secret():
@@ -162,7 +162,7 @@ def test_get_token_issuer_should_handle_invalid_token_with_no_iss():
         payload={'iat': 1234},
         key='1234',
         headers={'typ': 'JWT', 'alg': 'HS256'}
-    ).decode()
+    )
 
     with pytest.raises(TokenIssuerError) as e:
         get_token_issuer(token)
@@ -175,7 +175,7 @@ def test_get_token_issuer_should_handle_invalid_token_with_no_iss():
     ('iat', TokenIssuedAtError),
 ])
 def test_decode_should_handle_invalid_token_with_missing_field(missing_field, exception_class):
-    payload = {'iss': '1234', 'iat': '1234'}
+    payload = {'iss': '1234', 'iat': calendar.timegm(time.gmtime())}
     payload.pop(missing_field)
     token = jwt.encode(
         payload=payload,
@@ -188,7 +188,7 @@ def test_decode_should_handle_invalid_token_with_missing_field(missing_field, ex
 
 
 def test_decode_should_handle_invalid_token_with_non_hs256_algorithm():
-    payload = {'iss': '1234', 'iat': '1234'}
+    payload = {'iss': '1234', 'iat': calendar.timegm(time.gmtime())}
     token = jwt.encode(
         payload=payload,
         key='bar',
