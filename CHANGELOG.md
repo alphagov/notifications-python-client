@@ -1,3 +1,6 @@
+## 5.7.1
+* Support PyJWT 2.0 
+
 ## 5.7.0
 
 * We added `letter_contact_block` to our template object serialization, which means it will be added to responses for `get_template_by_id` requests and also `get_template_version` and `get_all_templates` . This version adds this new `letter_contact_block` attribute to Documentation and tests.  
