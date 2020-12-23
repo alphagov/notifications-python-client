@@ -103,8 +103,8 @@ def decode_jwt_token(token, secret):
         # check signature of the token
         decoded_token = jwt.decode(
             token,
-            key=secret.encode(),
-            verify=True,
+            key=secret,
+            options={"verify_signature": True},
             algorithms=[__algorithm__],
             leeway=__bound__
         )
@@ -149,7 +149,7 @@ def decode_token(token):
     :param token:
     :return decoded token:
     """
-    return jwt.decode(token, verify=False, algorithms=[__algorithm__])
+    return jwt.decode(token, options={"verify_signature": False}, algorithms=[__algorithm__])
 
 
 def epoch_seconds():
