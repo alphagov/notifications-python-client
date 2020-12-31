@@ -38,6 +38,32 @@ Running the script will also check for conformance with
 
 Additionally code coverage is checked via `pytest-cov`.
 
+### tox
+
+We use tox to ensure code works on all versions of python. You can run this using docker by calling:
+
+```sh
+make tox-with-docker
+```
+
+If you wish to run tox locally, you'll need to install a variety of
+python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
+
+You'll first want to install the latest versions of each minor python version. You'll need to use `pyenv install --list`
+to see available versions
+
+```sh
+while read line; do pyenv install "$line" < /dev/null; done < .python-version
+```
+
+Then you'll need to install tox.
+```sh
+pip install tox
+```
+
+Then you can run `tox` to run the tests against each version of python.
+
+
 ## Integration tests
 
 Before running tests please ensure that the environment variables are set up for the integration test.
