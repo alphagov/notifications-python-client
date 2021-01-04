@@ -4,12 +4,7 @@ Pull requests welcome.
 
 ## Working on the client locally
 
-This is a Python codebase, written to support Python 2 and 3.
-
-If you’re using OS X and don’t have Python installed, run this command:
-```shell
-    brew install python3
-```
+This is a Python codebase, written to support Python 3 only.
 
 ## Dependency management
 
