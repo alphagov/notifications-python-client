@@ -1,3 +1,7 @@
+## 6.0.1
+
+* Properly block old versions of python from installing the new version
+
 ## 6.0.0
 
 * Removed support for old versions of python.
