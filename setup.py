@@ -55,6 +55,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
 
+    # only support actively patched versions of python (https://devguide.python.org/devcycle/#end-of-life-branches)
+    python_requires='>=3.6',
+
     install_requires=[
         'requests>=2.0.0',
         'PyJWT>=1.5.1',
