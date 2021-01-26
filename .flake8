@@ -1,7 +1,6 @@
 [flake8]
 # Rule definitions: http://flake8.pycqa.org/en/latest/user/error-codes.html
 # W503: line break before binary operator
-# E402: module level import not at top of file (because of future imports)
 exclude = venv*,__pycache__,node_modules,cache,migrations,build,.eggs,.tox,.pytest_cache,.cache
 ignore = W503,E402
 max-complexity = 8
