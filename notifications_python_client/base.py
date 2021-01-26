@@ -1,8 +1,8 @@
 import urllib.parse
 import logging
 import json
+import time
 
-from monotonic import monotonic
 import requests
 
 from notifications_python_client import __version__
@@ -84,7 +84,7 @@ class BaseAPIClient(object):
         return url, kwargs
 
     def _perform_request(self, method, url, kwargs):
-        start_time = monotonic()
+        start_time = time.monotonic()
         try:
             response = requests.request(
                 method,
@@ -105,7 +105,7 @@ class BaseAPIClient(object):
             )
             raise api_error
         finally:
-            elapsed_time = monotonic() - start_time
+            elapsed_time = time.monotonic() - start_time
             logger.debug("API {} request on {} finished in {}".format(method, url, elapsed_time))
 
     def _process_json_response(self, response):

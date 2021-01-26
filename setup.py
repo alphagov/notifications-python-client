@@ -62,7 +62,6 @@ setup(
         'requests>=2.0.0',
         'PyJWT>=1.5.1',
         'docopt>=0.3.0',
-        'monotonic>=0.1',
     ],
     # for running pytest as `python setup.py test`, see
     # http://doc.pytest.org/en/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner
