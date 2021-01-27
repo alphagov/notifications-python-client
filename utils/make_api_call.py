@@ -27,7 +27,7 @@ from notifications_python_client.notifications import NotificationsAPIClient
 
 def create_notification(notifications_client, **kwargs):
     notification_type = kwargs['--type'] or input(
-        "enter type email|sms|letter|precompiled_letter: ")
+        "enter type email|sms|letter|precompiled_letter|broadcast: ")
 
     if notification_type == 'sms':
         return create_sms_notification(notifications_client, **kwargs)
@@ -37,6 +37,8 @@ def create_notification(notifications_client, **kwargs):
         return create_letter_notification(notifications_client, **kwargs)
     if notification_type == 'precompiled_letter':
         return create_precompiled_letter_notification(notifications_client, **kwargs)
+    if notification_type == 'broadcast':
+        return create_broadcast(notifications_client, **kwargs)
     print("Invalid type: {}, exiting".format(notification_type))
     sys.exit(1)
 
@@ -88,6 +90,16 @@ def create_precompiled_letter_notification(notifications_client, **kwargs):
     with open(filename, "rb") as pdf_file:
         return notifications_client.send_precompiled_letter_notification(
             reference=reference, pdf_file=pdf_file
+        )
+
+
+def create_broadcast(notifications_client, **kwargs):
+    filename = kwargs['--filename'] or input("filename (CAP XML): ")
+    with open(filename, "rb") as cap_xml_file:
+        cap_xml = cap_xml_file.read()
+        return notifications_client.post_cap_xml(
+            '/v2/broadcast',
+            contents=cap_xml,
         )
 
 

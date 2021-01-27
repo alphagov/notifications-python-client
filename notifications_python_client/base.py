@@ -69,6 +69,16 @@ class BaseAPIClient(object):
 
         return self._process_json_response(response)
 
+    def post_cap_xml(self, url, contents):
+        url, kwargs = self._create_request_objects(url, {}, {})
+
+        kwargs['headers']['Content-type'] = 'application/cap+xml'
+        kwargs['data'] = contents
+
+        response = self._perform_request("POST", url, kwargs)
+
+        return self._process_json_response(response)
+
     def _create_request_objects(self, url, data, params):
         api_token = create_jwt_token(
             self.api_key,
