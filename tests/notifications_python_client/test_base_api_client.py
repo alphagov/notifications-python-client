@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from builtins import str
-from future import standard_library
-standard_library.install_aliases()
 import requests
 import mock
 
@@ -117,4 +110,4 @@ def test_user_agent_is_set(base_client, rmock):
 
     base_client.request('GET', '/')
 
-    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.0.1"
+    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.0.2"

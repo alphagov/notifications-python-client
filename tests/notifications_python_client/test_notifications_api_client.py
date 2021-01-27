@@ -1,12 +1,6 @@
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
 import base64
 import io
-from future import standard_library
 from mock import Mock
-standard_library.install_aliases()
 from tests.conftest import TEST_HOST
 
 from notifications_python_client import prepare_upload

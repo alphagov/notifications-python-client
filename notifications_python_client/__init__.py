@@ -1,11 +1,3 @@
-from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import print_function
-
-from future import standard_library
-standard_library.install_aliases()
-
 # Version numbering follows Semantic Versionning:
 #
 # Given a version number MAJOR.MINOR.PATCH, increment the:
@@ -15,7 +7,7 @@ standard_library.install_aliases()
 #
 # -- http://semver.org/
 
-__version__ = '6.0.1'
+__version__ = '6.0.2'
 
 from notifications_python_client.errors import REQUEST_ERROR_STATUS_CODE, REQUEST_ERROR_MESSAGE  # noqa
 

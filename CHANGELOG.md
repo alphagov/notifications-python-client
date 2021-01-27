@@ -1,3 +1,7 @@
+## 6.0.2
+
+* Remove two dependencies that are now not needed, `monotonic` and `future`
+
 ## 6.0.1
 
 * Properly block old versions of python from installing the new version
