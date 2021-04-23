@@ -50,7 +50,7 @@ class APIError(Exception):
     @property
     def message(self) -> Union[str, List[dict]]:
         try:
-            json_resp = self.response.json() # type: ignore
+            json_resp = self.response.json()  # type: ignore
             return json_resp.get('message', json_resp.get('errors'))
         except (TypeError, ValueError, AttributeError, KeyError):
             return self._message or REQUEST_ERROR_MESSAGE
@@ -58,7 +58,7 @@ class APIError(Exception):
     @property
     def status_code(self) -> int:
         try:
-            return self.response.status_code # type: ignore
+            return self.response.status_code  # type: ignore
         except AttributeError:
             return REQUEST_ERROR_STATUS_CODE
 
