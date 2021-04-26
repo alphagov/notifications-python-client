@@ -1,3 +1,7 @@
+## 6.1.0
+
+* Add type hints for errors
+
 ## 6.0.2
 
 * Remove two dependencies that are now not needed, `monotonic` and `future`

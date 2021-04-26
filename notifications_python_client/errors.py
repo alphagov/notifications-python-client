@@ -1,3 +1,6 @@
+from requests import RequestException, Response
+from typing import List, Union
+
 REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"
 
@@ -37,7 +40,7 @@ class TokenIssuedAtError(TokenDecodeError):
 
 
 class APIError(Exception):
-    def __init__(self, response=None, message=None):
+    def __init__(self, response: Response = None, message: str = None):
         self.response = response
         self._message = message
 
@@ -45,23 +48,24 @@ class APIError(Exception):
         return "{} - {}".format(self.status_code, self.message)
 
     @property
-    def message(self):
+    def message(self) -> Union[str, List[dict]]:
         try:
-            return self.response.json().get('message', self.response.json().get('errors'))
+            json_resp = self.response.json()  # type: ignore
+            return json_resp.get('message', json_resp.get('errors'))
         except (TypeError, ValueError, AttributeError, KeyError):
             return self._message or REQUEST_ERROR_MESSAGE
 
     @property
-    def status_code(self):
+    def status_code(self) -> int:
         try:
-            return self.response.status_code
+            return self.response.status_code  # type: ignore
         except AttributeError:
             return REQUEST_ERROR_STATUS_CODE
 
 
 class HTTPError(APIError):
     @staticmethod
-    def create(e):
+    def create(e: RequestException) -> 'HTTPError':
         error = HTTPError(e.response)
         if error.status_code == 503:
             error = HTTP503Error(e.response)
