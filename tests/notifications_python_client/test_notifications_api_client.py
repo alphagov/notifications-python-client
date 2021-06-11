@@ -120,6 +120,19 @@ def test_get_all_notifications_by_status(notifications_client, rmock):
     assert rmock.called
 
 
+def test_get_all_notifications_including_jobs(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications?include_jobs={1}".format(TEST_HOST, "true")
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"status": "success"},
+        status_code=200)
+
+    notifications_client.get_all_notifications(include_jobs=True)
+
+    assert rmock.called
+
+
 def test_get_all_notifications(notifications_client, rmock):
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
     rmock.request(

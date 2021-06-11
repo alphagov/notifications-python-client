@@ -565,7 +565,7 @@ You can only get the status of messages sent within the retention period. The de
 This will return all your messages with statuses. They will display in pages of up to 250 messages each.
 
 ```python
-response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
+response = notifications_client.get_all_notifications(template_type, status, reference, older_than, include_jobs)
 ```
 
 You can filter the returned messages by including the following optional arguments in the method:
@@ -574,6 +574,7 @@ You can filter the returned messages by including the following optional argumen
 - [`status`](#status-optional)
 - [`reference`](#get-the-status-of-multiple-messages-arguments-reference-optional)
 - [`older_than`](#older-than-optional)
+- [`include_jobs`](#include-jobs)
 
 
 ##### One page of up to 250 messages
@@ -647,6 +648,12 @@ older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notificati
 If you leave out this argument, the method returns the most recent 250 messages.
 
 The client only returns messages sent within the retention period. The default retention period is 7 days. If the message specified in this argument was sent before the retention period, the client returns an empty response.
+
+##### incude_jobs (optional)
+
+Includes notifications sent as part of a batch upload.
+
+If you leave out this argument, the method only returns notifications sent using the API.
 
 #### Response
 
