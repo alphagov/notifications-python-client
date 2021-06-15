@@ -746,6 +746,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |#`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |#`received`|The provider has printed and dispatched the letter.|
 |#`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#`permanent-failure`|The provider cannot print the letter. Your letter will not be dispatched.|
 
 ### Precompiled letter status descriptions
 
@@ -758,6 +759,7 @@ If the request is not successful, the client returns an `HTTPError` containing t
 |#`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
 |#`received`|The provider has printed and dispatched the letter.|
 |#`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#`permanent-failure`|The provider cannot print the letter. Your letter will not be dispatched.|
 
 ### Get a PDF for a letter
 
