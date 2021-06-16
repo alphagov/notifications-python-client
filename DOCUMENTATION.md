@@ -700,10 +700,10 @@ If the request to the client is successful, the client returns a `dict`.
 
 For more information, see the:
 
-* [email status descriptions](#email-status-descriptions)
-* [text message status descriptions](#text-message-status-descriptions)
-* [letter status descriptions](#letter-status-descriptions)
-* [precompiled letter status descriptions](#precompiled-letter-status-descriptions)
+* [email status](#email-status-descriptions)
+* [text message status](#text-message-status-descriptions)
+* [letter status](#letter-status-descriptions)
+* [precompiled letter status](#precompiled-letter-status-descriptions)
 
 #### Error codes
 
