@@ -112,7 +112,14 @@ class NotificationsAPIClient(BaseAPIClient):
 
         return BytesIO(response.content)
 
-    def get_all_notifications(self, status=None, template_type=None, reference=None, older_than=None):
+    def get_all_notifications(
+        self,
+        status=None,
+        template_type=None,
+        reference=None,
+        older_than=None,
+        include_jobs=None
+    ):
         data = {}
         if status:
             data.update({'status': status})
@@ -122,6 +129,8 @@ class NotificationsAPIClient(BaseAPIClient):
             data.update({'reference': reference})
         if older_than:
             data.update({'older_than': older_than})
+        if include_jobs:
+            data.update({'include_jobs': include_jobs})
         return self.get(
             '/v2/notifications',
             params=data

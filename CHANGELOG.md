@@ -1,3 +1,7 @@
+## 6.2.0
+
+* Optionally include job notifications in `get_all_notifications`
+
 ## 6.1.0
 
 * Add type hints for errors
