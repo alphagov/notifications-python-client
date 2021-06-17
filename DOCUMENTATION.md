@@ -649,7 +649,7 @@ If you leave out this argument, the method returns the most recent 250 messages.
 
 The client only returns messages sent within the retention period. The default retention period is 7 days. If the message specified in this argument was sent before the retention period, the client returns an empty response.
 
-##### incude_jobs (optional)
+##### include_jobs (optional)
 
 Includes notifications sent as part of a batch upload.
 
