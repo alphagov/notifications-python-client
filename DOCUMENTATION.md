@@ -574,7 +574,7 @@ You can filter the returned messages by including the following optional argumen
 - [`status`](#status-optional)
 - [`reference`](#get-the-status-of-multiple-messages-arguments-reference-optional)
 - [`older_than`](#older-than-optional)
-- [`include_jobs`](#include-jobs)
+- [`include_jobs`](#include-jobs-optional)
 
 
 ##### One page of up to 250 messages
