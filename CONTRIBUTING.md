@@ -4,15 +4,29 @@ Pull requests welcome.
 
 This is a Python codebase, written to support Python 3 only.
 
+## Setting Up
+
+### Docker container
+
+This app uses dependencies that are difficult to install locally. In order to make local development easy, we run app commands through a Docker container. Run the following to set this up:
+
+```shell
+make prepare-docker-runner-image
+```
+
+Because the container caches things like packages, you will need to run this again if you change the package versions.
+
 ## Tests
 
-The `./scripts/run_tests.py` script will run all the tests.
-[`py.test`](http://pytest.org/latest/) is used for testing.
+There are unit and integration tests that can be run to test functionality of the client.
 
-Running the script will also check for conformance with
-[`flake8`](https://pypi.org/project/flake8/).
+### Unit tests
 
-Additionally code coverage is checked via `pytest-cov`.
+To run the unit tests:
+
+```
+make test-with-docker
+```
 
 ### tox
 
@@ -22,7 +36,7 @@ We use tox to ensure code works on all versions of python. You can run this usin
 make tox-with-docker
 ```
 
-## Integration tests
+### Integration tests
 
 Before running tests please ensure that the environment variables are set up for the integration test.
 
@@ -40,9 +54,11 @@ API_SENDING_KEY "API_team_key for sending an SMS to a receiving number"
 INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages - leave blank for local development as cannot test locally"
 ```
 
-The `./scripts/run_integration_tests.py` script will run the integration tests.
-The integration tests will test the contract of the response to all the api calls,
-ensuring the latest version of notifications-api do not break the contract of the notifications-python-client.
+To run the integration tests:
+
+```
+make integration-test-with-docker
+```
 
 ## Running the client locally
 
