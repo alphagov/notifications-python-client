@@ -1,3 +1,7 @@
+## 6.2.1
+
+* Auto-convert sets to lists in API calls
+
 ## 6.2.0
 
 * Optionally include job notifications in `get_all_notifications`
