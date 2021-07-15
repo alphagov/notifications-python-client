@@ -2,8 +2,6 @@
 
 Pull requests welcome.
 
-## Working on the client locally
-
 This is a Python codebase, written to support Python 3 only.
 
 ## Tests
@@ -23,24 +21,6 @@ We use tox to ensure code works on all versions of python. You can run this usin
 ```sh
 make tox-with-docker
 ```
-
-If you wish to run tox locally, you'll need to install a variety of
-python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
-
-You'll first want to install the latest versions of each minor python version. You'll need to use `pyenv install --list`
-to see available versions
-
-```sh
-while read line; do pyenv install "$line" < /dev/null; done < .python-version
-```
-
-Then you'll need to install tox.
-```sh
-pip install tox
-```
-
-Then you can run `tox` to run the tests against each version of python.
-
 
 ## Integration tests
 
@@ -63,6 +43,25 @@ INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages - leave blank 
 The `./scripts/run_integration_tests.py` script will run the integration tests.
 The integration tests will test the contract of the response to all the api calls,
 ensuring the latest version of notifications-api do not break the contract of the notifications-python-client.
+
+## Running the client locally
+
+If you wish to run tox locally, you'll need to install a variety of
+python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
+
+You'll first want to install the latest versions of each minor python version. You'll need to use `pyenv install --list`
+to see available versions
+
+```sh
+while read line; do pyenv install "$line" < /dev/null; done < .python-version
+```
+
+Then you'll need to install tox.
+```sh
+pip install tox
+```
+
+Then you can run `tox` to run the tests against each version of python.
 
 ## Command line tool
 
