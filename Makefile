@@ -11,36 +11,30 @@ DOCKER_CONTAINER_PREFIX = ${USER}-${BUILD_TAG}
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: venv
-venv: venv/bin/activate ## Create virtualenv if it does not exist
-
-venv/bin/activate:
-	test -d venv || virtualenv venv -p python3
-
 .PHONY: dependencies
-dependencies: venv ## Install build dependencies
+dependencies: ## Install build dependencies
 	pip install --upgrade .
 
 .PHONY: build
 build: dependencies ## Build project
 
 .PHONY: test
-test: venv ## Run tests
+test: ## Run tests
 	./scripts/run_tests.sh
 
 .PHONY: integration-test
-integration-test: venv ## Run integration tests
+integration-test: ## Run integration tests
 	./scripts/run_integration_tests.sh
 
 .PHONY: build-wheel
-build-wheel: venv ## build distributable wheel
-	./venv/bin/pip install wheel
-	./venv/bin/python setup.py bdist_wheel
+build-wheel: ## build distributable wheel
+	pip install wheel
+	python setup.py bdist_wheel
 
 .PHONY: publish-to-pypi
 publish-to-pypi: build-wheel ## upload distributable wheel to pypi
-	./venv/bin/pip install --upgrade twine
-	@./venv/bin/twine upload dist/*.whl \
+	pip install --upgrade twine
+	@twine upload dist/*.whl \
 		--username="${PYPI_USERNAME}" \
 		--password="${PYPI_PASSWORD}" \
 		--skip-existing # if you haven't run `make clean` there may be old wheels - don't try and re-upload them
@@ -115,7 +109,7 @@ clean-docker-containers: ## Clean up any remaining docker containers
 	docker rm -f $(shell docker ps -q -f "name=${DOCKER_CONTAINER_PREFIX}") 2> /dev/null || true
 
 clean:
-	rm -rf .cache venv dist .eggs build .tox
+	rm -rf .cache dist .eggs build .tox
 
 .PHONY: tox-with-docker
 tox-with-docker: prepare-docker-runner-image generate-env-file
