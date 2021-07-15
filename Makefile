@@ -52,11 +52,6 @@ build-with-docker: prepare-docker-runner-image ## Build inside a Docker containe
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-build" \
 		-v "`pwd`:/var/project" \
-		-e http_proxy="${HTTP_PROXY}" \
-		-e HTTP_PROXY="${HTTP_PROXY}" \
-		-e https_proxy="${HTTPS_PROXY}" \
-		-e HTTPS_PROXY="${HTTPS_PROXY}" \
-		-e NO_PROXY="${NO_PROXY}" \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		make build
 
@@ -65,11 +60,6 @@ test-with-docker: prepare-docker-runner-image generate-env-file ## Run tests ins
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-test" \
 		-v "`pwd`:/var/project" \
-		-e http_proxy="${HTTP_PROXY}" \
-		-e HTTP_PROXY="${HTTP_PROXY}" \
-		-e https_proxy="${HTTPS_PROXY}" \
-		-e HTTPS_PROXY="${HTTPS_PROXY}" \
-		-e NO_PROXY="${NO_PROXY}" \
 		--env-file docker.env \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		make test
@@ -79,11 +69,6 @@ integration-test-with-docker: prepare-docker-runner-image generate-env-file ## R
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
 		-v "`pwd`:/var/project" \
-		-e http_proxy="${HTTP_PROXY}" \
-		-e HTTP_PROXY="${HTTP_PROXY}" \
-		-e https_proxy="${HTTPS_PROXY}" \
-		-e HTTPS_PROXY="${HTTPS_PROXY}" \
-		-e NO_PROXY="${NO_PROXY}" \
 		--env-file docker.env \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		make integration-test
@@ -93,11 +78,6 @@ publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## pu
 	@docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-publish-to-pypi" \
 		-v "`pwd`:/var/project" \
-		-e http_proxy="${HTTP_PROXY}" \
-		-e HTTP_PROXY="${HTTP_PROXY}" \
-		-e https_proxy="${HTTPS_PROXY}" \
-		-e HTTPS_PROXY="${HTTPS_PROXY}" \
-		-e NO_PROXY="${NO_PROXY}" \
 		-e PYPI_USERNAME="${PYPI_USERNAME}" \
 		-e PYPI_PASSWORD="${PYPI_PASSWORD}" \
 		--env-file docker.env \
@@ -116,11 +96,6 @@ tox-with-docker: prepare-docker-runner-image generate-env-file
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
 		-v "`pwd`:/var/project" \
-		-e http_proxy="${HTTP_PROXY}" \
-		-e HTTP_PROXY="${HTTP_PROXY}" \
-		-e https_proxy="${HTTPS_PROXY}" \
-		-e HTTPS_PROXY="${HTTPS_PROXY}" \
-		-e NO_PROXY="${NO_PROXY}" \
 		--env-file docker.env \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		tox
