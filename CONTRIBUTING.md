@@ -36,6 +36,8 @@ We use tox to ensure code works on all versions of python. You can run this usin
 make tox-with-docker
 ```
 
+Because tox caches installed packages, you may need to run `rm -rf .tox` if you change package versions.
+
 ### Integration tests
 
 Before running tests please ensure that the environment variables are set up for the integration test.
