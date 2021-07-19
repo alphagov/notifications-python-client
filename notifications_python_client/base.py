@@ -74,7 +74,7 @@ class BaseAPIClient(object):
         }
 
         if data is not None:
-            kwargs.update(data=json.dumps(data))
+            kwargs.update(data=self._serialize_data(data))
 
         if params is not None:
             kwargs.update(params=params)
@@ -82,6 +82,15 @@ class BaseAPIClient(object):
         url = urllib.parse.urljoin(str(self.base_url), str(url))
 
         return url, kwargs
+
+    def _serialize_data(self, data):
+        return json.dumps(data, default=self._extended_json_encoder)
+
+    def _extended_json_encoder(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+
+        raise TypeError
 
     def _perform_request(self, method, url, kwargs):
         start_time = time.monotonic()

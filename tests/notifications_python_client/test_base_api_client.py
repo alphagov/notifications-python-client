@@ -110,4 +110,17 @@ def test_user_agent_is_set(base_client, rmock):
 
     base_client.request('GET', '/')
 
-    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.2.0"
+    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.2.1"
+
+
+@pytest.mark.parametrize('data, expected_json', [
+    [{'list': {1, 2}}, {'list': [1, 2]}]
+])
+def test_converts_extended_types_to_json(base_client, rmock, data, expected_json):
+    rmock.request(
+        "GET",
+        "http://test-host/",
+        json=expected_json,
+    )
+
+    base_client.request('GET', '/', data=data)
