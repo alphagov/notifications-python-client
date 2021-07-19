@@ -30,11 +30,15 @@ RUN eval "$(/root/.pyenv/bin/pyenv init - )"
 
 WORKDIR /var/project
 
-COPY .python-version .
+COPY tox-python-versions .
 
 RUN \
 	echo "Install python based on .python-version file" \
-	&& while read line; do pyenv install "$line" < /dev/null; done < .python-version
+	&& while read line; do pyenv install "$line" < /dev/null; done < tox-python-versions
+
+# Make pyenv activate all installed Python versions for tox (available as pythonX.Y)
+# The first version will be the one used when running "python"
+RUN pyenv global $(tr '\n' ' ' < tox-python-versions)
 
 RUN \
 	echo "installing tox" \

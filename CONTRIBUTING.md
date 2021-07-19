@@ -62,17 +62,20 @@ make integration-test-with-docker
 
 ## Running the client locally
 
-If you wish to run tox locally, you'll need to install a variety of
-python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
-
-You'll first want to install the latest versions of each minor python version. You'll need to use `pyenv install --list`
-to see available versions
+If you wish to run tox locally, you'll need to install a variety of python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
 
 ```sh
-while read line; do pyenv install "$line" < /dev/null; done < .python-version
+while read line; do pyenv install "$line" < /dev/null; done < tox-python-versions
+```
+
+You may already have a `.python-version` file. In order to run tox you need to activate all the Python versions in `tox-python-versions`.
+
+```sh
+cp tox-python-versions .python-version
 ```
 
 Then you'll need to install tox.
+
 ```sh
 pip install tox
 ```
