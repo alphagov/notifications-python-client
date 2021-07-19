@@ -13,7 +13,7 @@ help:
 
 .PHONY: dependencies
 dependencies: ## Install build dependencies
-	pip install --upgrade .
+	pip install -r requirements_for_test.txt
 
 .PHONY: build
 build: dependencies ## Build project
