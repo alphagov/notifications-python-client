@@ -1,6 +1,5 @@
 from integration_test.enums import TEMPLATE_TYPES
-from integration_test.schemas.v2.definitions import uuid, personalisation
-
+from integration_test.schemas.v2.definitions import personalisation, uuid
 
 get_template_by_id_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",

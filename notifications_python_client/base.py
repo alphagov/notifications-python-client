@@ -1,14 +1,13 @@
-import urllib.parse
-import logging
 import json
+import logging
 import time
+import urllib.parse
 
 import requests
 
 from notifications_python_client import __version__
-from notifications_python_client.errors import HTTPError, InvalidResponse
 from notifications_python_client.authentication import create_jwt_token
-
+from notifications_python_client.errors import HTTPError, InvalidResponse
 
 logger = logging.getLogger(__name__)
 

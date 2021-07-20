@@ -1,9 +1,10 @@
 import base64
 import io
+
 from mock import Mock
-from tests.conftest import TEST_HOST
 
 from notifications_python_client import prepare_upload
+from tests.conftest import TEST_HOST
 
 
 def test_get_notification_by_id(notifications_client, rmock):

@@ -1,5 +1,6 @@
 .
 
+isort==5.8.0
 flake8>=3.9.2
 pytest>=3.0.2
 pytest-mock>=1.2

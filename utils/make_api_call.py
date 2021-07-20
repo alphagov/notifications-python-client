@@ -19,8 +19,9 @@ Example:
 
 import json
 import sys
-from docopt import docopt
 from pprint import pprint
+
+from docopt import docopt
 
 from notifications_python_client.notifications import NotificationsAPIClient
 

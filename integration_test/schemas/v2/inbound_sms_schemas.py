@@ -1,6 +1,5 @@
 from integration_test.schemas.v2.definitions import uuid
 
-
 get_inbound_sms_single_response = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "GET inbound sms schema response",

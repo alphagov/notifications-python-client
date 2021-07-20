@@ -15,6 +15,7 @@ build: bootstrap ## Build project (dummy task for CI)
 .PHONY: test
 test: ## Run tests
 	flake8 .
+	isort --check-only ./notifications_python_client ./utils ./integration_test ./tests
 	pytest
 
 .PHONY: integration-test

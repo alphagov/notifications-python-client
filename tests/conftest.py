@@ -1,11 +1,9 @@
 import mock
-
-import requests_mock
 import pytest
+import requests_mock
 
 from notifications_python_client.base import BaseAPIClient
 from notifications_python_client.notifications import NotificationsAPIClient
-
 
 TEST_HOST = 'http://test-host'
 SERVICE_ID = 'c745a8d8-b48a-4b0d-96e5-dbea0165ebd1'

@@ -9,7 +9,11 @@
 
 __version__ = '6.2.1'
 
-from notifications_python_client.errors import REQUEST_ERROR_STATUS_CODE, REQUEST_ERROR_MESSAGE  # noqa
-
-from notifications_python_client.notifications import NotificationsAPIClient  # noqa
-from notifications_python_client.utils import prepare_upload # noqa
+from notifications_python_client.errors import (  # noqa
+    REQUEST_ERROR_MESSAGE,
+    REQUEST_ERROR_STATUS_CODE,
+)
+from notifications_python_client.notifications import (  # noqa
+    NotificationsAPIClient,
+)
+from notifications_python_client.utils import prepare_upload  # noqa

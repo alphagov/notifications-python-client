@@ -1,5 +1,6 @@
 import base64
 import io
+
 import pytest
 
 from notifications_python_client import prepare_upload
