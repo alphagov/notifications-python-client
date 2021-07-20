@@ -11,12 +11,12 @@ DOCKER_CONTAINER_PREFIX = ${USER}-${BUILD_TAG}
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: dependencies
-dependencies: ## Install build dependencies
+.PHONY: bootstrap
+bootstrap: ## Install build dependencies
 	pip install -r requirements_for_test.txt
 
 .PHONY: build
-build: dependencies ## Build project
+build: bootstrap ## Build project (dummy task for CI)
 
 .PHONY: test
 test: ## Run tests
