@@ -48,15 +48,6 @@ generate-env-file: ## Generate the environment file for running the tests inside
 prepare-docker-runner-image: ## Prepare the Docker builder image
 	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
 
-.PHONY: build-with-docker
-build-with-docker: prepare-docker-runner-image ## Build inside a Docker container
-	docker run -i --rm \
-		--name "${DOCKER_CONTAINER_PREFIX}-build" \
-		-v "`pwd`:/var/project" \
-		-v "`pwd`/tox-python-versions:/var/project/.python-version" \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make build
-
 .PHONY: test-with-docker
 test-with-docker: prepare-docker-runner-image generate-env-file ## Run tests inside a Docker container
 	docker run -i --rm \
