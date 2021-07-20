@@ -34,12 +34,8 @@ publish-to-pypi: build-wheel ## upload distributable wheel to pypi
 		--password="${PYPI_PASSWORD}" \
 		--skip-existing # if you haven't run `make clean` there may be old wheels - don't try and re-upload them
 
-.PHONY: generate-env-file
-generate-env-file: ## Generate the environment file for running the tests inside a Docker container
-	scripts/generate_docker_env.sh
-
 .PHONY: bootstrap-with-docker
-bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
+bootstrap-with-docker: ## Prepare the Docker builder image
 	docker build -t notifications-python-client .
 
 .PHONY: test-with-docker
