@@ -20,11 +20,12 @@ build: dependencies ## Build project
 
 .PHONY: test
 test: ## Run tests
-	./scripts/run_tests.sh
+	flake8 .
+	pytest
 
 .PHONY: integration-test
 integration-test: ## Run integration tests
-	./scripts/run_integration_tests.sh
+	python integration_test/integration_tests.py
 
 .PHONY: build-wheel
 build-wheel: ## build distributable wheel
