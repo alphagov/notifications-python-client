@@ -1,12 +1,6 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-DOCKER_BUILDER_IMAGE_NAME = govuk/notify-python-client-runner
-
-BUILD_TAG ?= notifications-python-client-manual
-
-DOCKER_CONTAINER_PREFIX = ${USER}-${BUILD_TAG}
-
 .PHONY: help
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -46,53 +40,19 @@ generate-env-file: ## Generate the environment file for running the tests inside
 
 .PHONY: bootstrap-with-docker
 bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
+	docker build -t notifications-python-client .
 
 .PHONY: test-with-docker
 test-with-docker: ## Run tests inside a Docker container
-	docker run -i --rm \
-		--name "${DOCKER_CONTAINER_PREFIX}-test" \
-		-v "`pwd`:/var/project" \
-		-v "`pwd`/tox-python-versions:/var/project/.python-version" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make test
+	./scripts/run_with_docker.sh make test
 
 .PHONY: integration-test-with-docker
 integration-test-with-docker: ## Run integration tests inside a Docker container
-	docker run -i --rm \
-		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
-		-v "`pwd`:/var/project" \
-		-v "`pwd`/tox-python-versions:/var/project/.python-version" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make integration-test
-
-.PHONY: publish-to-pypi-with-docker
-publish-to-pypi-with-docker: ## publish wheel to pypi inside a docker container
-	@docker run -i --rm \
-		--name "${DOCKER_CONTAINER_PREFIX}-publish-to-pypi" \
-		-v "`pwd`:/var/project" \
-		-v "`pwd`/tox-python-versions:/var/project/.python-version" \
-		-e PYPI_USERNAME="${PYPI_USERNAME}" \
-		-e PYPI_PASSWORD="${PYPI_PASSWORD}" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make publish-to-pypi
-
-.PHONY: clean-docker-containers
-clean-docker-containers: ## Clean up any remaining docker containers
-	docker rm -f $(shell docker ps -q -f "name=${DOCKER_CONTAINER_PREFIX}") 2> /dev/null || true
+	./scripts/run_with_docker.sh make integration-test
 
 .PHONY: tox-with-docker
 tox-with-docker:
-	docker run -i --rm \
-		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
-		-v "`pwd`:/var/project" \
-		-v "`pwd`/tox-python-versions:/var/project/.python-version" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		tox
+	./scripts/run_with_docker.sh tox
 
 clean:
 	rm -rf .cache dist .eggs build .tox
