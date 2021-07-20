@@ -11,7 +11,7 @@ This is a Python codebase, written to support Python 3 only.
 This app uses dependencies that are difficult to install locally. In order to make local development easy, we run app commands through a Docker container. Run the following to set this up:
 
 ```shell
-make prepare-docker-runner-image
+make bootstrap-with-docker
 ```
 
 Because the container caches things like packages, you will need to run this again if you change the package versions.

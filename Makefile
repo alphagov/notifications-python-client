@@ -44,12 +44,12 @@ publish-to-pypi: build-wheel ## upload distributable wheel to pypi
 generate-env-file: ## Generate the environment file for running the tests inside a Docker container
 	scripts/generate_docker_env.sh
 
-.PHONY: prepare-docker-runner-image
-prepare-docker-runner-image: ## Prepare the Docker builder image
+.PHONY: bootstrap-with-docker
+bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
 	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
 
 .PHONY: test-with-docker
-test-with-docker: prepare-docker-runner-image generate-env-file ## Run tests inside a Docker container
+test-with-docker: ## Run tests inside a Docker container
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-test" \
 		-v "`pwd`:/var/project" \
@@ -59,7 +59,7 @@ test-with-docker: prepare-docker-runner-image generate-env-file ## Run tests ins
 		make test
 
 .PHONY: integration-test-with-docker
-integration-test-with-docker: prepare-docker-runner-image generate-env-file ## Run integration tests inside a Docker container
+integration-test-with-docker: ## Run integration tests inside a Docker container
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
 		-v "`pwd`:/var/project" \
@@ -69,7 +69,7 @@ integration-test-with-docker: prepare-docker-runner-image generate-env-file ## R
 		make integration-test
 
 .PHONY: publish-to-pypi-with-docker
-publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## publish wheel to pypi inside a docker container
+publish-to-pypi-with-docker: ## publish wheel to pypi inside a docker container
 	@docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-publish-to-pypi" \
 		-v "`pwd`:/var/project" \
@@ -84,11 +84,8 @@ publish-to-pypi-with-docker: prepare-docker-runner-image generate-env-file ## pu
 clean-docker-containers: ## Clean up any remaining docker containers
 	docker rm -f $(shell docker ps -q -f "name=${DOCKER_CONTAINER_PREFIX}") 2> /dev/null || true
 
-clean:
-	rm -rf .cache dist .eggs build .tox
-
 .PHONY: tox-with-docker
-tox-with-docker: prepare-docker-runner-image generate-env-file
+tox-with-docker:
 	docker run -i --rm \
 		--name "${DOCKER_CONTAINER_PREFIX}-integration-test" \
 		-v "`pwd`:/var/project" \
@@ -96,3 +93,6 @@ tox-with-docker: prepare-docker-runner-image generate-env-file
 		--env-file docker.env \
 		${DOCKER_BUILDER_IMAGE_NAME} \
 		tox
+
+clean:
+	rm -rf .cache dist .eggs build .tox
