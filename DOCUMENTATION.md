@@ -230,7 +230,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 #### Upload your file
 
-You can upload PDF, CSV, .odt, .txt, .rtf, .xslx and MS Word Document files. Your file must be smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
+You can upload PDF, CSV, .odt, .txt, .rtf, .xlsx and MS Word Document files. Your file must be smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
 Pass the file object as a value into the personalisation argument. For example:
 
@@ -973,7 +973,7 @@ This generates a preview version of a template.
 
 ```python
 response = notifications_client.post_template_preview(
-    'template_id'='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
+    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
     personalisation={
         'KEY': 'VALUE',
         'KEY': 'VALUE',
