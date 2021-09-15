@@ -28,6 +28,15 @@ def test_can_set_base_url():
     assert client.base_url == 'foo'
 
 
+def test_set_timeout():
+    client = BaseAPIClient(base_url='foo', api_key=COMBINED_API_KEY, timeout=2)
+    assert client.timeout == 2
+
+
+def test_default_timeout_is_set(base_client):
+    assert base_client.timeout == 30
+
+
 def test_fails_if_client_id_missing():
     with pytest.raises(AssertionError) as err:
         BaseAPIClient(api_key=API_KEY_ID)
@@ -110,7 +119,7 @@ def test_user_agent_is_set(base_client, rmock):
 
     base_client.request('GET', '/')
 
-    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.2.1"
+    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.3.0"
 
 
 @pytest.mark.parametrize('data, expected_json', [

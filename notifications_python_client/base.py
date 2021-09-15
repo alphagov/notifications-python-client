@@ -17,13 +17,15 @@ class BaseAPIClient(object):
     def __init__(
             self,
             api_key,
-            base_url='https://api.notifications.service.gov.uk'
+            base_url='https://api.notifications.service.gov.uk',
+            timeout=30
     ):
         """
         Initialise the client
         Error if either of base_url or secret missing
         :param base_url - base URL of GOV.UK Notify API:
         :param secret - application secret - used to sign the request:
+        :param timeout - request timeout on the client
         :return:
         """
         service_id = api_key[-73:-37]
@@ -35,6 +37,7 @@ class BaseAPIClient(object):
         self.base_url = base_url
         self.service_id = service_id
         self.api_key = api_key
+        self.timeout = timeout
 
     def put(self, url, data):
         return self.request("PUT", url, data=data)
@@ -71,6 +74,7 @@ class BaseAPIClient(object):
 
         kwargs = {
             "headers": self.generate_headers(api_token),
+            "timeout": self.timeout
         }
 
         if data is not None:
