@@ -52,7 +52,9 @@ setup(
     ],
     keywords='gds govuk notify',
 
-    packages=find_packages(),
+    packages=find_packages(
+        include=['notifications_python_client'],
+    ),
     include_package_data=True,
 
     # only support actively patched versions of python (https://devguide.python.org/devcycle/#end-of-life-branches)
