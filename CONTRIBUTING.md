@@ -8,9 +8,7 @@ This is a Python codebase, written to support Python 3 only.
 
 ## Dependency management
 
-This is done through [pip](pip.readthedocs.org/) and
-[virtualenv](https://virtualenv.readthedocs.org/en/latest/).
-We recommend using [VirtualEnvWrapper](http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html).
+This is done through [pip](pip.readthedocs.org/) and [virtualenv](https://virtualenv.readthedocs.org/en/latest/). We recommend using [VirtualEnvWrapper](http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html).
 
 Setting up a Virtualenv for python3
 
