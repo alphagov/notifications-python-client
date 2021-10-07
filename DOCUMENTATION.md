@@ -24,8 +24,15 @@ from notifications_python_client.notifications import NotificationsAPIClient
 notifications_client = NotificationsAPIClient(api_key)
 ```
 
+#### Arguments
+
+##### api_key (required)
+
 To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page. You can find more information in the [API keys](#api-keys) section of this documentation.
-The default timeout for the APIClient is 30.
+
+##### timeout (optional)
+
+The default timeout is 30 seconds. For more information about timeouts see https://docs.python-requests.org/en/latest/user/advanced/#timeouts.
 
 ## Send a message
 
