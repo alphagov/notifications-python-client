@@ -53,7 +53,12 @@ setup(
     keywords='gds govuk notify',
 
     packages=find_packages(
-        include=['notifications_python_client'],
+        exclude=[
+            'integration_test',
+            'scripts',
+            'tests',
+            'utils',
+        ],
     ),
     include_package_data=True,
 
