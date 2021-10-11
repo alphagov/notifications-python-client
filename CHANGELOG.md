@@ -1,3 +1,7 @@
+## 6.3.0
+
+* Added a default timeout of 30s to the `BaseAPIClient`
+
 ## 6.2.1
 
 * Auto-convert sets to lists in API calls
