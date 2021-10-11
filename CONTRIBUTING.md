@@ -83,7 +83,7 @@ Then you can run `tox` to run the tests against each version of python.
 Use this to test the client without having to create an application.
 
 ```
-    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
+python utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
 ```
 
 This will use the API referred to in the base_api_url argument to send a text message.
