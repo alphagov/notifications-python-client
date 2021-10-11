@@ -1,5 +1,6 @@
-from requests import RequestException, Response
 from typing import List, Union
+
+from requests import RequestException, Response
 
 REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"

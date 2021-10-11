@@ -1,25 +1,32 @@
+import os
+import time
+import uuid
 from datetime import datetime
 from io import BytesIO
-import time
-import os
-import uuid
 
 from jsonschema import Draft4Validator
 
-from integration_test.schemas.v2.inbound_sms_schemas import get_inbound_sms_response
+from integration_test.enums import EMAIL_TYPE, LETTER_TYPE, SMS_TYPE
+from integration_test.schemas.v2.inbound_sms_schemas import (
+    get_inbound_sms_response,
+)
 from integration_test.schemas.v2.notification_schemas import (
-    post_sms_response,
-    post_email_response,
-    post_letter_response,
     get_notification_response,
     get_notifications_response,
-    post_precompiled_letter_response)
-from integration_test.schemas.v2.template_schemas import get_template_by_id_response, post_template_preview_response
-from integration_test.schemas.v2.templates_schemas import get_all_template_response
-from integration_test.enums import SMS_TYPE, EMAIL_TYPE, LETTER_TYPE
-
-from notifications_python_client.notifications import NotificationsAPIClient
+    post_email_response,
+    post_letter_response,
+    post_precompiled_letter_response,
+    post_sms_response,
+)
+from integration_test.schemas.v2.template_schemas import (
+    get_template_by_id_response,
+    post_template_preview_response,
+)
+from integration_test.schemas.v2.templates_schemas import (
+    get_all_template_response,
+)
 from notifications_python_client.errors import HTTPError
+from notifications_python_client.notifications import NotificationsAPIClient
 
 
 def validate(json_to_validate, schema):

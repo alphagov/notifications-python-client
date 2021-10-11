@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import requests
 import mock
-
 import pytest
-from notifications_python_client.errors import HTTPError, InvalidResponse
+import requests
+
 from notifications_python_client.base import BaseAPIClient
-from tests.conftest import API_KEY_ID, SERVICE_ID, COMBINED_API_KEY
+from notifications_python_client.errors import HTTPError, InvalidResponse
+from tests.conftest import API_KEY_ID, COMBINED_API_KEY, SERVICE_ID
 
 
 @pytest.mark.parametrize('client', [

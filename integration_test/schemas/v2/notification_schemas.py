@@ -1,5 +1,4 @@
-from integration_test.schemas.v2.definitions import uuid, personalisation
-
+from integration_test.schemas.v2.definitions import personalisation, uuid
 
 template = {
     "$schema": "http://json-schema.org/draft-04/schema#",

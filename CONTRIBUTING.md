@@ -2,36 +2,41 @@
 
 Pull requests welcome.
 
-## Working on the client locally
-
 This is a Python codebase, written to support Python 3 only.
 
-## Dependency management
+## Setting Up
 
-This is done through [pip](pip.readthedocs.org/) and
-[virtualenv](https://virtualenv.readthedocs.org/en/latest/).
-We recommend using [VirtualEnvWrapper](http://virtualenvwrapper.readthedocs.org/en/latest/command_ref.html).
+### Docker container
 
-Setting up a Virtualenv for python3
+This app uses dependencies that are difficult to install locally. In order to make local development easy, we run app commands through a Docker container. Run the following to set this up:
 
 ```shell
-    mkvirtualenv -p /usr/local/bin/python3 notifications-python-client
+make bootstrap-with-docker
 ```
 
-Install the dependencies
-```python
-    python setup.py develop
+Because the container caches things like packages, you will need to run this again if you change the package versions.
+
+### `environment.sh`
+
+In the root directory of the repo, run:
+
 ```
+notify-pass credentials/client-integration-tests > environment.sh
+```
+
+Unless you're part of the GOV.UK Notify team, you won't be able to run this command or the Integration Tests. However, the file still needs to exist - run `touch environment.sh` instead.
 
 ## Tests
 
-The `./scripts/run_tests.py` script will run all the tests.
-[`py.test`](http://pytest.org/latest/) is used for testing.
+There are unit and integration tests that can be run to test functionality of the client.
 
-Running the script will also check for conformance with
-[`flake8`](https://pypi.org/project/flake8/).
+### Unit tests
 
-Additionally code coverage is checked via `pytest-cov`.
+To run the unit tests:
+
+```
+make test-with-docker
+```
 
 ### tox
 
@@ -41,52 +46,44 @@ We use tox to ensure code works on all versions of python. You can run this usin
 make tox-with-docker
 ```
 
-If you wish to run tox locally, you'll need to install a variety of
-python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
+Because tox caches installed packages, you may need to run `rm -rf .tox` if you change package versions.
 
-You'll first want to install the latest versions of each minor python version. You'll need to use `pyenv install --list`
-to see available versions
+### Integration tests
+
+To run the integration tests:
+
+```
+make integration-test-with-docker
+```
+
+## Running the client locally
+
+If you wish to run tox locally, you'll need to install a variety of python versions. You should use [`pyenv`](https://github.com/pyenv/pyenv) for this.
 
 ```sh
-while read line; do pyenv install "$line" < /dev/null; done < .python-version
+while read line; do pyenv install "$line" < /dev/null; done < tox-python-versions
+```
+
+You may already have a `.python-version` file. In order to run tox you need to activate all the Python versions in `tox-python-versions`.
+
+```sh
+cp tox-python-versions .python-version
 ```
 
 Then you'll need to install tox.
+
 ```sh
 pip install tox
 ```
 
 Then you can run `tox` to run the tests against each version of python.
 
-
-## Integration tests
-
-Before running tests please ensure that the environment variables are set up for the integration test.
-
-```
-NOTIFY_API_URL "https://example.notify-api.url"
-API_KEY "example_API_test_key"
-FUNCTIONAL_TEST_NUMBER "valid mobile number"
-FUNCTIONAL_TEST_EMAIL "valid email address"
-EMAIL_TEMPLATE_ID "valid email_template_id"
-SMS_TEMPLATE_ID "valid sms_template_id"
-LETTER_TEMPLATE_ID "valid letter_template_id"
-EMAIL_REPLY_TO_ID "valid email reply to id"
-SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a valid number"
-API_SENDING_KEY "API_team_key for sending an SMS to a receiving number"
-INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages - leave blank for local development as cannot test locally"
-```
-
-The `./scripts/run_integration_tests.py` script will run the integration tests.
-The integration tests will test the contract of the response to all the api calls,
-ensuring the latest version of notifications-api do not break the contract of the notifications-python-client.
-
 ## Command line tool
 
 Use this to test the client without having to create an application.
 
 ```
-    PYTHONPATH=. python /utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
+python utils/make_api_call.py <base_api_url> <api_key> [fetch|create]
 ```
 
 This will use the API referred to in the base_api_url argument to send a text message.

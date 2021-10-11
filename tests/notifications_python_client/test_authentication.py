@@ -2,20 +2,23 @@ import calendar
 import time
 
 import jwt
-import pytest
 import mock
+import pytest
 from freezegun import freeze_time
 
 from notifications_python_client.authentication import (
-    create_jwt_token, decode_jwt_token, get_token_issuer)
+    create_jwt_token,
+    decode_jwt_token,
+    get_token_issuer,
+)
 from notifications_python_client.errors import (
-    TokenExpiredError,
-    TokenDecodeError,
-    TokenIssuerError,
-    TokenIssuedAtError,
-    TokenAlgorithmError,
-    TokenError,
     TOKEN_ERROR_DEFAULT_ERROR_MESSAGE,
+    TokenAlgorithmError,
+    TokenDecodeError,
+    TokenError,
+    TokenExpiredError,
+    TokenIssuedAtError,
+    TokenIssuerError,
 )
 
 
