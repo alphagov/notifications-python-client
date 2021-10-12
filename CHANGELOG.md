@@ -1,3 +1,7 @@
+## 6.3.1
+
+* Remove test directories from distributed package
+
 ## 6.3.0
 
 * Added a default timeout of 30s to the `BaseAPIClient`
