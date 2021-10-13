@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 import mock
 import pytest
 import requests
@@ -119,7 +121,10 @@ def test_user_agent_is_set(base_client, rmock):
 
     base_client.request('GET', '/')
 
-    assert rmock.last_request.headers.get("User-Agent") == "NOTIFY-API-PYTHON-CLIENT/6.3.0"
+    assert re.fullmatch(
+        r'NOTIFY-API-PYTHON-CLIENT\/(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)',
+        rmock.last_request.headers.get("User-Agent"),
+    )
 
 
 @pytest.mark.parametrize('data, expected_json', [
