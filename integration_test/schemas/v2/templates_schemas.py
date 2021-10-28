@@ -1,7 +1,5 @@
-from integration_test.enums import TEMPLATE_TYPES
-from integration_test.schemas.v2.template_schemas import (
-    get_template_by_id_response as template,
-)
+from enums import TEMPLATE_TYPES
+from schemas.v2.template_schemas import get_template_by_id_response as template
 
 get_all_template_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",
