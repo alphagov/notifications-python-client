@@ -216,9 +216,13 @@ You can leave out this argument if your service only has one reply-to email addr
 
 To send a file by email, add a placeholder to the template then upload a file. The placeholder will contain a secure link to download the file.
 
-The file will be available for the recipient to download for 18 months.
-
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
+
+For added security, you can ask recipients to confirm their email address before they can download the file.
+
+You can also choose the length of time that a file is available to download. The default period is 78 weeks (18 months).
+
+From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files.
 
 #### Add contact details to the file download page
 
@@ -232,9 +236,9 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant email template.
 1. Select __Edit__.
-1. Add a placeholder to the email template using double brackets. For example:
+1. Add a placeholder to the email template using double brackets. For example: "Download your file at: ((link_to_file))"
 
-"Download your file at: ((link_to_file))"
+Your email should also tell recipients how long the file will be available to download.
 
 #### Upload your file
 
@@ -268,6 +272,66 @@ with open('file.csv', 'rb') as f:
       'first_name': 'Amala',
       'application_date': '2018-01-01',
       'link_to_file': prepare_upload(f, is_csv=True),
+    }
+```
+
+#### Ask recipients to confirm their email address before they can download the file
+
+This feature is currently opt-in only. From 29 March 2023 it will apply to all new files by default, unless you opt out.
+
+##### Opt in
+
+To ask recipients to confirm their email address, set the `verify_email_before_download` flag to `true`.
+
+You will not need to do this after 29 March 2023.
+
+```python
+from notifications_python_client import prepare_upload
+
+with open('file.pdf', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'application_date': '2018-01-01',
+      'link_to_file': prepare_upload(f),
+    }
+```
+
+##### Opt out (not recommended)
+
+You should not opt out if you send files that contain personally identifiable information or sensitive information.
+
+If you do not want to use this security feature, set the `verify_email_before_download` flag to `false` by 29 March 2023.
+
+```python
+from notifications_python_client import prepare_upload
+
+with open('file.pdf', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'application_date': '2018-01-01',
+      'link_to_file': prepare_upload(f),
+    }
+```
+
+#### Choose the length of time that a file is available to download
+
+Set the number of weeks you want the file to be available using the `retention_period` key.
+
+You can choose any value between 1 week and 78 weeks.
+
+If you do not do this, the file will be available for the default period of 78 weeks (18 months).
+
+```python
+from notifications_python_client import prepare_upload
+
+with open('file.pdf', 'rb') as f:
+    ...
+    personalisation={
+      'first_name': 'Amala',
+      'application_date': '2018-01-01',
+      'link_to_file': prepare_upload(f),
     }
 ```
 
