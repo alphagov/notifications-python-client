@@ -286,7 +286,7 @@ When a recipient clicks the link in the email you’ve sent them, they have to e
 
 From 29 March 2023, we will turn this feature on by default for every file you send. Files sent before 29 March will not be affected.
 
-##### Opt in
+##### Turn on email address check
 
 To ask recipients to confirm their email address, set the `verify_email_before_download` flag to `true`.
 
