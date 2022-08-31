@@ -280,7 +280,11 @@ with open('file.csv', 'rb') as f:
 
 #### Ask recipients to confirm their email address before they can download the file
 
-This feature is currently opt-in only. From 29 March 2023 it will apply to all new files by default, unless you opt out.
+This new security feature is optional. You should use it if you send files that are sensitive - for example, because they contain personal information about your users.
+
+When a recipient clicks the link in the email you’ve sent them, they have to enter their email address. Only someone who knows the recipient’s email address can download the file.
+
+From 29 March 2023, we will turn this feature on by default for every file you send. Files sent before 29 March will not be affected.
 
 ##### Opt in
 
