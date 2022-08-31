@@ -288,9 +288,11 @@ From 29 March 2023, we will turn this feature on by default for every file you s
 
 ##### Turn on email address check
 
-To ask recipients to confirm their email address, set the `verify_email_before_download` flag to `true`.
+To use this feature before 29 March 2023 you will need version X.X.X of the Python client library, or a more recent version.
+ 
+To make the recipient confirm their email address before downloading the file, set the `verify_email_before_download` flag to `True`.
 
-You will not need to do this after 29 March 2023.
+You will not need to do this after 29 March.
 
 ```python
 from notifications_python_client import prepare_upload
