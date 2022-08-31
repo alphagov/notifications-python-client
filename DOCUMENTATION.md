@@ -218,7 +218,7 @@ To send a file by email, add a placeholder to the template then upload a file. T
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-Your file will be available to download for a default period of 78 weeks (18 months). From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 29 March are not affected.
+Your file will be available to download for a default period of 78 weeks (18 months). From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 29 March will not be affected.
 
 To help protect your files you can also:
 
