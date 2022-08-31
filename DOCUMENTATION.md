@@ -306,7 +306,17 @@ with open('file.pdf', 'rb') as f:
 
 ##### Turn off email address check (not recommended)
 
-You should not opt out if you send files that contain personally identifiable information or sensitive information.
+If you do not want to use this feature after 29 March 2023, you can turn it off on a file-by-file basis.
+
+To do this you will need version X.X.X of the Python client library, or a more recent version.
+
+You should not turn this feature off if you send files that contain:
+
+* personally identifiable information
+* commercially sensitive information
+* information classified as ‘OFFICIAL’ or ‘OFFICIAL-SENSITIVE’ under the [Government Security Classifications](https://www.gov.uk/government/publications/government-security-classifications) policy
+
+To let the recipient download the file without confirming their email address, set the `verify_email_before_download` flag to `False`.
 
 
 ```python
