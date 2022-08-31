@@ -304,7 +304,7 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-##### Opt out (not recommended)
+##### Turn off email address check (not recommended)
 
 You should not opt out if you send files that contain personally identifiable information or sensitive information.
 
