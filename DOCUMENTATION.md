@@ -294,6 +294,7 @@ with open('file.pdf', 'rb') as f:
       'first_name': 'Amala',
       'application_date': '2018-01-01',
       'link_to_file': prepare_upload(f),
+      'verify_email_before_download': True,
     }
 ```
 
