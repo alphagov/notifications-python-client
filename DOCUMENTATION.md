@@ -332,7 +332,7 @@ with open('file.pdf', 'rb') as f:
     personalisation={
       'first_name': 'Amala',
       'application_date': '2018-01-01',
-      'link_to_file': prepare_upload(f),
+      'link_to_file': prepare_upload(f, retention_period='4 weeks'),
     }
 ```
 
