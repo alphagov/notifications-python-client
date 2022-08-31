@@ -225,7 +225,7 @@ To help protect your files you can also:
 * ask recipients to confirm their email address before downloading
 * choose the length of time that a file is available to download
 
-To turn these features on or off, you will need to update your API client to the latest version.
+To turn these features on or off, you will need version X.X.X of the Python client library or a more recent version.
 
 #### Add contact details to the file download page
 
