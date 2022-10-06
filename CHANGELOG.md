@@ -1,3 +1,7 @@
+## 6.4.0
+
+* Added support for `confirm_email_before_download` and `retention_period` security features for sending files by email.
+
 ## 6.3.0
 
 * Added a default timeout of 30s to the `BaseAPIClient`

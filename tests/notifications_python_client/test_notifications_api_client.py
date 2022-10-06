@@ -271,7 +271,12 @@ def test_create_email_notification_with_document_stream_upload(notifications_cli
         'template_id': '456', 'email_address': 'to@example.com',
         'personalisation': {
             'name': 'chris',
-            'doc': {'file': 'ZmlsZS1jb250ZW50cw==', 'is_csv': False}
+            'doc': {
+                'file': 'ZmlsZS1jb250ZW50cw==',
+                'is_csv': False,
+                'confirm_email_before_download': None,
+                'retention_period': None
+            },
         }
     }
 
@@ -296,7 +301,12 @@ def test_create_email_notification_with_document_file_upload(notifications_clien
         'template_id': '456', 'email_address': 'to@example.com',
         'personalisation': {
             'name': 'chris',
-            'doc': {'file': 'JVBERi0xLjUgdGVzdAo=', 'is_csv': False}
+            'doc': {
+                'file': 'JVBERi0xLjUgdGVzdAo=',
+                'is_csv': False,
+                'confirm_email_before_download': None,
+                'retention_period': None
+            },
         }
     }
 
@@ -321,7 +331,12 @@ def test_create_email_notification_with_csv_file_upload(notifications_client, rm
         'template_id': '456', 'email_address': 'to@example.com',
         'personalisation': {
             'name': 'chris',
-            'doc': {'file': 'VGhpcyBpcyBhIGNzdiwK', 'is_csv': True}
+            'doc': {
+                'file': 'VGhpcyBpcyBhIGNzdiwK',
+                'is_csv': True,
+                'confirm_email_before_download': None,
+                'retention_period': None
+            },
         }
     }
 
