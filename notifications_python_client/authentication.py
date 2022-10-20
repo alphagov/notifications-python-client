@@ -16,6 +16,8 @@ __algorithm__ = "HS256"
 __type__ = "JWT"
 __bound__ = 30
 
+INVALID_FUTURE_TOKEN_ERROR_MESSAGE = "Token can not be in the future"
+
 
 def create_jwt_token(secret, client_id):
     """
@@ -104,6 +106,8 @@ def decode_jwt_token(token, secret):
         return validate_jwt_token(decoded_token)
     except jwt.InvalidIssuedAtError:
         raise TokenExpiredError("Token has invalid iat field", decode_token(token))
+    except jwt.ImmatureSignatureError:
+        raise TokenExpiredError(INVALID_FUTURE_TOKEN_ERROR_MESSAGE, decode_token(token))
     except jwt.DecodeError:
         raise TokenDecodeError
     except jwt.InvalidAlgorithmError:
@@ -131,7 +135,7 @@ def validate_jwt_token(decoded_token):
     if now > (iat + __bound__):
         raise TokenExpiredError("Token has expired", decoded_token)
     if iat > (now + __bound__):
-        raise TokenExpiredError("Token can not be in the future", decoded_token)
+        raise TokenExpiredError(INVALID_FUTURE_TOKEN_ERROR_MESSAGE, decoded_token)
 
     return True
 

@@ -55,7 +55,6 @@ def test_token_should_fail_to_decode_if_wrong_key():
 
 @pytest.mark.parametrize('exception_class', [
     jwt.InvalidAudienceError,
-    jwt.ImmatureSignatureError,
     jwt.InvalidIssuerError,
     jwt.ExpiredSignatureError,
 

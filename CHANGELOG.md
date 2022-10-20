@@ -1,3 +1,7 @@
+## 6.4.1
+
+* Fix authentication when using PyJWT 2.6.0 - which now more strictly validates tokens with `iat` in the future.
+
 ## 6.4.0
 
 * Added support for `confirm_email_before_download` and `retention_period` security features for sending files by email.
