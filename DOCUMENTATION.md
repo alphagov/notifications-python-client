@@ -12,7 +12,7 @@ Run the following code in the command line:
 pip install notifications-python-client
 ```
 
-Refer to the [client changelog](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the client version number and the latest updates.
+Refer to the [client changelog](https://github.com/alphagov/notifications-python-client/blob/main/CHANGELOG.md) for the client version number and the latest updates.
 
 ### Create a new instance of the client
 
