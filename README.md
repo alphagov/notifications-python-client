@@ -6,5 +6,5 @@ Useful links:
 
 - [Documentation](https://docs.notifications.service.gov.uk/python.html)
 - [PyPi package](https://pypi.org/project/notifications-python-client/)
-- [Changelog](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md)
-- [Contributing to this client](https://github.com/alphagov/notifications-python-client/blob/master/CONTRIBUTING.md)
+- [Changelog](https://github.com/alphagov/notifications-python-client/blob/main/CHANGELOG.md)
+- [Contributing to this client](https://github.com/alphagov/notifications-python-client/blob/main/CONTRIBUTING.md)
