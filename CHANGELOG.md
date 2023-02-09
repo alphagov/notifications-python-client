@@ -1,3 +1,8 @@
+## Unreleased
+
+* Add support for python 3.10 and 3.11
+* Drop support for end-of-lifed python 3.6
+
 ## 7.0.0
 
 * PyPI distribution no longer includes `integration_test`, `tests` and `utils` modules which were not intended for client use.
