@@ -7,9 +7,7 @@ from io import BytesIO
 from jsonschema import Draft4Validator
 
 from integration_test.enums import EMAIL_TYPE, LETTER_TYPE, SMS_TYPE
-from integration_test.schemas.v2.inbound_sms_schemas import (
-    get_inbound_sms_response,
-)
+from integration_test.schemas.v2.inbound_sms_schemas import get_inbound_sms_response
 from integration_test.schemas.v2.notification_schemas import (
     get_notification_response,
     get_notifications_response,
@@ -22,9 +20,7 @@ from integration_test.schemas.v2.template_schemas import (
     get_template_by_id_response,
     post_template_preview_response,
 )
-from integration_test.schemas.v2.templates_schemas import (
-    get_all_template_response,
-)
+from integration_test.schemas.v2.templates_schemas import get_all_template_response
 from notifications_python_client.errors import HTTPError
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -35,75 +31,67 @@ def validate(json_to_validate, schema):
 
 
 def send_sms_notification_test_response(python_client, sender_id=None):
-    mobile_number = os.environ['FUNCTIONAL_TEST_NUMBER']
-    template_id = os.environ['SMS_TEMPLATE_ID']
+    mobile_number = os.environ["FUNCTIONAL_TEST_NUMBER"]
+    template_id = os.environ["SMS_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
-    personalisation = {'name': unique_name}
+    personalisation = {"name": unique_name}
     sms_sender_id = sender_id
-    response = python_client.send_sms_notification(phone_number=mobile_number,
-                                                   template_id=template_id,
-                                                   personalisation=personalisation,
-                                                   sms_sender_id=sms_sender_id)
+    response = python_client.send_sms_notification(
+        phone_number=mobile_number,
+        template_id=template_id,
+        personalisation=personalisation,
+        sms_sender_id=sms_sender_id,
+    )
     validate(response, post_sms_response)
-    assert unique_name in response['content']['body']  # check placeholders are replaced
-    return response['id']
+    assert unique_name in response["content"]["body"]  # check placeholders are replaced
+    return response["id"]
 
 
 def send_email_notification_test_response(python_client, reply_to=None):
-    email_address = os.environ['FUNCTIONAL_TEST_EMAIL']
-    template_id = os.environ['EMAIL_TEMPLATE_ID']
+    email_address = os.environ["FUNCTIONAL_TEST_EMAIL"]
+    template_id = os.environ["EMAIL_TEMPLATE_ID"]
     email_reply_to_id = reply_to
     unique_name = str(uuid.uuid4())
-    personalisation = {'name': unique_name}
-    response = python_client.send_email_notification(email_address=email_address,
-                                                     template_id=template_id,
-                                                     personalisation=personalisation,
-                                                     email_reply_to_id=email_reply_to_id)
+    personalisation = {"name": unique_name}
+    response = python_client.send_email_notification(
+        email_address=email_address,
+        template_id=template_id,
+        personalisation=personalisation,
+        email_reply_to_id=email_reply_to_id,
+    )
     validate(response, post_email_response)
-    assert unique_name in response['content']['body']  # check placeholders are replaced
-    return response['id']
+    assert unique_name in response["content"]["body"]  # check placeholders are replaced
+    return response["id"]
 
 
 def send_letter_notification_test_response(python_client):
-    template_id = os.environ['LETTER_TEMPLATE_ID']
+    template_id = os.environ["LETTER_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
-    personalisation = {
-        'address_line_1': unique_name,
-        'address_line_2': 'foo',
-        'postcode': 'SW1 1AA'
-    }
-    response = python_client.send_letter_notification(
-        template_id=template_id,
-        personalisation=personalisation
-    )
+    personalisation = {"address_line_1": unique_name, "address_line_2": "foo", "postcode": "SW1 1AA"}
+    response = python_client.send_letter_notification(template_id=template_id, personalisation=personalisation)
     validate(response, post_letter_response)
-    assert unique_name in response['content']['body']  # check placeholders are replaced
-    return response['id']
+    assert unique_name in response["content"]["body"]  # check placeholders are replaced
+    return response["id"]
 
 
 def send_precompiled_letter_notification_test_response(python_client):
     unique_name = str(uuid.uuid4())
-    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
-        response = python_client.send_precompiled_letter_notification(
-            reference=unique_name,
-            pdf_file=pdf_file
-        )
+    with open("integration_test/test_files/one_page_pdf.pdf", "rb") as pdf_file:
+        response = python_client.send_precompiled_letter_notification(reference=unique_name, pdf_file=pdf_file)
     validate(response, post_precompiled_letter_response)
-    assert unique_name in response['reference']
-    return response['id']
+    assert unique_name in response["reference"]
+    return response["id"]
 
 
 def send_precompiled_letter_notification_set_postage_test_response(python_client):
     unique_name = str(uuid.uuid4())
-    with open('integration_test/test_files/one_page_pdf.pdf', "rb") as pdf_file:
+    with open("integration_test/test_files/one_page_pdf.pdf", "rb") as pdf_file:
         response = python_client.send_precompiled_letter_notification(
-            reference=unique_name,
-            pdf_file=pdf_file,
-            postage="first"
+            reference=unique_name, pdf_file=pdf_file, postage="first"
         )
     validate(response, post_precompiled_letter_response)
-    assert "first" in response['postage']
-    return response['id']
+    assert "first" in response["postage"]
+    return response["id"]
 
 
 def get_notification_by_id(python_client, id, notification_type):
@@ -126,12 +114,12 @@ def get_pdf_for_letter(python_client, id):
             response = python_client.get_pdf_for_letter(id)
             break
         except HTTPError as exc:
-            if exc.message[0]['error'] != 'PDFNotReadyError':
+            if exc.message[0]["error"] != "PDFNotReadyError":
                 raise
 
             count += 3
             if count > 45:
-                print('pdf {} not ready at {} after 45 seconds'.format(id, datetime.utcnow()))
+                print("pdf {} not ready at {} after 45 seconds".format(id, datetime.utcnow()))
                 raise
             else:
                 time.sleep(3)
@@ -141,14 +129,11 @@ def get_pdf_for_letter(python_client, id):
 
 
 def get_received_text_messages():
-    client = NotificationsAPIClient(
-        base_url=os.environ['NOTIFY_API_URL'],
-        api_key=os.environ['INBOUND_SMS_QUERY_KEY']
-    )
+    client = NotificationsAPIClient(base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["INBOUND_SMS_QUERY_KEY"])
 
     response = client.get_received_texts()
     validate(response, get_inbound_sms_response)
-    assert len(response['received_text_messages']) > 0
+    assert len(response["received_text_messages"]) > 0
 
 
 def get_all_notifications(client):
@@ -167,14 +152,14 @@ def get_template_by_id(python_client, template_id, notification_type):
             "Government Digital Service\nThe White Chapel Building\n10 Whitechapel High "
             "Street\nLondon\nE1 8QS\nUnited Kingdom"
         )
-        assert response['letter_contact_block'] == expected_conact_block
+        assert response["letter_contact_block"] == expected_conact_block
     elif notification_type == SMS_TYPE:
         validate(response, get_template_by_id_response)
-        assert response['subject'] is None
+        assert response["subject"] is None
     else:
         raise KeyError("template type should be email|letter|sms")
 
-    assert template_id == response['id']
+    assert template_id == response["id"]
 
 
 def get_template_by_id_and_version(python_client, template_id, version, notification_type):
@@ -184,17 +169,17 @@ def get_template_by_id_and_version(python_client, template_id, version, notifica
         validate(response, get_template_by_id_response)
     elif notification_type == SMS_TYPE:
         validate(response, get_template_by_id_response)
-        assert response['subject'] is None
+        assert response["subject"] is None
     else:
         raise KeyError("template type should be email|sms")
 
-    assert template_id == response['id']
-    assert version == response['version']
+    assert template_id == response["id"]
+    assert version == response["version"]
 
 
 def post_template_preview(python_client, template_id, notification_type):
     unique_name = str(uuid.uuid4())
-    personalisation = {'name': unique_name}
+    personalisation = {"name": unique_name}
 
     response = python_client.post_template_preview(template_id, personalisation)
 
@@ -202,12 +187,12 @@ def post_template_preview(python_client, template_id, notification_type):
         validate(response, post_template_preview_response)
     elif notification_type == SMS_TYPE:
         validate(response, post_template_preview_response)
-        assert response['subject'] is None
+        assert response["subject"] is None
     else:
         raise KeyError("template type should be email|sms")
 
-    assert template_id == response['id']
-    assert unique_name in response['body']
+    assert template_id == response["id"]
+    assert unique_name in response["body"]
 
 
 def get_all_templates(python_client):
@@ -221,20 +206,16 @@ def get_all_templates_for_type(python_client, template_type):
 
 
 def test_integration():
-    client = NotificationsAPIClient(
-        base_url=os.environ['NOTIFY_API_URL'],
-        api_key=os.environ['API_KEY']
-    )
+    client = NotificationsAPIClient(base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["API_KEY"])
     client_using_team_key = NotificationsAPIClient(
-        base_url=os.environ['NOTIFY_API_URL'],
-        api_key=os.environ['API_SENDING_KEY']
+        base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["API_SENDING_KEY"]
     )
 
-    sms_template_id = os.environ['SMS_TEMPLATE_ID']
-    sms_sender_id = os.environ['SMS_SENDER_ID']
-    email_template_id = os.environ['EMAIL_TEMPLATE_ID']
-    email_reply_to_id = os.environ['EMAIL_REPLY_TO_ID']
-    letter_template_id = os.environ['LETTER_TEMPLATE_ID']
+    sms_template_id = os.environ["SMS_TEMPLATE_ID"]
+    sms_sender_id = os.environ["SMS_SENDER_ID"]
+    email_template_id = os.environ["EMAIL_TEMPLATE_ID"]
+    email_reply_to_id = os.environ["EMAIL_REPLY_TO_ID"]
+    letter_template_id = os.environ["LETTER_TEMPLATE_ID"]
 
     assert sms_template_id
     assert sms_sender_id
@@ -276,7 +257,7 @@ def test_integration():
     get_pdf_for_letter(client, letter_id)
     get_pdf_for_letter(client, precompiled_letter_id)
 
-    if (os.environ['INBOUND_SMS_QUERY_KEY']):
+    if os.environ["INBOUND_SMS_QUERY_KEY"]:
         get_received_text_messages()
 
     print("notifications-python-client integration tests are successful")

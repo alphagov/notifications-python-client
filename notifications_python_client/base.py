@@ -13,12 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient(object):
-    def __init__(
-            self,
-            api_key,
-            base_url='https://api.notifications.service.gov.uk',
-            timeout=30
-    ):
+    def __init__(self, api_key, base_url="https://api.notifications.service.gov.uk", timeout=30):
         """
         Initialise the client
         Error if either of base_url or secret missing
@@ -54,7 +49,7 @@ class BaseAPIClient(object):
         return {
             "Content-type": "application/json",
             "Authorization": "Bearer {}".format(api_token),
-            "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__)
+            "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__),
         }
 
     def request(self, method, url, data=None, params=None):
@@ -66,15 +61,9 @@ class BaseAPIClient(object):
         return self._process_json_response(response)
 
     def _create_request_objects(self, url, data, params):
-        api_token = create_jwt_token(
-            self.api_key,
-            self.service_id
-        )
+        api_token = create_jwt_token(self.api_key, self.service_id)
 
-        kwargs = {
-            "headers": self.generate_headers(api_token),
-            "timeout": self.timeout
-        }
+        kwargs = {"headers": self.generate_headers(api_token), "timeout": self.timeout}
 
         if data is not None:
             kwargs.update(data=self._serialize_data(data))
@@ -98,22 +87,13 @@ class BaseAPIClient(object):
     def _perform_request(self, method, url, kwargs):
         start_time = time.monotonic()
         try:
-            response = requests.request(
-                method,
-                url,
-                **kwargs
-            )
+            response = requests.request(method, url, **kwargs)
             response.raise_for_status()
             return response
         except requests.RequestException as e:
             api_error = HTTPError.create(e)
             logger.error(
-                "API {} request on {} failed with {} '{}'".format(
-                    method,
-                    url,
-                    api_error.status_code,
-                    api_error.message
-                )
+                "API {} request on {} failed with {} '{}'".format(method, url, api_error.status_code, api_error.message)
             )
             raise api_error
         finally:
@@ -126,7 +106,4 @@ class BaseAPIClient(object):
                 return
             return response.json()
         except ValueError:
-            raise InvalidResponse(
-                response,
-                message="No JSON response object could be decoded"
-            )
+            raise InvalidResponse(response, message="No JSON response object could be decoded")

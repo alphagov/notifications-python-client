@@ -10,7 +10,6 @@ TOKEN_ERROR_DEFAULT_ERROR_MESSAGE = "Invalid token: " + TOKEN_ERROR_GUIDANCE
 
 
 class TokenError(Exception):
-
     def __init__(self, message=None, token=None):
         self.message = message + ". " + TOKEN_ERROR_GUIDANCE if message else TOKEN_ERROR_DEFAULT_ERROR_MESSAGE
         self.token = token
@@ -22,22 +21,22 @@ class TokenExpiredError(TokenError):
 
 class TokenAlgorithmError(TokenError):
     def __init__(self):
-        super().__init__('Invalid token: algorithm used is not HS256')
+        super().__init__("Invalid token: algorithm used is not HS256")
 
 
 class TokenDecodeError(TokenError):
     def __init__(self, message=None):
-        super().__init__(message or 'Invalid token: signature')
+        super().__init__(message or "Invalid token: signature")
 
 
 class TokenIssuerError(TokenDecodeError):
     def __init__(self):
-        super().__init__('Invalid token: iss field not provided')
+        super().__init__("Invalid token: iss field not provided")
 
 
 class TokenIssuedAtError(TokenDecodeError):
     def __init__(self):
-        super().__init__('Invalid token: iat field not provided')
+        super().__init__("Invalid token: iat field not provided")
 
 
 class APIError(Exception):
@@ -52,7 +51,7 @@ class APIError(Exception):
     def message(self) -> Union[str, List[dict]]:
         try:
             json_resp = self.response.json()  # type: ignore
-            return json_resp.get('message', json_resp.get('errors'))
+            return json_resp.get("message", json_resp.get("errors"))
         except (TypeError, ValueError, AttributeError, KeyError):
             return self._message or REQUEST_ERROR_MESSAGE
 
@@ -66,7 +65,7 @@ class APIError(Exception):
 
 class HTTPError(APIError):
     @staticmethod
-    def create(e: RequestException) -> 'HTTPError':
+    def create(e: RequestException) -> "HTTPError":
         error = HTTPError(e.response)
         if error.status_code == 503:
             error = HTTP503Error(e.response)
@@ -78,6 +77,7 @@ class HTTP503Error(HTTPError):
 
     Used for detecting whether failed requests should be retried.
     """
+
     pass
 
 
