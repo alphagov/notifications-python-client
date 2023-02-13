@@ -1,7 +1,7 @@
 .
 
-isort==5.8.0
-flake8>=3.9.2
+isort==5.12.0  # Also update `.pre-commit-config.yaml` if this change
+flake8>=3.9.2  # Also update `.pre-commit-config.yaml` if this change
 pytest>=3.0.2
 pytest-mock>=1.2
 pytest-cov>=2.3.1
