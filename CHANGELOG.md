@@ -1,4 +1,4 @@
-## Unreleased
+## 7.0.0
 
 * PyPI distribution no longer includes `integration_test`, `tests` and `utils` modules which were not intended for client use.
 

@@ -7,7 +7,7 @@
 #
 # -- http://semver.org/
 
-__version__ = '6.4.1'
+__version__ = '7.0.0'
 
 from notifications_python_client.errors import (  # noqa
     REQUEST_ERROR_MESSAGE,
