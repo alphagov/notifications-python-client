@@ -1,3 +1,7 @@
+## 7.0.0
+
+* PyPI distribution no longer includes `integration_test`, `tests` and `utils` modules which were not intended for client use.
+
 ## 6.4.1
 
 * Fix authentication when using PyJWT 2.6.0 - which now more strictly validates tokens with `iat` in the future.
