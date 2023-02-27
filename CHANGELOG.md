@@ -1,4 +1,4 @@
-### Unreleased
+### 8.0.0
 
 * Add support for python 3.10 and 3.11
 * Drop support for end-of-lifed python 3.6
