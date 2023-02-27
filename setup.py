@@ -1,4 +1,4 @@
-# this restructured text docstring is displayed on https://pypi.python.org/pypi/notifications-python-client/
+# this restructured text docstring is displayed on https://pypi.org/project/notifications-python-client/
 """
 Python API client for GOV.UK Notify - see https://www.notifications.service.gov.uk for more information.
 
@@ -45,18 +45,19 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
     keywords='gds govuk notify',
 
     packages=find_packages(include=['notifications_python_client']),
     include_package_data=True,
 
-    # only support actively patched versions of python (https://devguide.python.org/devcycle/#end-of-life-branches)
-    python_requires='>=3.6',
+    # only support actively patched versions of python (https://devguide.python.org/versions/)
+    python_requires='>=3.7',
 
     install_requires=[
         'requests>=2.0.0',

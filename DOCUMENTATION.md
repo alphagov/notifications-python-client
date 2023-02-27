@@ -1,6 +1,7 @@
 # Python client documentation
 
-This documentation is for developers interested in using the GOV.UK Notify Python client to send emails, text messages or letters. Notify supports Python 3.6 and higher.
+This documentation is for developers interested in using the GOV.UK Notify Python client to send emails, text messages or letters.
+Notify supports Python 3.7 and higher.
 
 ## Set up the client
 
