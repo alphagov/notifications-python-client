@@ -9,11 +9,7 @@ from tests.conftest import TEST_HOST
 
 def test_get_notification_by_id(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/{1}".format(TEST_HOST, "123")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_notification_by_id(123)
 
@@ -22,11 +18,7 @@ def test_get_notification_by_id(notifications_client, rmock):
 
 def test_get_received_texts(notifications_client, rmock):
     endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_received_texts()
     assert rmock.called
@@ -34,11 +26,7 @@ def test_get_received_texts(notifications_client, rmock):
 
 def test_get_received_texts_older_than(notifications_client, rmock):
     endpoint = "{0}/v2/received-text-messages?older_than={1}".format(TEST_HOST, "older_id")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_received_texts(older_than="older_id")
     assert rmock.called
@@ -46,11 +34,7 @@ def test_get_received_texts_older_than(notifications_client, rmock):
 
 def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_client, rmock):
     endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     list(notifications_client.get_received_texts_iterator())
     assert rmock.called
@@ -58,11 +42,7 @@ def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_
 
 def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?status={1}&template_type={2}".format(TEST_HOST, "status", "type")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications("status", "type")
 
@@ -71,11 +51,7 @@ def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
 
 def test_get_all_notifications_by_type(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?template_type={1}".format(TEST_HOST, "type")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(template_type="type")
 
@@ -84,11 +60,7 @@ def test_get_all_notifications_by_type(notifications_client, rmock):
 
 def test_get_all_notifications_by_reference(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?reference={1}".format(TEST_HOST, "reference")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(reference="reference")
 
@@ -97,11 +69,7 @@ def test_get_all_notifications_by_reference(notifications_client, rmock):
 
 def test_get_all_notifications_by_older_than(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?older_than={1}".format(TEST_HOST, "older_than")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(older_than="older_than")
 
@@ -110,11 +78,7 @@ def test_get_all_notifications_by_older_than(notifications_client, rmock):
 
 def test_get_all_notifications_by_status(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?status={1}".format(TEST_HOST, "status")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(status="status")
 
@@ -123,11 +87,7 @@ def test_get_all_notifications_by_status(notifications_client, rmock):
 
 def test_get_all_notifications_including_jobs(notifications_client, rmock):
     endpoint = "{0}/v2/notifications?include_jobs={1}".format(TEST_HOST, "true")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(include_jobs=True)
 
@@ -136,11 +96,7 @@ def test_get_all_notifications_including_jobs(notifications_client, rmock):
 
 def test_get_all_notifications(notifications_client, rmock):
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications()
 
@@ -149,333 +105,247 @@ def test_get_all_notifications(notifications_client, rmock):
 
 def test_create_sms_notification(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    notifications_client.send_sms_notification(
-        phone_number="07700 900000", template_id="456"
-    )
+    notifications_client.send_sms_notification(phone_number="07700 900000", template_id="456")
 
-    assert rmock.last_request.json() == {
-        'template_id': '456', 'phone_number': '07700 900000'
-    }
+    assert rmock.last_request.json() == {"template_id": "456", "phone_number": "07700 900000"}
 
 
 def test_create_sms_notification_with_personalisation(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_sms_notification(
-        phone_number="07700 900000", template_id="456", personalisation={'name': 'chris'}
+        phone_number="07700 900000", template_id="456", personalisation={"name": "chris"}
     )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'phone_number': '07700 900000', 'personalisation': {'name': 'chris'}
+        "template_id": "456",
+        "phone_number": "07700 900000",
+        "personalisation": {"name": "chris"},
     }
 
 
 def test_create_sms_notification_with_sms_sender_id(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    notifications_client.send_sms_notification(
-        phone_number="07700 900000", template_id="456", sms_sender_id="789"
-    )
+    notifications_client.send_sms_notification(phone_number="07700 900000", template_id="456", sms_sender_id="789")
 
-    assert rmock.last_request.json() == {
-        'template_id': '456', 'phone_number': '07700 900000', 'sms_sender_id': '789'
-    }
+    assert rmock.last_request.json() == {"template_id": "456", "phone_number": "07700 900000", "sms_sender_id": "789"}
 
 
 def test_create_email_notification(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    notifications_client.send_email_notification(
-        email_address="to@example.com", template_id="456")
+    notifications_client.send_email_notification(email_address="to@example.com", template_id="456")
 
-    assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com'
-    }
+    assert rmock.last_request.json() == {"template_id": "456", "email_address": "to@example.com"}
 
 
 def test_create_email_notification_with_email_reply_to_id(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(
-        email_address="to@example.com", template_id="456", email_reply_to_id="789")
+        email_address="to@example.com", template_id="456", email_reply_to_id="789"
+    )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com', 'email_reply_to_id': '789'
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "email_reply_to_id": "789",
     }
 
 
 def test_create_email_notification_with_personalisation(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(
-        email_address="to@example.com", template_id="456", personalisation={'name': 'chris'}
+        email_address="to@example.com", template_id="456", personalisation={"name": "chris"}
     )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com', 'personalisation': {'name': 'chris'}
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "personalisation": {"name": "chris"},
     }
 
 
 def test_create_email_notification_with_document_stream_upload(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    if hasattr(io, 'BytesIO'):
-        mock_file = io.BytesIO(b'file-contents')
+    if hasattr(io, "BytesIO"):
+        mock_file = io.BytesIO(b"file-contents")
     else:
-        mock_file = io.StringIO('file-contents')
+        mock_file = io.StringIO("file-contents")
 
     notifications_client.send_email_notification(
-        email_address="to@example.com", template_id="456", personalisation={
-            'name': 'chris',
-            'doc': prepare_upload(mock_file)
-        }
+        email_address="to@example.com",
+        template_id="456",
+        personalisation={"name": "chris", "doc": prepare_upload(mock_file)},
     )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com',
-        'personalisation': {
-            'name': 'chris',
-            'doc': {
-                'file': 'ZmlsZS1jb250ZW50cw==',
-                'is_csv': False,
-                'confirm_email_before_download': None,
-                'retention_period': None
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "personalisation": {
+            "name": "chris",
+            "doc": {
+                "file": "ZmlsZS1jb250ZW50cw==",
+                "is_csv": False,
+                "confirm_email_before_download": None,
+                "retention_period": None,
             },
-        }
+        },
     }
 
 
 def test_create_email_notification_with_document_file_upload(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    with open('tests/test_files/test.pdf', 'rb') as f:
+    with open("tests/test_files/test.pdf", "rb") as f:
         notifications_client.send_email_notification(
-            email_address="to@example.com", template_id="456", personalisation={
-                'name': 'chris',
-                'doc': prepare_upload(f)
-            }
+            email_address="to@example.com",
+            template_id="456",
+            personalisation={"name": "chris", "doc": prepare_upload(f)},
         )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com',
-        'personalisation': {
-            'name': 'chris',
-            'doc': {
-                'file': 'JVBERi0xLjUgdGVzdAo=',
-                'is_csv': False,
-                'confirm_email_before_download': None,
-                'retention_period': None
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "personalisation": {
+            "name": "chris",
+            "doc": {
+                "file": "JVBERi0xLjUgdGVzdAo=",
+                "is_csv": False,
+                "confirm_email_before_download": None,
+                "retention_period": None,
             },
-        }
+        },
     }
 
 
 def test_create_email_notification_with_csv_file_upload(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    with open('tests/test_files/test.csv', 'rb') as f:
+    with open("tests/test_files/test.csv", "rb") as f:
         notifications_client.send_email_notification(
-            email_address="to@example.com", template_id="456", personalisation={
-                'name': 'chris',
-                'doc': prepare_upload(f, is_csv=True)
-            }
+            email_address="to@example.com",
+            template_id="456",
+            personalisation={"name": "chris", "doc": prepare_upload(f, is_csv=True)},
         )
 
     assert rmock.last_request.json() == {
-        'template_id': '456', 'email_address': 'to@example.com',
-        'personalisation': {
-            'name': 'chris',
-            'doc': {
-                'file': 'VGhpcyBpcyBhIGNzdiwK',
-                'is_csv': True,
-                'confirm_email_before_download': None,
-                'retention_period': None
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "personalisation": {
+            "name": "chris",
+            "doc": {
+                "file": "VGhpcyBpcyBhIGNzdiwK",
+                "is_csv": True,
+                "confirm_email_before_download": None,
+                "retention_period": None,
             },
-        }
+        },
     }
 
 
 def test_create_letter_notification(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_letter_notification(
-        template_id="456",
-        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'SW1 1AA'}
+        template_id="456", personalisation={"address_line_1": "Foo", "address_line_2": "Bar", "postcode": "SW1 1AA"}
     )
 
     assert rmock.last_request.json() == {
-        'template_id': '456',
-        'personalisation': {
-            'address_line_1': 'Foo',
-            'address_line_2': 'Bar',
-            'postcode': 'SW1 1AA'
-        }
+        "template_id": "456",
+        "personalisation": {"address_line_1": "Foo", "address_line_2": "Bar", "postcode": "SW1 1AA"},
     }
 
 
 def test_create_letter_notification_with_reference(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_letter_notification(
         template_id="456",
-        personalisation={'address_line_1': 'Foo', 'address_line_2': 'Bar', 'postcode': 'SW1 1AA'},
-        reference='Baz'
+        personalisation={"address_line_1": "Foo", "address_line_2": "Bar", "postcode": "SW1 1AA"},
+        reference="Baz",
     )
 
     assert rmock.last_request.json() == {
-        'template_id': '456',
-        'personalisation': {
-            'address_line_1': 'Foo',
-            'address_line_2': 'Bar',
-            'postcode': 'SW1 1AA'
-        },
-        'reference': 'Baz'
+        "template_id": "456",
+        "personalisation": {"address_line_1": "Foo", "address_line_2": "Bar", "postcode": "SW1 1AA"},
+        "reference": "Baz",
     }
 
 
 def test_send_precompiled_letter_notification(notifications_client, rmock, mocker):
     endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
     mock_file = Mock(
-        read=Mock(return_value=b'file_contents'),
+        read=Mock(return_value=b"file_contents"),
     )
 
-    notifications_client.send_precompiled_letter_notification(
-        reference='Baz',
-        pdf_file=mock_file
-    )
+    notifications_client.send_precompiled_letter_notification(reference="Baz", pdf_file=mock_file)
 
     assert rmock.last_request.json() == {
-        'reference': 'Baz',
-        'content': base64.b64encode(b'file_contents').decode('utf-8')
+        "reference": "Baz",
+        "content": base64.b64encode(b"file_contents").decode("utf-8"),
     }
 
 
 def test_send_precompiled_letter_notification_sets_postage(notifications_client, rmock, mocker):
     endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
     mock_file = Mock(
-        read=Mock(return_value=b'file_contents'),
+        read=Mock(return_value=b"file_contents"),
     )
 
-    notifications_client.send_precompiled_letter_notification(
-        reference='Baz',
-        pdf_file=mock_file,
-        postage='first'
-    )
+    notifications_client.send_precompiled_letter_notification(reference="Baz", pdf_file=mock_file, postage="first")
 
     assert rmock.last_request.json() == {
-        'reference': 'Baz',
-        'content': base64.b64encode(b'file_contents').decode('utf-8'),
-        'postage': 'first'
+        "reference": "Baz",
+        "content": base64.b64encode(b"file_contents").decode("utf-8"),
+        "postage": "first",
     }
 
 
 def test_get_all_notifications_iterator_calls_get_notifications(notifications_client, rmock):
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     list(notifications_client.get_all_notifications_iterator())
 
     assert rmock.called
 
 
-def test_get_all_notifications_iterator_stops_if_empty_notification_list_returned(
-    notifications_client,
-    rmock
-):
+def test_get_all_notifications_iterator_stops_if_empty_notification_list_returned(notifications_client, rmock):
     responses = [
-        _generate_response('79f9c6ce-cd6a-4b47-a3e7-41e155f112b0', [1, 2]),
-        _generate_response('3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb')
+        _generate_response("79f9c6ce-cd6a-4b47-a3e7-41e155f112b0", [1, 2]),
+        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb"),
     ]
 
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        responses
-    )
+    rmock.request("GET", endpoint, responses)
 
     list(notifications_client.get_all_notifications_iterator())
     assert rmock.call_count == 2
 
 
-def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
-    notifications_client,
-    rmock
-):
+def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(notifications_client, rmock):
     responses = [
-        _generate_response('79f9c6ce-cd6a-4b47-a3e7-41e155f112b0', [1, 2]),
-        _generate_response('ea179232-3190-410d-b8ab-23dfecdd3157', [3, 4]),
-        _generate_response('3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb')
+        _generate_response("79f9c6ce-cd6a-4b47-a3e7-41e155f112b0", [1, 2]),
+        _generate_response("ea179232-3190-410d-b8ab-23dfecdd3157", [3, 4]),
+        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb"),
     ]
 
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
@@ -486,11 +356,7 @@ def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
 
 def test_get_template(notifications_client, rmock):
     endpoint = "{0}/v2/template/{1}".format(TEST_HOST, "123")
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_template(123)
 
@@ -499,11 +365,7 @@ def test_get_template(notifications_client, rmock):
 
 def test_get_template_version(notifications_client, rmock):
     endpoint = "{0}/v2/template/{1}/version/{2}".format(TEST_HOST, "123", 1)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_template_version(123, 1)
 
@@ -512,27 +374,17 @@ def test_get_template_version(notifications_client, rmock):
 
 def test_post_template_preview(notifications_client, rmock):
     endpoint = "{0}/v2/template/{1}/preview".format(TEST_HOST, "123")
-    rmock.request(
-        "POST",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
-    notifications_client.post_template_preview(123, personalisation={'name': 'chris'})
+    notifications_client.post_template_preview(123, personalisation={"name": "chris"})
 
     assert rmock.called
-    assert rmock.last_request.json() == {
-        'personalisation': {'name': 'chris'}
-    }
+    assert rmock.last_request.json() == {"personalisation": {"name": "chris"}}
 
 
 def test_get_all_templates(notifications_client, rmock):
     endpoint = "{0}/v2/templates".format(TEST_HOST)
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_templates()
 
@@ -540,40 +392,30 @@ def test_get_all_templates(notifications_client, rmock):
 
 
 def test_get_all_templates_by_type(notifications_client, rmock):
-    endpoint = "{0}/v2/templates?type={1}".format(TEST_HOST, 'type')
-    rmock.request(
-        "GET",
-        endpoint,
-        json={"status": "success"},
-        status_code=200)
+    endpoint = "{0}/v2/templates?type={1}".format(TEST_HOST, "type")
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
-    notifications_client.get_all_templates('type')
+    notifications_client.get_all_templates("type")
 
     assert rmock.called
 
 
 def test_get_pdf_for_letter(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/{1}/pdf".format(TEST_HOST, "123")
-    rmock.request(
-        "GET",
-        endpoint,
-        content=b'foo',
-        status_code=200)
+    rmock.request("GET", endpoint, content=b"foo", status_code=200)
 
-    response = notifications_client.get_pdf_for_letter('123')
+    response = notifications_client.get_pdf_for_letter("123")
 
-    assert response.read() == b'foo'
+    assert response.read() == b"foo"
 
     assert rmock.called
 
 
 def _generate_response(next_link_uuid, notifications=[]):
     return {
-        'json': {
-            'notifications': notifications,
-            'links': {
-                'next': 'http://localhost:6011/v2/notifications?older_than={}'.format(next_link_uuid)
-            }
+        "json": {
+            "notifications": notifications,
+            "links": {"next": "http://localhost:6011/v2/notifications?older_than={}".format(next_link_uuid)},
         },
-        'status_code': 200
+        "status_code": 200,
     }

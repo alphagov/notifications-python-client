@@ -40,15 +40,9 @@ def create_jwt_token(secret, client_id):
     assert secret, "Missing secret key"
     assert client_id, "Missing client id"
 
-    headers = {
-        "typ": __type__,
-        "alg": __algorithm__
-    }
+    headers = {"typ": __type__, "alg": __algorithm__}
 
-    claims = {
-        'iss': client_id,
-        'iat': epoch_seconds()
-    }
+    claims = {"iss": client_id, "iat": epoch_seconds()}
     t = jwt.encode(payload=claims, key=secret, headers=headers)
     if isinstance(t, str):
         return t
@@ -69,10 +63,10 @@ def get_token_issuer(token):
     try:
         unverified = decode_token(token)
 
-        if 'iss' not in unverified:
+        if "iss" not in unverified:
             raise TokenIssuerError
 
-        return unverified.get('iss')
+        return unverified.get("iss")
     except jwt.DecodeError:
         raise TokenDecodeError
 
@@ -97,11 +91,7 @@ def decode_jwt_token(token, secret):
     try:
         # check signature of the token
         decoded_token = jwt.decode(
-            token,
-            key=secret,
-            options={"verify_signature": True},
-            algorithms=[__algorithm__],
-            leeway=__bound__
+            token, key=secret, options={"verify_signature": True}, algorithms=[__algorithm__], leeway=__bound__
         )
         return validate_jwt_token(decoded_token)
     except jwt.InvalidIssuedAtError:
@@ -124,14 +114,14 @@ def decode_jwt_token(token, secret):
 
 def validate_jwt_token(decoded_token):
     # token has all the required fields
-    if 'iss' not in decoded_token:
+    if "iss" not in decoded_token:
         raise TokenIssuerError
-    if 'iat' not in decoded_token:
+    if "iat" not in decoded_token:
         raise TokenIssuedAtError
 
     # check iat time is within bounds
     now = epoch_seconds()
-    iat = int(decoded_token['iat'])
+    iat = int(decoded_token["iat"])
     if now > (iat + __bound__):
         raise TokenExpiredError("Token has expired", decoded_token)
     if iat > (now + __bound__):

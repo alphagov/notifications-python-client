@@ -5,10 +5,7 @@ get_template_by_id_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "schema for parameters allowed when getting template by id",
     "type": "object",
-    "properties": {
-        "id": uuid,
-        "version": {"type": ["integer", "null"], "minimum": 1}
-    },
+    "properties": {"id": uuid, "version": {"type": ["integer", "null"], "minimum": 1}},
     "required": ["id"],
     "additionalProperties": False,
 }
@@ -22,23 +19,15 @@ get_template_by_id_response = {
         "id": uuid,
         "name": {"type": "string"},
         "type": {"enum": TEMPLATE_TYPES},
-        "created_at": {
-            "format": "date-time",
-            "type": "string",
-            "description": "Date+time created"
-        },
-        "updated_at": {
-            "format": "date-time",
-            "type": ["string", "null"],
-            "description": "Date+time updated"
-        },
+        "created_at": {"format": "date-time", "type": "string", "description": "Date+time created"},
+        "updated_at": {"format": "date-time", "type": ["string", "null"], "description": "Date+time updated"},
         "created_by": {"type": "string"},
         "version": {"type": "integer"},
         "body": {"type": "string"},
         "subject": {"type": ["string", "null"]},
-        "letter_contact_block": {"type": ["string", "null"]}
+        "letter_contact_block": {"type": ["string", "null"]},
     },
-    "required": ["id", "type", "created_at", "updated_at", "version", "created_by", "body"]
+    "required": ["id", "type", "created_at", "updated_at", "version", "created_by", "body"],
 }
 
 post_template_preview_request = {
@@ -46,11 +35,8 @@ post_template_preview_request = {
     "description": "POST template schema",
     "type": "object",
     "title": "POST v2/template/{id}/preview",
-    "properties": {
-        "id": uuid,
-        "personalisation": personalisation
-    },
-    "required": ["id", "personalisation"]
+    "properties": {"id": uuid, "personalisation": personalisation},
+    "required": ["id", "personalisation"],
 }
 
 post_template_preview_response = {
@@ -63,7 +49,7 @@ post_template_preview_response = {
         "type": {"enum": TEMPLATE_TYPES},
         "version": {"type": "integer"},
         "body": {"type": "string"},
-        "subject": {"type": ["string", "null"]}
+        "subject": {"type": ["string", "null"]},
     },
-    "required": ["id", "type", "version", "body"]
+    "required": ["id", "type", "version", "body"],
 }
