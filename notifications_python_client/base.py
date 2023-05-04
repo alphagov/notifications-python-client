@@ -105,5 +105,5 @@ class BaseAPIClient(object):
             if response.status_code == 204:
                 return
             return response.json()
-        except ValueError:
-            raise InvalidResponse(response, message="No JSON response object could be decoded")
+        except ValueError as e:
+            raise InvalidResponse(response, message="No JSON response object could be decoded") from e
