@@ -92,7 +92,7 @@ class BaseAPIClient(object):
             return response
         except requests.RequestException as e:
             api_error = HTTPError.create(e)
-            logger.error(
+            logger.warning(
                 "API %s request on %s failed with %s '%s'", method, url, api_error.status_code, api_error.message
             )
             raise api_error
