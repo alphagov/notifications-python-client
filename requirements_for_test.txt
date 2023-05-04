@@ -1,8 +1,5 @@
 .
 
-isort==5.12.0 ; python_version >= '3.8' # Also update `.pre-commit-config.yaml` if this change
-isort==5.10.0 ; python_version < '3.8'
-flake8>=3.9.2  # Also update `.pre-commit-config.yaml` if this change
 pytest>=3.0.2
 pytest-mock>=1.2
 pytest-cov>=2.3.1
@@ -13,3 +10,4 @@ requests-mock>=0.7.0
 jsonschema>=2.5.1
 
 black==22.8.0  # Also update `.pre-commit-config.yaml` if this changes
+ruff==0.0.261  # Also update `.pre-commit-config.yaml` if this changes
