@@ -53,7 +53,7 @@ class BaseAPIClient(object):
         }
 
     def request(self, method, url, data=None, params=None):
-        logger.debug("API request {} {}".format(method, url))
+        logger.debug("API request %s %s", method, url)
         url, kwargs = self._create_request_objects(url, data, params)
 
         response = self._perform_request(method, url, kwargs)
@@ -93,12 +93,12 @@ class BaseAPIClient(object):
         except requests.RequestException as e:
             api_error = HTTPError.create(e)
             logger.error(
-                "API {} request on {} failed with {} '{}'".format(method, url, api_error.status_code, api_error.message)
+                "API %s request on %s failed with %s '%s'", method, url, api_error.status_code, api_error.message
             )
             raise api_error
         finally:
             elapsed_time = time.monotonic() - start_time
-            logger.debug("API {} request on {} finished in {}".format(method, url, elapsed_time))
+            logger.debug("API %s request on %s finished in %s", method, url, elapsed_time)
 
     def _process_json_response(self, response):
         try:
