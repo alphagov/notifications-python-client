@@ -1,3 +1,9 @@
+### 8.0.1
+
+* Some minor non-functional code reformatting.
+* Changing emitted logs to use lazy %-based evaluation rather than upfront "".format
+* Changing an error-level log to a warning-level log (request failures). These still throw the actual exception to be caught and handled by the calling code.
+
 ### 8.0.0
 
 * Add support for python 3.10 and 3.11

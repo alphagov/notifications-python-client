@@ -67,8 +67,8 @@ def get_token_issuer(token):
             raise TokenIssuerError
 
         return unverified.get("iss")
-    except jwt.DecodeError:
-        raise TokenDecodeError
+    except jwt.DecodeError as e:
+        raise TokenDecodeError from e
 
 
 def decode_jwt_token(token, secret):
@@ -94,22 +94,22 @@ def decode_jwt_token(token, secret):
             token, key=secret, options={"verify_signature": True}, algorithms=[__algorithm__], leeway=__bound__
         )
         return validate_jwt_token(decoded_token)
-    except jwt.InvalidIssuedAtError:
-        raise TokenExpiredError("Token has invalid iat field", decode_token(token))
-    except jwt.ImmatureSignatureError:
-        raise TokenExpiredError(INVALID_FUTURE_TOKEN_ERROR_MESSAGE, decode_token(token))
-    except jwt.DecodeError:
-        raise TokenDecodeError
-    except jwt.InvalidAlgorithmError:
-        raise TokenAlgorithmError
-    except jwt.InvalidTokenError:
+    except jwt.InvalidIssuedAtError as e:
+        raise TokenExpiredError("Token has invalid iat field", decode_token(token)) from e
+    except jwt.ImmatureSignatureError as e:
+        raise TokenExpiredError(INVALID_FUTURE_TOKEN_ERROR_MESSAGE, decode_token(token)) from e
+    except jwt.DecodeError as e:
+        raise TokenDecodeError from e
+    except jwt.InvalidAlgorithmError as e:
+        raise TokenAlgorithmError from e
+    except jwt.InvalidTokenError as e:
         # At this point, we have not caught a specific exception we care about enough to show
         # a precise error message (ie something to do with the iat, iss or alg fields).
         # If there is a different reason our token is invalid we will throw a generic error as we
         # don't wish to provide exact messages for every type of error that jwt might encounter.
         # https://github.com/jpadilla/pyjwt/blob/master/jwt/exceptions.py
         # https://pyjwt.readthedocs.io/en/latest/api.html#exceptions
-        raise TokenError
+        raise TokenError from e
 
 
 def validate_jwt_token(decoded_token):

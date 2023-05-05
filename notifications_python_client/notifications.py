@@ -72,7 +72,7 @@ class NotificationsAPIClient(BaseAPIClient):
 
     def get_pdf_for_letter(self, id):
         url = "/v2/notifications/{}/pdf".format(id)
-        logger.debug("API request {} {}".format("GET", url))
+        logger.debug("API request %s %s", "GET", url)
         url, kwargs = self._create_request_objects(url, data=None, params=None)
 
         response = self._perform_request("GET", url, kwargs)

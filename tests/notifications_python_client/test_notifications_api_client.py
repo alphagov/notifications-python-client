@@ -331,7 +331,7 @@ def test_get_all_notifications_iterator_calls_get_notifications(notifications_cl
 def test_get_all_notifications_iterator_stops_if_empty_notification_list_returned(notifications_client, rmock):
     responses = [
         _generate_response("79f9c6ce-cd6a-4b47-a3e7-41e155f112b0", [1, 2]),
-        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb"),
+        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb", []),
     ]
 
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
@@ -345,7 +345,7 @@ def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
     responses = [
         _generate_response("79f9c6ce-cd6a-4b47-a3e7-41e155f112b0", [1, 2]),
         _generate_response("ea179232-3190-410d-b8ab-23dfecdd3157", [3, 4]),
-        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb"),
+        _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb", []),
     ]
 
     endpoint = "{0}/v2/notifications".format(TEST_HOST)
@@ -411,7 +411,7 @@ def test_get_pdf_for_letter(notifications_client, rmock):
     assert rmock.called
 
 
-def _generate_response(next_link_uuid, notifications=[]):
+def _generate_response(next_link_uuid, notifications: list):
     return {
         "json": {
             "notifications": notifications,
