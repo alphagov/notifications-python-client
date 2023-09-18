@@ -1110,6 +1110,13 @@ This API call returns one page of up to 250 received text messages. You can get 
 
 You can only get the status of messages that are 7 days old or newer.
 
+### Enable received text messages
+
+To receive text messages:
+
+1. Go to the **Text message settings** section of the **Settings** page.
+1. Select **Change** on the **Receive text messages** row.
+
 ### Get all received text messages
 
 This method returns a `<generator object>` with all received text messages.
