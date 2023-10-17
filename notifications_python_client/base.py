@@ -32,6 +32,7 @@ class BaseAPIClient(object):
         self.service_id = service_id
         self.api_key = api_key
         self.timeout = timeout
+        self.request_session = requests.Session()
 
     def put(self, url, data):
         return self.request("PUT", url, data=data)
@@ -87,7 +88,7 @@ class BaseAPIClient(object):
     def _perform_request(self, method, url, kwargs):
         start_time = time.monotonic()
         try:
-            response = requests.request(method, url, **kwargs)
+            response = self.request_session.request(method, url, **kwargs)
             response.raise_for_status()
             return response
         except requests.RequestException as e:

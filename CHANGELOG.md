@@ -1,3 +1,7 @@
+## 8.1.0
+
+* Reuse the same `requests.session` between requests to increase performance through HTTP Keepalive
+
 ## 8.0.1
 
 * Some minor non-functional code reformatting.
