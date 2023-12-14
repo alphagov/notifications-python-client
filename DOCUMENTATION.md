@@ -177,8 +177,10 @@ If a template has placeholder fields for personalised information such as name o
 
 ```python
 personalisation={
-    'first_name': 'Amala',
-    'application_date': '2018-01-01',
+    "first_name": "Amala",
+    "application_date": "2018-01-01",
+    # pass in a list and it will appear as bullet points in the message:
+    "required_documents": ["passport", "utility bill", "other id"],
 }
 ```
 You can leave out this argument if a template does not have any placeholder fields for personalised information.
@@ -443,7 +445,9 @@ personalisation={
   'address_line_4': 'Middlesex',
   'address_line_5': 'SW14 6BF',
   'name': 'John Smith',
-  'application_id': '4134325'
+  'application_id': '4134325',
+  # pass in a list and it will appear as bullet points in the letter:
+  "required_documents": ["passport", "utility bill", "other id"],
 }
 ```
 
