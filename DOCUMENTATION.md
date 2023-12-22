@@ -262,10 +262,15 @@ with open('file.pdf', 'rb') as f:
     }
 ```
 
-##### CSV Files
+#### Set the filename
 
-Uploads for CSV files should use the `is_csv` parameter
-on the `prepare_upload()` utility.  For example:
+You can provide a filename to set when the recipient downloads the file. If this is not provided, a random filename will be generated.
+
+Choosing a sensible filename can help users understand what the file contains, and find it again later.
+
+You do not have to set this, but we strongly recommend it.
+
+The filename must include the correct file extension, such as `.csv` for a CSV file. If you include the wrong file extension, users may not be able to open your file.
 
 ```python
 from notifications_python_client import prepare_upload
@@ -275,7 +280,7 @@ with open('file.csv', 'rb') as f:
     personalisation={
       'first_name': 'Amala',
       'application_date': '2018-01-01',
-      'link_to_file': prepare_upload(f, is_csv=True),
+      'link_to_file': prepare_upload(f, filename='2023-12-25-daily-report.csv'),
     }
 ```
 
