@@ -52,6 +52,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     keywords="gds govuk notify",
     packages=find_packages(include=["notifications_python_client"]),
