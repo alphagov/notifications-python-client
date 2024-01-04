@@ -1,3 +1,9 @@
+
+## 9.0.0
+
+* Removes the `is_csv` parameter to `prepare_upload`.
+* Adds the `filename` parameter to `prepare_upload`. See [our documentation](https://docs.notifications.service.gov.uk/python.html#send-a-file-by-email) for guidance on how to use this.
+
 ## 8.2.0
 
 * Add support for python 3.12

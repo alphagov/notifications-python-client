@@ -197,7 +197,7 @@ def test_create_email_notification_with_document_stream_upload(notifications_cli
             "name": "chris",
             "doc": {
                 "file": "ZmlsZS1jb250ZW50cw==",
-                "is_csv": False,
+                "filename": None,
                 "confirm_email_before_download": None,
                 "retention_period": None,
             },
@@ -223,7 +223,7 @@ def test_create_email_notification_with_document_file_upload(notifications_clien
             "name": "chris",
             "doc": {
                 "file": "JVBERi0xLjUgdGVzdAo=",
-                "is_csv": False,
+                "filename": None,
                 "confirm_email_before_download": None,
                 "retention_period": None,
             },
@@ -239,7 +239,7 @@ def test_create_email_notification_with_csv_file_upload(notifications_client, rm
         notifications_client.send_email_notification(
             email_address="to@example.com",
             template_id="456",
-            personalisation={"name": "chris", "doc": prepare_upload(f, is_csv=True)},
+            personalisation={"name": "chris", "doc": prepare_upload(f, filename="file.csv")},
         )
 
     assert rmock.last_request.json() == {
@@ -249,7 +249,7 @@ def test_create_email_notification_with_csv_file_upload(notifications_client, rm
             "name": "chris",
             "doc": {
                 "file": "VGhpcyBpcyBhIGNzdiwK",
-                "is_csv": True,
+                "filename": "file.csv",
                 "confirm_email_before_download": None,
                 "retention_period": None,
             },

@@ -14,10 +14,11 @@ def test_prepare_upload_raises_an_error_for_large_files():
 
 
 @pytest.mark.parametrize(
-    "is_csv",
+    "filename",
     (
-        True,
-        False,
+        None,
+        "file.csv",
+        "file.pdf",
     ),
 )
 @pytest.mark.parametrize(
@@ -39,16 +40,16 @@ def test_prepare_upload_raises_an_error_for_large_files():
         "bad string",  # Validations happens on the API only
     ),
 )
-def test_prepare_upload_generates_expected_dict(is_csv, confirm_email_before_download, retention_period):
+def test_prepare_upload_generates_expected_dict(filename, confirm_email_before_download, retention_period):
     file_content = b"a" * 256
     file_dict = prepare_upload(
         io.BytesIO(file_content),
-        is_csv=is_csv,
+        filename=filename,
         confirm_email_before_download=confirm_email_before_download,
         retention_period=retention_period,
     )
 
-    assert file_dict["is_csv"] is is_csv
+    assert file_dict["filename"] == filename
     assert file_dict["file"] == base64.b64encode(file_content).decode("ascii")
     assert file_dict["confirm_email_before_download"] is confirm_email_before_download
     assert file_dict["retention_period"] is retention_period
