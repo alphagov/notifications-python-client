@@ -1,3 +1,6 @@
+## 9.1.0
+
+* Chain RequestExceptions when raising an HTTPError so users can view the full context in stack traces etc
 
 ## 9.0.0
 

@@ -96,7 +96,7 @@ class BaseAPIClient(object):
             logger.warning(
                 "API %s request on %s failed with %s '%s'", method, url, api_error.status_code, api_error.message
             )
-            raise api_error
+            raise api_error from e
         finally:
             elapsed_time = time.monotonic() - start_time
             logger.debug("API %s request on %s finished in %s", method, url, elapsed_time)
