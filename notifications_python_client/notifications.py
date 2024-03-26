@@ -22,7 +22,13 @@ class NotificationsAPIClient(BaseAPIClient):
         return self.post("/v2/notifications/sms", data=notification)
 
     def send_email_notification(
-        self, email_address, template_id, personalisation=None, reference=None, email_reply_to_id=None
+        self,
+        email_address,
+        template_id,
+        personalisation=None,
+        reference=None,
+        email_reply_to_id=None,
+        unsubscribe_link=None,
     ):
         notification = {"email_address": email_address, "template_id": template_id}
         if personalisation:
@@ -31,6 +37,9 @@ class NotificationsAPIClient(BaseAPIClient):
             notification.update({"reference": reference})
         if email_reply_to_id:
             notification.update({"email_reply_to_id": email_reply_to_id})
+        if unsubscribe_link:
+            notification.update({"unsubscribe_link": unsubscribe_link})
+
         return self.post("/v2/notifications/email", data=notification)
 
     def send_letter_notification(self, template_id, personalisation, reference=None):
