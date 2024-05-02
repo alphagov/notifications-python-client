@@ -9,11 +9,6 @@ uuid = {
     "validationMessage": "is not a valid UUID",
 }
 
-https_url = {
-    "type": "string",
-    "format": "uri",
-    "pattern": "^https.*",
-    "validationMessage": "is not a valid https url"
-}
+https_url = {"type": "string", "format": "uri", "pattern": "^https.*", "validationMessage": "is not a valid https url"}
 
 personalisation = {"type": "object", "validationMessage": "should contain key value pairs"}

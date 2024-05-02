@@ -9,6 +9,7 @@ Options:
     --template=<4051caf5-3c65-4dd3-82d7-31c8c8e82e27>
     --personalisation=<{}>
     --reference=<''>
+    --unsubscribe_link=<''>
     --sms_sender_id=<''>
     --filename=<''>
 
@@ -67,6 +68,7 @@ def create_email_notification(notifications_client, **kwargs):
     reference = (
         kwargs["--reference"] if kwargs["--reference"] is not None else input("reference string for notification: ")
     )  # noqa
+    unsubscribe_link = kwargs["--unsubscribe_link"] or input("unsubscribe_link")
     email_reply_to_id = input("email reply to id:")
     return notifications_client.send_email_notification(
         email_address,
@@ -74,6 +76,7 @@ def create_email_notification(notifications_client, **kwargs):
         personalisation=personalisation,
         reference=reference,
         email_reply_to_id=email_reply_to_id,
+        unsubscribe_link=unsubscribe_link
     )
 
 

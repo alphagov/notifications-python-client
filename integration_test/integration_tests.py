@@ -53,11 +53,12 @@ def send_email_notification_test_response(python_client, reply_to=None):
     email_reply_to_id = reply_to
     unique_name = str(uuid.uuid4())
     personalisation = {"name": unique_name}
-    unsubscribe_link = "https://unsubscribelink.com/unsubscribe",
+    unsubscribe_link = ("https://unsubscribelink.com/unsubscribe",)
     response = python_client.send_email_notification(
         email_address=email_address,
         template_id=template_id,
         personalisation=personalisation,
+        unsubscribe_link=unsubscribe_link,
         email_reply_to_id=email_reply_to_id,
     )
     validate(response, post_email_response)
