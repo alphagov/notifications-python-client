@@ -76,7 +76,7 @@ def create_email_notification(notifications_client, **kwargs):
         personalisation=personalisation,
         reference=reference,
         email_reply_to_id=email_reply_to_id,
-        unsubscribe_link=unsubscribe_link
+        unsubscribe_link=unsubscribe_link,
     )
 
 
