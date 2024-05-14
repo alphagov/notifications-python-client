@@ -127,7 +127,7 @@ post_email_request = {
         "template_id": uuid,
         "email_reply_to_id": uuid,
         "personalisation": personalisation,
-        "unsubscribe_link": https_url,
+        "one_click_unsubscribe_url": https_url,
     },
     "required": ["email_address", "template_id"],
 }

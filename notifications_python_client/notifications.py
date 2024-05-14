@@ -28,7 +28,7 @@ class NotificationsAPIClient(BaseAPIClient):
         personalisation=None,
         reference=None,
         email_reply_to_id=None,
-        unsubscribe_link=None,
+        one_click_unsubscribe_url=None,
     ):
         notification = {"email_address": email_address, "template_id": template_id}
         if personalisation:
@@ -37,8 +37,8 @@ class NotificationsAPIClient(BaseAPIClient):
             notification.update({"reference": reference})
         if email_reply_to_id:
             notification.update({"email_reply_to_id": email_reply_to_id})
-        if unsubscribe_link:
-            notification.update({"unsubscribe_link": unsubscribe_link})
+        if one_click_unsubscribe_url:
+            notification.update({"one_click_unsubscribe_url": one_click_unsubscribe_url})
 
         return self.post("/v2/notifications/email", data=notification)
 
