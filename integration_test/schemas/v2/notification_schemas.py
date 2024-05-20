@@ -1,4 +1,4 @@
-from integration_test.schemas.v2.definitions import personalisation, uuid
+from integration_test.schemas.v2.definitions import https_url, personalisation, uuid
 
 template = {
     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -127,6 +127,7 @@ post_email_request = {
         "template_id": uuid,
         "email_reply_to_id": uuid,
         "personalisation": personalisation,
+        "one_click_unsubscribe_url": https_url,
     },
     "required": ["email_address", "template_id"],
 }

@@ -175,6 +175,25 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
     }
 
 
+def test_create_email_notification_with_one_click_unsubscribe_url(notifications_client, rmock):
+    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
+
+    notifications_client.send_email_notification(
+        email_address="to@example.com",
+        template_id="456",
+        personalisation={"name": "Namey"},
+        one_click_unsubscribe_url="https://unsubscribelink.com/unsubscribe",
+    )
+
+    assert rmock.last_request.json() == {
+        "template_id": "456",
+        "email_address": "to@example.com",
+        "personalisation": {"name": "Namey"},
+        "one_click_unsubscribe_url": "https://unsubscribelink.com/unsubscribe",
+    }
+
+
 def test_create_email_notification_with_document_stream_upload(notifications_client, rmock):
     endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)

@@ -1,3 +1,6 @@
+## 9.1.0
+
+* Adds `one_click_unsubscribe_url` parameter to `send_email_notification`
 
 ## 9.0.0
 
