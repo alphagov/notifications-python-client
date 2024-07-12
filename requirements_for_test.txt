@@ -1,5 +1,4 @@
 .
 -r requirements_for_test_common.txt
 
-mock>=1.0.1
 jsonschema>=2.5.1
