@@ -7,7 +7,7 @@ from tests.conftest import TEST_HOST
 
 
 def test_get_notification_by_id(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/{1}".format(TEST_HOST, "123")
+    endpoint = f"{TEST_HOST}/v2/notifications/123"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_notification_by_id(123)
@@ -24,7 +24,7 @@ def test_get_received_texts(notifications_client, rmock):
 
 
 def test_get_received_texts_older_than(notifications_client, rmock):
-    endpoint = "{0}/v2/received-text-messages?older_than={1}".format(TEST_HOST, "older_id")
+    endpoint = f"{TEST_HOST}/v2/received-text-messages?older_than=older_id"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_received_texts(older_than="older_id")
@@ -40,7 +40,7 @@ def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_
 
 
 def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?status={1}&template_type={2}".format(TEST_HOST, "status", "type")
+    endpoint = f"{TEST_HOST}/v2/notifications?status=status&template_type=type"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications("status", "type")
@@ -49,7 +49,7 @@ def test_get_all_notifications_by_type_and_status(notifications_client, rmock):
 
 
 def test_get_all_notifications_by_type(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?template_type={1}".format(TEST_HOST, "type")
+    endpoint = f"{TEST_HOST}/v2/notifications?template_type=type"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(template_type="type")
@@ -58,7 +58,7 @@ def test_get_all_notifications_by_type(notifications_client, rmock):
 
 
 def test_get_all_notifications_by_reference(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?reference={1}".format(TEST_HOST, "reference")
+    endpoint = f"{TEST_HOST}/v2/notifications?reference=reference"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(reference="reference")
@@ -67,7 +67,7 @@ def test_get_all_notifications_by_reference(notifications_client, rmock):
 
 
 def test_get_all_notifications_by_older_than(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?older_than={1}".format(TEST_HOST, "older_than")
+    endpoint = f"{TEST_HOST}/v2/notifications?older_than=older_than"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(older_than="older_than")
@@ -76,7 +76,7 @@ def test_get_all_notifications_by_older_than(notifications_client, rmock):
 
 
 def test_get_all_notifications_by_status(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?status={1}".format(TEST_HOST, "status")
+    endpoint = f"{TEST_HOST}/v2/notifications?status=status"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(status="status")
@@ -85,7 +85,7 @@ def test_get_all_notifications_by_status(notifications_client, rmock):
 
 
 def test_get_all_notifications_including_jobs(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications?include_jobs={1}".format(TEST_HOST, "true")
+    endpoint = f"{TEST_HOST}/v2/notifications?include_jobs=true"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications(include_jobs=True)
@@ -175,7 +175,7 @@ def test_create_email_notification_with_personalisation(notifications_client, rm
 
 
 def test_create_email_notification_with_one_click_unsubscribe_url(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(
@@ -373,7 +373,7 @@ def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
 
 
 def test_get_template(notifications_client, rmock):
-    endpoint = "{0}/v2/template/{1}".format(TEST_HOST, "123")
+    endpoint = f"{TEST_HOST}/v2/template/{123}"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_template(123)
@@ -382,7 +382,7 @@ def test_get_template(notifications_client, rmock):
 
 
 def test_get_template_version(notifications_client, rmock):
-    endpoint = "{0}/v2/template/{1}/version/{2}".format(TEST_HOST, "123", 1)
+    endpoint = f"{TEST_HOST}/v2/template/123/version/1"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_template_version(123, 1)
@@ -391,7 +391,7 @@ def test_get_template_version(notifications_client, rmock):
 
 
 def test_post_template_preview(notifications_client, rmock):
-    endpoint = "{0}/v2/template/{1}/preview".format(TEST_HOST, "123")
+    endpoint = f"{TEST_HOST}/v2/template/123/preview"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.post_template_preview(123, personalisation={"name": "chris"})
@@ -410,7 +410,7 @@ def test_get_all_templates(notifications_client, rmock):
 
 
 def test_get_all_templates_by_type(notifications_client, rmock):
-    endpoint = "{0}/v2/templates?type={1}".format(TEST_HOST, "type")
+    endpoint = f"{TEST_HOST}/v2/templates?type=type"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_templates("type")
@@ -419,7 +419,7 @@ def test_get_all_templates_by_type(notifications_client, rmock):
 
 
 def test_get_pdf_for_letter(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/{1}/pdf".format(TEST_HOST, "123")
+    endpoint = f"{TEST_HOST}/v2/notifications/123/pdf"
     rmock.request("GET", endpoint, content=b"foo", status_code=200)
 
     response = notifications_client.get_pdf_for_letter("123")
