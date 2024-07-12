@@ -1,4 +1,3 @@
-
 from requests import RequestException, Response
 
 REQUEST_ERROR_STATUS_CODE = 503
@@ -76,7 +75,6 @@ class HTTP503Error(HTTPError):
 
     Used for detecting whether failed requests should be retried.
     """
-
 
 
 class InvalidResponse(APIError):
