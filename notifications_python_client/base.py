@@ -12,7 +12,7 @@ from notifications_python_client.errors import HTTPError, InvalidResponse
 logger = logging.getLogger(__name__)
 
 
-class BaseAPIClient(object):
+class BaseAPIClient:
     def __init__(self, api_key, base_url="https://api.notifications.service.gov.uk", timeout=30):
         """
         Initialise the client
@@ -49,8 +49,8 @@ class BaseAPIClient(object):
     def generate_headers(self, api_token):
         return {
             "Content-type": "application/json",
-            "Authorization": "Bearer {}".format(api_token),
-            "User-agent": "NOTIFY-API-PYTHON-CLIENT/{}".format(__version__),
+            "Authorization": f"Bearer {api_token}",
+            "User-agent": f"NOTIFY-API-PYTHON-CLIENT/{__version__}",
         }
 
     def request(self, method, url, data=None, params=None):

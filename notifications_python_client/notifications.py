@@ -59,11 +59,11 @@ class NotificationsAPIClient(BaseAPIClient):
 
     def get_received_texts(self, older_than=None):
         if older_than:
-            query_string = "?older_than={}".format(older_than)
+            query_string = f"?older_than={older_than}"
         else:
             query_string = ""
 
-        return self.get("/v2/received-text-messages{}".format(query_string))
+        return self.get(f"/v2/received-text-messages{query_string}")
 
     def get_received_texts_iterator(self, older_than=None):
         result = self.get_received_texts(older_than=older_than)
@@ -77,10 +77,10 @@ class NotificationsAPIClient(BaseAPIClient):
             received_texts = result.get("received_text_messages")
 
     def get_notification_by_id(self, id):
-        return self.get("/v2/notifications/{}".format(id))
+        return self.get(f"/v2/notifications/{id}")
 
     def get_pdf_for_letter(self, id):
-        url = "/v2/notifications/{}/pdf".format(id)
+        url = f"/v2/notifications/{id}/pdf"
         logger.debug("API request %s %s", "GET", url)
         url, kwargs = self._create_request_objects(url, data=None, params=None)
 
@@ -117,18 +117,18 @@ class NotificationsAPIClient(BaseAPIClient):
 
     def post_template_preview(self, template_id, personalisation):
         template = {"personalisation": personalisation}
-        return self.post("/v2/template/{}/preview".format(template_id), data=template)
+        return self.post(f"/v2/template/{template_id}/preview", data=template)
 
     def get_template(self, template_id):
-        return self.get("/v2/template/{}".format(template_id))
+        return self.get(f"/v2/template/{template_id}")
 
     def get_template_version(self, template_id, version):
-        return self.get("/v2/template/{}/version/{}".format(template_id, version))
+        return self.get(f"/v2/template/{template_id}/version/{version}")
 
     def get_all_template_versions(self, template_id):
-        return self.get("service/{}/template/{}/versions".format(self.service_id, template_id))
+        return self.get(f"service/{self.service_id}/template/{template_id}/versions")
 
     def get_all_templates(self, template_type=None):
-        _template_type = "?type={}".format(template_type) if template_type else ""
+        _template_type = f"?type={template_type}" if template_type else ""
 
-        return self.get("/v2/templates{}".format(_template_type))
+        return self.get(f"/v2/templates{_template_type}")

@@ -38,7 +38,7 @@ def create_notification(notifications_client, **kwargs):
         return create_letter_notification(notifications_client, **kwargs)
     if notification_type == "precompiled_letter":
         return create_precompiled_letter_notification(notifications_client, **kwargs)
-    print("Invalid type: {}, exiting".format(notification_type))
+    print(f"Invalid type: {notification_type}, exiting")
     sys.exit(1)
 
 

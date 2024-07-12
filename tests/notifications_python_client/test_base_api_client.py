@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import re
+from unittest import mock
 
-import mock
 import pytest
 import requests
 

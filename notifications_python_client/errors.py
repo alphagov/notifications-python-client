@@ -1,4 +1,3 @@
-from typing import List, Union
 
 from requests import RequestException, Response
 
@@ -45,10 +44,10 @@ class APIError(Exception):
         self._message = message
 
     def __str__(self):
-        return "{} - {}".format(self.status_code, self.message)
+        return f"{self.status_code} - {self.message}"
 
     @property
-    def message(self) -> Union[str, List[dict]]:
+    def message(self) -> str | list[dict]:
         try:
             json_resp = self.response.json()  # type: ignore
             return json_resp.get("message", json_resp.get("errors"))
@@ -78,7 +77,6 @@ class HTTP503Error(HTTPError):
     Used for detecting whether failed requests should be retried.
     """
 
-    pass
 
 
 class InvalidResponse(APIError):

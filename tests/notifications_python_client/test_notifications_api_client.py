@@ -1,7 +1,6 @@
 import base64
 import io
-
-from mock import Mock
+from unittest.mock import Mock
 
 from notifications_python_client import prepare_upload
 from tests.conftest import TEST_HOST
@@ -17,7 +16,7 @@ def test_get_notification_by_id(notifications_client, rmock):
 
 
 def test_get_received_texts(notifications_client, rmock):
-    endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/received-text-messages"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_received_texts()
@@ -33,7 +32,7 @@ def test_get_received_texts_older_than(notifications_client, rmock):
 
 
 def test_get_all_received_texts_iterator_calls_get_received_texts(notifications_client, rmock):
-    endpoint = "{0}/v2/received-text-messages".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/received-text-messages"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     list(notifications_client.get_received_texts_iterator())
@@ -95,7 +94,7 @@ def test_get_all_notifications_including_jobs(notifications_client, rmock):
 
 
 def test_get_all_notifications(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_notifications()
@@ -104,7 +103,7 @@ def test_get_all_notifications(notifications_client, rmock):
 
 
 def test_create_sms_notification(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/sms"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_sms_notification(phone_number="07700 900000", template_id="456")
@@ -113,7 +112,7 @@ def test_create_sms_notification(notifications_client, rmock):
 
 
 def test_create_sms_notification_with_personalisation(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/sms"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_sms_notification(
@@ -128,7 +127,7 @@ def test_create_sms_notification_with_personalisation(notifications_client, rmoc
 
 
 def test_create_sms_notification_with_sms_sender_id(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/sms".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/sms"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_sms_notification(phone_number="07700 900000", template_id="456", sms_sender_id="789")
@@ -137,7 +136,7 @@ def test_create_sms_notification_with_sms_sender_id(notifications_client, rmock)
 
 
 def test_create_email_notification(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(email_address="to@example.com", template_id="456")
@@ -146,7 +145,7 @@ def test_create_email_notification(notifications_client, rmock):
 
 
 def test_create_email_notification_with_email_reply_to_id(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(
@@ -161,7 +160,7 @@ def test_create_email_notification_with_email_reply_to_id(notifications_client, 
 
 
 def test_create_email_notification_with_personalisation(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_email_notification(
@@ -195,7 +194,7 @@ def test_create_email_notification_with_one_click_unsubscribe_url(notifications_
 
 
 def test_create_email_notification_with_document_stream_upload(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     if hasattr(io, "BytesIO"):
@@ -225,7 +224,7 @@ def test_create_email_notification_with_document_stream_upload(notifications_cli
 
 
 def test_create_email_notification_with_document_file_upload(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     with open("tests/test_files/test.pdf", "rb") as f:
@@ -251,7 +250,7 @@ def test_create_email_notification_with_document_file_upload(notifications_clien
 
 
 def test_create_email_notification_with_csv_file_upload(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/email".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/email"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     with open("tests/test_files/test.csv", "rb") as f:
@@ -277,7 +276,7 @@ def test_create_email_notification_with_csv_file_upload(notifications_client, rm
 
 
 def test_create_letter_notification(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/letter"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_letter_notification(
@@ -291,7 +290,7 @@ def test_create_letter_notification(notifications_client, rmock):
 
 
 def test_create_letter_notification_with_reference(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/letter"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.send_letter_notification(
@@ -308,7 +307,7 @@ def test_create_letter_notification_with_reference(notifications_client, rmock):
 
 
 def test_send_precompiled_letter_notification(notifications_client, rmock, mocker):
-    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/letter"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
     mock_file = Mock(
         read=Mock(return_value=b"file_contents"),
@@ -323,7 +322,7 @@ def test_send_precompiled_letter_notification(notifications_client, rmock, mocke
 
 
 def test_send_precompiled_letter_notification_sets_postage(notifications_client, rmock, mocker):
-    endpoint = "{0}/v2/notifications/letter".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications/letter"
     rmock.request("POST", endpoint, json={"status": "success"}, status_code=200)
     mock_file = Mock(
         read=Mock(return_value=b"file_contents"),
@@ -339,7 +338,7 @@ def test_send_precompiled_letter_notification_sets_postage(notifications_client,
 
 
 def test_get_all_notifications_iterator_calls_get_notifications(notifications_client, rmock):
-    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     list(notifications_client.get_all_notifications_iterator())
@@ -353,7 +352,7 @@ def test_get_all_notifications_iterator_stops_if_empty_notification_list_returne
         _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb", []),
     ]
 
-    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications"
     rmock.request("GET", endpoint, responses)
 
     list(notifications_client.get_all_notifications_iterator())
@@ -367,7 +366,7 @@ def test_get_all_notifications_iterator_gets_more_notifications_with_correct_id(
         _generate_response("3e8f2f0a-0f2b-4d1b-8a01-761f14a281bb", []),
     ]
 
-    endpoint = "{0}/v2/notifications".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/notifications"
     rmock.request("GET", endpoint, responses)
     list(notifications_client.get_all_notifications_iterator())
     assert rmock.call_count == 3
@@ -402,7 +401,7 @@ def test_post_template_preview(notifications_client, rmock):
 
 
 def test_get_all_templates(notifications_client, rmock):
-    endpoint = "{0}/v2/templates".format(TEST_HOST)
+    endpoint = f"{TEST_HOST}/v2/templates"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
 
     notifications_client.get_all_templates()
@@ -434,7 +433,7 @@ def _generate_response(next_link_uuid, notifications: list):
     return {
         "json": {
             "notifications": notifications,
-            "links": {"next": "http://localhost:6011/v2/notifications?older_than={}".format(next_link_uuid)},
+            "links": {"next": f"http://localhost:6011/v2/notifications?older_than={next_link_uuid}"},
         },
         "status_code": 200,
     }

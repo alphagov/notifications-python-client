@@ -1,4 +1,5 @@
-import mock
+from unittest import mock
+
 import pytest
 import requests_mock
 
@@ -8,7 +9,7 @@ from notifications_python_client.notifications import NotificationsAPIClient
 TEST_HOST = "http://test-host"
 SERVICE_ID = "c745a8d8-b48a-4b0d-96e5-dbea0165ebd1"
 API_KEY_ID = "8b3aa916-ec82-434e-b0c5-d5d9b371d6a3"
-COMBINED_API_KEY = "key_name-{}-{}".format(SERVICE_ID, API_KEY_ID)
+COMBINED_API_KEY = f"key_name-{SERVICE_ID}-{API_KEY_ID}"
 
 
 @pytest.fixture
