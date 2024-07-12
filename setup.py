@@ -47,7 +47,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -58,7 +57,7 @@ setup(
     packages=find_packages(include=["notifications_python_client"]),
     include_package_data=True,
     # only support actively patched versions of python (https://devguide.python.org/versions/)
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=[
         "requests>=2.0.0",
         "PyJWT>=1.5.1",
