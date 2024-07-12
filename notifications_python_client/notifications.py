@@ -69,8 +69,7 @@ class NotificationsAPIClient(BaseAPIClient):
         result = self.get_received_texts(older_than=older_than)
         received_texts = result.get("received_text_messages")
         while received_texts:
-            for received_text in received_texts:
-                yield received_text
+            yield from received_texts
             next_link = result["links"].get("next")
             received_text_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
             result = self.get_received_texts_iterator(older_than=received_text_id)
@@ -108,8 +107,7 @@ class NotificationsAPIClient(BaseAPIClient):
         result = self.get_all_notifications(status, template_type, reference, older_than)
         notifications = result.get("notifications")
         while notifications:
-            for notification in notifications:
-                yield notification
+            yield from notifications
             next_link = result["links"].get("next")
             notification_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
             result = self.get_all_notifications(status, template_type, reference, notification_id)
