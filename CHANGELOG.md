@@ -1,3 +1,8 @@
+## 10.0.0
+
+* Drop support for end-of-life Python 3.7
+* Chain `RequestExceptions` when raising an `HTTPError` so users can view the full context in stack traces etc.
+
 ## 9.1.0
 
 * Adds `one_click_unsubscribe_url` parameter to `send_email_notification`
