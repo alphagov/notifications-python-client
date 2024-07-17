@@ -1,8 +1,8 @@
 import calendar
 import time
+from unittest import mock
 
 import jwt
-import mock
 import pytest
 from freezegun import freeze_time
 

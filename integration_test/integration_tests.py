@@ -121,7 +121,7 @@ def get_pdf_for_letter(python_client, id):
 
             count += 3
             if count > 45:
-                print("pdf {} not ready at {} after 45 seconds".format(id, datetime.utcnow()))
+                print(f"pdf {id} not ready at {datetime.utcnow()} after 45 seconds")  # noqa: T201
                 raise
             else:
                 time.sleep(3)
@@ -262,7 +262,7 @@ def test_integration():
     if os.environ["INBOUND_SMS_QUERY_KEY"]:
         get_received_text_messages()
 
-    print("notifications-python-client integration tests are successful")
+    print("notifications-python-client integration tests are successful")  # noqa: T201
 
 
 if __name__ == "__main__":

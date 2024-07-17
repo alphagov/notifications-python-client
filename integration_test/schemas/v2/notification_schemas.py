@@ -212,7 +212,7 @@ def create_post_sms_response_from_notification(notification, body, from_number, 
         "id": notification.id,
         "reference": notification.client_reference,
         "content": {"body": body, "from_number": from_number},
-        "uri": "{}/v2/notifications/{}".format(url_root, str(notification.id)),
+        "uri": f"{url_root}/v2/notifications/{str(notification.id)}",
         "template": __create_template_from_notification(notification=notification, url_root=url_root),
     }
 
@@ -222,7 +222,7 @@ def create_post_email_response_from_notification(notification, content, subject,
         "id": notification.id,
         "reference": notification.client_reference,
         "content": {"from_email": email_from, "body": content, "subject": subject},
-        "uri": "{}/v2/notifications/{}".format(url_root, str(notification.id)),
+        "uri": f"{url_root}/v2/notifications/{str(notification.id)}",
         "template": __create_template_from_notification(notification=notification, url_root=url_root),
     }
 
@@ -231,5 +231,5 @@ def __create_template_from_notification(notification, url_root):
     return {
         "id": notification.template_id,
         "version": notification.template_version,
-        "uri": "{}/v2/templates/{}".format(url_root, str(notification.template_id)),
+        "uri": f"{url_root}/v2/templates/{str(notification.template_id)}",
     }
