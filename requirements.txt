@@ -3,4 +3,5 @@
 # `requirements.txt` so that the version_tools scripts in utils can inspect
 # it to work out the current utils version
 
+# Run `make bump-utils` to update to the latest version
 notifications-utils @ git+https://github.com/alphagov/notifications-utils.git@82.1.2
