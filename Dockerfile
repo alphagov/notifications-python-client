@@ -1,4 +1,5 @@
 FROM debian:buster
+COPY ./ /notifications-python-client
 
 ENV PYTHONUNBUFFERED=1 \
 	DEBIAN_FRONTEND=noninteractive
