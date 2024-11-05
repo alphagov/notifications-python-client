@@ -14,6 +14,10 @@ bootstrap: ## Install build dependencies
 .PHONY: build
 build: bootstrap ## Build project (dummy task for CI)
 
+.PHONY: bump-utils
+bump-utils:  # Bump notifications-utils package to latest version
+	python -c "from notifications_utils.version_tools import upgrade_version; upgrade_version()"
+
 .PHONY: test
 test: ## Run tests
 	ruff check .
