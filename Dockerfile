@@ -40,7 +40,7 @@ RUN \
 COPY . .
 
 # Make pyenv activate all installed Python versions for tox (available as pythonX.Y)
-# The first version will be the one used when running "python"
+# The first version in the file will be the one used when running "python"
 RUN pyenv global $(tr '\n' ' ' < tox-python-versions)
 
 RUN make bootstrap
