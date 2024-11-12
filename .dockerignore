@@ -1,2 +1,3 @@
 .tox
 environment.sh
+.python-version
