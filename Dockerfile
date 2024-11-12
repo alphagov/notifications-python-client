@@ -1,4 +1,5 @@
 FROM debian:buster
+COPY ./ /notifications-python-client
 
 ENV PYTHONUNBUFFERED=1 \
 	DEBIAN_FRONTEND=noninteractive
@@ -7,6 +8,8 @@ RUN \
 	echo "Install base packages" \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
+		awscli \
+		jq \
 		gcc \
 		git \
 		gnupg \

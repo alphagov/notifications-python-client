@@ -31,8 +31,8 @@ def validate(json_to_validate, schema):
 
 
 def send_sms_notification_test_response(python_client, sender_id=None):
-    mobile_number = os.environ["FUNCTIONAL_TEST_NUMBER"]
-    template_id = os.environ["SMS_TEMPLATE_ID"]
+    mobile_number = os.environ["API_CLIENT_INTEGRATION_TESTS_NUMBER"]
+    template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_SMS_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
     personalisation = {"name": unique_name}
     sms_sender_id = sender_id
@@ -48,8 +48,8 @@ def send_sms_notification_test_response(python_client, sender_id=None):
 
 
 def send_email_notification_test_response(python_client, reply_to=None):
-    email_address = os.environ["FUNCTIONAL_TEST_EMAIL"]
-    template_id = os.environ["EMAIL_TEMPLATE_ID"]
+    email_address = os.environ["API_CLIENT_INTEGRATION_TESTS_EMAIL"]
+    template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_EMAIL_TEMPLATE_ID"]
     email_reply_to_id = reply_to
     unique_name = str(uuid.uuid4())
     personalisation = {"name": unique_name}
@@ -67,7 +67,7 @@ def send_email_notification_test_response(python_client, reply_to=None):
 
 
 def send_letter_notification_test_response(python_client):
-    template_id = os.environ["LETTER_TEMPLATE_ID"]
+    template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_LETTER_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
     personalisation = {"address_line_1": unique_name, "address_line_2": "foo", "postcode": "SW1 1AA"}
     response = python_client.send_letter_notification(template_id=template_id, personalisation=personalisation)
@@ -131,7 +131,10 @@ def get_pdf_for_letter(python_client, id):
 
 
 def get_received_text_messages():
-    client = NotificationsAPIClient(base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["INBOUND_SMS_QUERY_KEY"])
+    client = NotificationsAPIClient(
+        base_url=os.environ["API_CLIENT_INTEGRATION_TESTS_NOTIFY_API_URL"],
+        api_key=os.environ["API_CLIENT_INTEGRATION_TESTS_INBOUND_SMS_API_KEY"],
+    )
 
     response = client.get_received_texts()
     validate(response, get_inbound_sms_response)
@@ -208,16 +211,20 @@ def get_all_templates_for_type(python_client, template_type):
 
 
 def test_integration():
-    client = NotificationsAPIClient(base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["API_KEY"])
+    client = NotificationsAPIClient(
+        base_url=os.environ["API_CLIENT_INTEGRATION_TESTS_NOTIFY_API_URL"],
+        api_key=os.environ["API_CLIENT_INTEGRATION_TESTS_TEST_API_KEY"],
+    )
     client_using_team_key = NotificationsAPIClient(
-        base_url=os.environ["NOTIFY_API_URL"], api_key=os.environ["API_SENDING_KEY"]
+        base_url=os.environ["API_CLIENT_INTEGRATION_TESTS_NOTIFY_API_URL"],
+        api_key=os.environ["API_CLIENT_INTEGRATION_TESTS_TEAM_API_KEY"],
     )
 
-    sms_template_id = os.environ["SMS_TEMPLATE_ID"]
-    sms_sender_id = os.environ["SMS_SENDER_ID"]
-    email_template_id = os.environ["EMAIL_TEMPLATE_ID"]
-    email_reply_to_id = os.environ["EMAIL_REPLY_TO_ID"]
-    letter_template_id = os.environ["LETTER_TEMPLATE_ID"]
+    sms_template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_SMS_TEMPLATE_ID"]
+    sms_sender_id = os.environ["API_CLIENT_INTEGRATION_TESTS_SMS_SENDER_ID"]
+    email_template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_EMAIL_TEMPLATE_ID"]
+    email_reply_to_id = os.environ["API_CLIENT_INTEGRATION_TESTS_EMAIL_REPLY_TO_ID"]
+    letter_template_id = os.environ["API_CLIENT_INTEGRATION_TESTS_LETTER_TEMPLATE_ID"]
 
     assert sms_template_id
     assert sms_sender_id
@@ -259,7 +266,7 @@ def test_integration():
     get_pdf_for_letter(client, letter_id)
     get_pdf_for_letter(client, precompiled_letter_id)
 
-    if os.environ["INBOUND_SMS_QUERY_KEY"]:
+    if os.environ["API_CLIENT_INTEGRATION_TESTS_INBOUND_SMS_API_KEY"]:
         get_received_text_messages()
 
     print("notifications-python-client integration tests are successful")  # noqa: T201
