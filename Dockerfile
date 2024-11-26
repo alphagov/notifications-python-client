@@ -7,11 +7,13 @@ RUN \
 	echo "Install base packages" \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
+		awscli \
 		gcc \
 		git \
 		gnupg \
 		curl \
 		ca-certificates \
+		jq \
 		# pyenv dependencies (https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
 		make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
 		libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev \
@@ -36,7 +38,6 @@ RUN \
 	echo "Install python based on .python-version file" \
 	&& while read line; do pyenv install "$line" < /dev/null; done < tox-python-versions
 
-# Make all files available so we can run "make bootstrap" and install dependencies.
 COPY . .
 
 # Make pyenv activate all installed Python versions for tox (available as pythonX.Y)
