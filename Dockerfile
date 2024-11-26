@@ -35,8 +35,8 @@ WORKDIR /var/project
 COPY tox-python-versions .
 
 RUN \
-	echo "Install python based on .python-version file" \
-	&& while read line; do pyenv install "$line" < /dev/null; done < tox-python-versions
+	echo "Install python based on tox-python-versions file" \
+	&& xargs -a tox-python-versions -n 1 -P $(nproc) pyenv install
 
 COPY . .
 
