@@ -34,7 +34,7 @@ def send_sms_notification_test_response(python_client, sender_id=None):
     mobile_number = os.environ["TEST_NUMBER"]
     template_id = os.environ["FUNCTIONAL_TEST_SMS_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
-    personalisation = {"name": unique_name}
+    personalisation = {"build_id": unique_name}
     sms_sender_id = sender_id
     response = python_client.send_sms_notification(
         phone_number=mobile_number,
@@ -52,7 +52,7 @@ def send_email_notification_test_response(python_client, reply_to=None):
     template_id = os.environ["FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID"]
     email_reply_to_id = reply_to
     unique_name = str(uuid.uuid4())
-    personalisation = {"name": unique_name}
+    personalisation = {"build_id": unique_name}
     one_click_unsubscribe_url = "https://unsubscribelink.com/unsubscribe"
     response = python_client.send_email_notification(
         email_address=email_address,
@@ -69,7 +69,12 @@ def send_email_notification_test_response(python_client, reply_to=None):
 def send_letter_notification_test_response(python_client):
     template_id = os.environ["FUNCTIONAL_TEST_LETTER_TEMPLATE_ID"]
     unique_name = str(uuid.uuid4())
-    personalisation = {"address_line_1": unique_name, "address_line_2": "foo", "postcode": "SW1 1AA"}
+    personalisation = {
+        "address_line_1": unique_name,
+        "address_line_2": "foo",
+        "postcode": "SW1 1AA",
+        "build_id": unique_name,
+    }
     response = python_client.send_letter_notification(template_id=template_id, personalisation=personalisation)
     validate(response, post_letter_response)
     assert unique_name in response["content"]["body"]  # check placeholders are replaced
@@ -119,12 +124,12 @@ def get_pdf_for_letter(python_client, id):
             if exc.message[0]["error"] != "PDFNotReadyError":
                 raise
 
-            count += 3
-            if count > 45:
-                print(f"pdf {id} not ready at {datetime.utcnow()} after 45 seconds")  # noqa: T201
+            count += 5
+            if count > 120:
+                print(f"pdf {id} not ready at {datetime.utcnow()} after 120 seconds")  # noqa: T201
                 raise
             else:
-                time.sleep(3)
+                time.sleep(5)
 
     assert type(response) == BytesIO
     assert len(response.read()) != 0
@@ -183,7 +188,7 @@ def get_template_by_id_and_version(python_client, template_id, version, notifica
 
 def post_template_preview(python_client, template_id, notification_type):
     unique_name = str(uuid.uuid4())
-    personalisation = {"name": unique_name}
+    personalisation = {"build_id": unique_name}
 
     response = python_client.post_template_preview(template_id, personalisation)
 
