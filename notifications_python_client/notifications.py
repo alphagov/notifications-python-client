@@ -72,7 +72,7 @@ class NotificationsAPIClient(BaseAPIClient):
             yield from received_texts
             next_link = result["links"].get("next")
             received_text_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
-            result = self.get_received_texts_iterator(older_than=received_text_id)
+            result = self.get_received_texts(older_than=received_text_id)
             received_texts = result.get("received_text_messages")
 
     def get_notification_by_id(self, id):
