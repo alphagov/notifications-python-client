@@ -1,3 +1,7 @@
+## 10.0.1
+
+* Fix get_received_texts_iterator() method
+
 ## 10.0.0
 
 * Drop support for end-of-life Python 3.7
