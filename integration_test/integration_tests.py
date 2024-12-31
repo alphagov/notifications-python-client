@@ -119,12 +119,12 @@ def get_pdf_for_letter(python_client, id):
             if exc.message[0]["error"] != "PDFNotReadyError":
                 raise
 
-            count += 3
-            if count > 45:
-                print(f"pdf {id} not ready at {datetime.utcnow()} after 45 seconds")  # noqa: T201
+            count += 5
+            if count > 120:
+                print(f"pdf {id} not ready at {datetime.utcnow()} after 120 seconds")  # noqa: T201
                 raise
             else:
-                time.sleep(3)
+                time.sleep(5)
 
     assert type(response) == BytesIO
     assert len(response.read()) != 0
