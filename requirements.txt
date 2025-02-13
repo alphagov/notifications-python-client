@@ -4,4 +4,4 @@
 # it to work out the current utils version
 
 # Run `make bump-utils` to update to the latest version
-notifications-utils @ git+https://github.com/alphagov/notifications-utils.git@89.1.0
+notifications-utils @ git+https://github.com/alphagov/notifications-utils.git@95.1.1
