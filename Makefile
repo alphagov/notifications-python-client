@@ -9,7 +9,7 @@ help:
 freeze-requirements: ## Freeze requirements files
 	pip install -r requirements.txt
 	python -c "from notifications_utils.version_tools import copy_config; copy_config()"
-	pip-compile requirements_for_test.in
+	pip-compile -o requirements_for_test.txt setup.py requirements_for_test.in
 
 .PHONY: bootstrap
 bootstrap: ## Install build dependencies
