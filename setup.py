@@ -4,6 +4,7 @@ Python API client for GOV.UK Notify - see https://www.notifications.service.gov.
 
 For usage and documentation see https://docs.notifications.service.gov.uk/python.html
 """
+
 import ast
 import re
 

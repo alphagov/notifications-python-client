@@ -26,7 +26,7 @@ bump-utils:  # Bump notifications-utils package to latest version
 .PHONY: test
 test: ## Run tests
 	ruff check .
-	black --check .
+	ruff format --check .
 	pytest
 
 .PHONY: integration-test
