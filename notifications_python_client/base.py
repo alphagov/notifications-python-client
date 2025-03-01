@@ -13,7 +13,13 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient:
-    def __init__(self, api_key, base_url="https://api.notifications.service.gov.uk", timeout=30):
+    def __init__(
+        self,
+        api_key,
+        base_url="https://api.notifications.service.gov.uk",
+        timeout=30,
+        request_session=None,
+    ):
         """
         Initialise the client
         Error if either of base_url or secret missing
@@ -32,7 +38,7 @@ class BaseAPIClient:
         self.service_id = service_id
         self.api_key = api_key
         self.timeout = timeout
-        self.request_session = requests.Session()
+        self.request_session = request_session or requests.Session()
 
     def put(self, url, data):
         return self.request("PUT", url, data=data)
