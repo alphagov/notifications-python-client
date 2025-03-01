@@ -1,3 +1,7 @@
+## 10.1.0
+
+* BaseAPIClient: add request_session constructor argument
+
 ## 10.0.1
 
 * Fix get_received_texts_iterator() method
