@@ -5,12 +5,15 @@ SHELL := /bin/bash
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: bootstrap
-bootstrap: ## Install build dependencies
+.PHONY: freeze-requirements
+freeze-requirements: ## Freeze requirements files
 	pip install -r requirements.txt
 	python -c "from notifications_utils.version_tools import copy_config; copy_config()"
+	pip-compile -o requirements_for_test.txt setup.py requirements_for_test.in
+
+.PHONY: bootstrap
+bootstrap: ## Install build dependencies
 	pip install --upgrade pip-tools
-	pip-compile requirements_for_test.in
 	pip install -r requirements_for_test.txt
 
 .PHONY: build
@@ -23,7 +26,7 @@ bump-utils:  # Bump notifications-utils package to latest version
 .PHONY: test
 test: ## Run tests
 	ruff check .
-	black --check .
+	ruff format --check .
 	pytest
 
 .PHONY: integration-test

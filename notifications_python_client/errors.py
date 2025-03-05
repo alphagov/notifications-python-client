@@ -5,7 +5,7 @@ from requests import RequestException, Response
 REQUEST_ERROR_STATUS_CODE = 503
 REQUEST_ERROR_MESSAGE = "Request failed"
 
-TOKEN_ERROR_GUIDANCE = "See our requirements for JSON Web Tokens at https://docs.notifications.service.gov.uk/rest-api.html#authorisation-header"  # noqa
+TOKEN_ERROR_GUIDANCE = "See our requirements for JSON Web Tokens at https://docs.notifications.service.gov.uk/rest-api.html#authorisation-header"
 TOKEN_ERROR_DEFAULT_ERROR_MESSAGE = "Invalid token: " + TOKEN_ERROR_GUIDANCE
 
 

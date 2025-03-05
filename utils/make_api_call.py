@@ -50,7 +50,7 @@ def create_sms_notification(notifications_client, **kwargs):
     personalisation = personalisation and json.loads(personalisation)
     reference = (
         kwargs["--reference"] if kwargs["--reference"] is not None else input("reference string for notification: ")
-    )  # noqa
+    )
     sms_sender_id = kwargs["--sms_sender_id"] or input("sms sender id: ")
     return notifications_client.send_sms_notification(
         mobile_number,
@@ -68,7 +68,7 @@ def create_email_notification(notifications_client, **kwargs):
     personalisation = personalisation and json.loads(personalisation)
     reference = (
         kwargs["--reference"] if kwargs["--reference"] is not None else input("reference string for notification: ")
-    )  # noqa
+    )
     one_click_unsubscribe_url = kwargs["--one_click_unsubscribe_url"] or input("one_click_unsubscribe_url")
     email_reply_to_id = input("email reply to id:")
     return notifications_client.send_email_notification(
@@ -86,7 +86,7 @@ def create_letter_notification(notifications_client, **kwargs):
     personalisation = json.loads(kwargs["--personalisation"] or input("personalisation (as JSON):"))
     reference = (
         kwargs["--reference"] if kwargs["--reference"] is not None else input("reference string for notification: ")
-    )  # noqa
+    )
     return notifications_client.send_letter_notification(
         template_id=template_id, personalisation=personalisation, reference=reference
     )
@@ -150,7 +150,7 @@ def get_template_version(notifications_client):
     return notifications_client.get_template_version(template_id, version)
 
 
-if __name__ == "__main__":  # noqa
+if __name__ == "__main__":
     arguments = docopt(__doc__)
 
     client = NotificationsAPIClient(base_url=arguments["<base_url>"], api_key=arguments["<secret>"])

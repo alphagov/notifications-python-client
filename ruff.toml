@@ -1,14 +1,22 @@
-# This file was automatically copied from notifications-utils@89.1.0
+# This file was automatically copied from notifications-utils@95.1.1
 
-[tool.black]
-line-length = 120
+exclude = [
+    "migrations/versions/",
+    "venv*",
+    "__pycache__",
+    "node_modules",
+    "cache",
+    "migrations",
+    "build",
+    "sample_cap_xml_documents.py",
+]
 
-[tool.ruff]
 line-length = 120
 
 target-version = "py311"
 
-lint.select = [
+[lint]
+select = [
     "E",  # pycodestyle
     "W",  # pycodestyle
     "F",  # pyflakes
@@ -22,15 +30,7 @@ lint.select = [
     "ISC",  # flake8-implicit-str-concat
     "RSE",  # flake8-raise
     "PIE",  # flake8-pie
+    "N804",  # First argument of a class method should be named `cls`
+    "RUF100",  # Checks for noqa directives that are no longer applicable
 ]
-lint.ignore = []
-exclude = [
-    "migrations/versions/",
-    "venv*",
-    "__pycache__",
-    "node_modules",
-    "cache",
-    "migrations",
-    "build",
-    "sample_cap_xml_documents.py",
-]
+ignore = []

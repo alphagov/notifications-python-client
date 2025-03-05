@@ -126,7 +126,7 @@ def get_pdf_for_letter(python_client, id):
             else:
                 time.sleep(5)
 
-    assert type(response) == BytesIO
+    assert isinstance(response, BytesIO)
     assert len(response.read()) != 0
 
 
