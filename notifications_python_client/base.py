@@ -13,6 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAPIClient:
+    """
+    Base class for GOV.UK Notify API client.
+
+    This class is not thread-safe.
+    """
+
     def __init__(self, api_key, base_url="https://api.notifications.service.gov.uk", timeout=30):
         """
         Initialise the client
