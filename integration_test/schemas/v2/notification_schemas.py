@@ -26,7 +26,7 @@ get_notification_response = {
         "line_5": {"type": ["string", "null"]},
         "line_6": {"type": ["string", "null"]},
         "postcode": {"type": ["string", "null"]},
-        "postage": {"enum": ["first", "second", None]},
+        "postage": {"enum": ["first", "second", "economy", None]},
         "type": {"enum": ["sms", "letter", "email"]},
         "status": {"type": "string"},
         "template": template,
@@ -201,7 +201,7 @@ post_precompiled_letter_response = {
     "properties": {
         "id": uuid,
         "reference": {"type": ["string", "null"]},
-        "postage": {"enum": ["first", "second", None]},
+        "postage": {"enum": ["first", "second", "economy", None]},
     },
     "required": ["id", "reference"],
 }
