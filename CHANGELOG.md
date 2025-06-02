@@ -1,3 +1,8 @@
+## 11.0.0
+
+* Drop support for end-of-life Python 3.8
+* Add support for Python 3.13
+
 ## 10.0.1
 
 * Fix get_received_texts_iterator() method
