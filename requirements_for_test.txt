@@ -73,5 +73,5 @@ six==1.16.0
     # via python-dateutil
 soupsieve==2.6
     # via beautifulsoup4
-urllib3==2.2.3
+urllib3==2.5.0
     # via requests
