@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:trixie
 
 ENV PYTHONUNBUFFERED=1 \
     DEBIAN_FRONTEND=noninteractive
