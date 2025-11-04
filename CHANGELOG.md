@@ -1,3 +1,8 @@
+## 12.0.0
+
+* Drop support for end-of-life Python 3.9
+* Add support for Python 3.14
+
 ## 11.0.0
 
 * Drop support for end-of-life Python 3.8

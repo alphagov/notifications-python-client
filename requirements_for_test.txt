@@ -63,7 +63,7 @@ requests==2.32.3
     #   requests-mock
 requests-mock==1.12.1
     # via -r requirements_for_test_common.in
-rpds-py==0.21.0
+rpds-py==0.27.1
     # via
     #   jsonschema
     #   referencing
