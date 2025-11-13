@@ -23,10 +23,13 @@ build: bootstrap ## Build project (dummy task for CI)
 bump-utils:  # Bump notifications-utils package to latest version
 	python -c "from notifications_utils.version_tools import upgrade_version; upgrade_version()"
 
-.PHONY: test
-test: ## Run tests
+.PHONY: lint
+lint: ## Run static analysis
 	ruff check .
 	ruff format --check .
+
+.PHONY: test
+test: lint ## Run tests
 	pytest
 
 .PHONY: integration-test
