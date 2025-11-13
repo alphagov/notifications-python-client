@@ -62,5 +62,9 @@ integration-test-with-docker: ## Run integration tests inside a Docker container
 tox-with-docker:
 	./scripts/run_with_docker.sh tox
 
+.PHONY: tox
+tox: # Run the tox file
+	tox
+
 clean:
 	rm -rf .cache dist .eggs build .tox
