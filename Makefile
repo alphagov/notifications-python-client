@@ -30,7 +30,7 @@ lint: ## Run static analysis
 
 .PHONY: test
 test: lint ## Run tests
-	py.test --maxfail=10 tests/
+	pytest --maxfail=10 tests/
 
 .PHONY: integration-test
 integration-test: ## Run integration tests
