@@ -1,0 +1,50 @@
+name: On new tag, publish to PyPi.
+
+on:
+  push:
+    tags:
+      - "[0-9]*" # Triggers on tags like 10.0.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code at Tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.x"
+
+      - name: Build Package
+        run: |
+          pip install setuptools wheel
+          python setup.py bdist_wheel
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: python-package-dist
+          path: dist/
+          retention-days: 1 # Short life since it will be published immediately
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Needed for Trusted Publishing
+      contents: read
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: python-package-dist
+          path: dist/
+
+      - name: Publish to PyPi
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e
+        with:
+          verbose: true
