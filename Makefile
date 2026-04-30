@@ -9,12 +9,12 @@ help:
 freeze-requirements: ## Freeze requirements files
 	pip install -r requirements.txt
 	python -c "from notifications_utils.version_tools import copy_config; copy_config()"
-	pip-compile -o requirements_for_test.txt setup.py requirements_for_test.in
+	pip-compile -o requirements_for_test.txt setup.py requirements_for_test.in --generate-hashes
 
 .PHONY: bootstrap
 bootstrap: ## Install build dependencies
 	pip install --upgrade pip-tools
-	pip install -r requirements_for_test.txt
+	pip install -r requirements_for_test.txt --require-hashes
 
 .PHONY: build
 build: bootstrap ## Build project (dummy task for CI)
