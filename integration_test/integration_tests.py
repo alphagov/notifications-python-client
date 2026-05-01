@@ -60,9 +60,11 @@ def send_email_notification_test_response(python_client, reply_to=None):
         personalisation=personalisation,
         one_click_unsubscribe_url=one_click_unsubscribe_url,
         email_reply_to_id=email_reply_to_id,
+        sanitise_content_for=["name"],
     )
     validate(response, post_email_response)
-    assert unique_name in response["content"]["body"]  # check placeholders are replaced
+    # check placeholders are replaced and sanitised:
+    assert unique_name.replace("-", "\\-") in response["content"]["body"]
     return response["id"]
 
 
