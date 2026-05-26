@@ -1,3 +1,7 @@
+## 12.1.0
+
+* Adds `sanitise_content_for` parameter to `send_email_notification` endpoint. See [our documentation](https://docs.notifications.service.gov.uk/python.html#reducing-the-risk-of-malicious-content-injection-in-placeholders) for guidance on how to use this.
+
 ## 12.0.0
 
 * Drop support for end-of-life Python 3.9

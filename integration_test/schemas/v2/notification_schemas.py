@@ -115,7 +115,7 @@ post_sms_response = {
     },
     "required": ["id", "content", "uri", "template"],
 }
-
+# TODO: this doesn't seem to be used anywhere, do we still need it?
 post_email_request = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "POST email notification schema",
@@ -128,6 +128,7 @@ post_email_request = {
         "email_reply_to_id": uuid,
         "personalisation": personalisation,
         "one_click_unsubscribe_url": https_url,
+        "sanitise_content_for": {"type": "array", "items": {"type": "string"}},
     },
     "required": ["email_address", "template_id"],
 }
@@ -156,8 +157,9 @@ post_email_response = {
         "content": email_content,
         "uri": {"type": "string"},
         "template": template,
+        "sanitised_content": {"type": "object"},
     },
-    "required": ["id", "content", "uri", "template"],
+    "required": ["id", "content", "uri", "template", "sanitised_content"],
 }
 
 post_letter_request = {
@@ -217,6 +219,7 @@ def create_post_sms_response_from_notification(notification, body, from_number, 
     }
 
 
+# TODO: we don't seem to be using this, is it needed?
 def create_post_email_response_from_notification(notification, content, subject, email_from, url_root):
     return {
         "id": notification.id,
@@ -224,6 +227,7 @@ def create_post_email_response_from_notification(notification, content, subject,
         "content": {"from_email": email_from, "body": content, "subject": subject},
         "uri": f"{url_root}/v2/notifications/{str(notification.id)}",
         "template": __create_template_from_notification(notification=notification, url_root=url_root),
+        "sanitised_content": {},
     }
 
 
