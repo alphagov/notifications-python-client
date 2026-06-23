@@ -1,10 +1,8 @@
-# This file was automatically copied from notifications-utils@95.1.1
+# This file was automatically copied from notifications-utils@120.1.0
 
-exclude = [
+extend-exclude = [
     "migrations/versions/",
-    "venv*",
     "__pycache__",
-    "node_modules",
     "cache",
     "migrations",
     "build",
@@ -13,7 +11,7 @@ exclude = [
 
 line-length = 120
 
-target-version = "py311"
+target-version = "py313"
 
 [lint]
 select = [
