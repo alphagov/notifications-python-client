@@ -133,3 +133,10 @@ class NotificationsAPIClient(BaseAPIClient):
         _template_type = f"?type={template_type}" if template_type else ""
 
         return self.get(f"/v2/templates{_template_type}")
+
+    def get_returned_letters_summary(self):
+        return self.get("/v2/returned-letters/summary")
+
+    def get_returned_letters(self, report_date):
+        query_string = f"?report_date={report_date}"
+        return self.get(f"/v2/returned-letters{query_string}")

@@ -456,3 +456,12 @@ def _generate_response(next_link_uuid, notifications: list):
         },
         "status_code": 200,
     }
+
+
+def test_get_returned_letters_summary(notifications_client, rmock):
+    endpoint = f"{TEST_HOST}/v2/returned-letters/summary"
+    rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
+
+    notifications_client.get_returned_letters_summary()
+
+    assert rmock.called

@@ -15,5 +15,4 @@ def prepare_upload(f, filename=None, confirm_email_before_download=None, retenti
         "confirm_email_before_download": confirm_email_before_download,
         "retention_period": retention_period,
     }
-
     return file_data

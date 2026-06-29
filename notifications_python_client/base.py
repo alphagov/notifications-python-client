@@ -19,7 +19,7 @@ class BaseAPIClient:
     This class is not thread-safe.
     """
 
-    def __init__(self, api_key, base_url="https://api.notifications.service.gov.uk", timeout=30):
+    def __init__(self, api_key, base_url="http://localhost:6011", timeout=30):
         """
         Initialise the client
         Error if either of base_url or secret missing
