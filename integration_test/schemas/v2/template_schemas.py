@@ -26,6 +26,13 @@ get_template_by_id_response = {
         "body": {"type": "string"},
         "subject": {"type": ["string", "null"]},
         "letter_contact_block": {"type": ["string", "null"]},
+        "personalisation": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {"required": {"type": "boolean"}},
+            },
+        },
     },
     "required": ["id", "type", "created_at", "updated_at", "version", "created_by", "body"],
 }
