@@ -1,3 +1,7 @@
+## 12.2.0
+
+* Document `personalisation` on template responses from `get_template`, `get_template_version` and `get_all_templates`. This is an object of placeholder names, for example `{"name": {"required": True}}`.
+
 ## 12.1.0
 
 * Adds `sanitise_content_for` parameter to `send_email_notification` endpoint. See [our documentation](https://docs.notifications.service.gov.uk/python.html#reducing-the-risk-of-malicious-content-injection-in-placeholders) for guidance on how to use this.

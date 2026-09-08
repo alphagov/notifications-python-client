@@ -400,6 +400,20 @@ def test_get_template(notifications_client, rmock):
     assert rmock.called
 
 
+def test_get_template_returns_personalisation(notifications_client, rmock):
+    endpoint = f"{TEST_HOST}/v2/template/{123}"
+    rmock.request(
+        "GET",
+        endpoint,
+        json={"id": "123", "personalisation": {"name": {"required": True}}},
+        status_code=200,
+    )
+
+    response = notifications_client.get_template(123)
+
+    assert response["personalisation"] == {"name": {"required": True}}
+
+
 def test_get_template_version(notifications_client, rmock):
     endpoint = f"{TEST_HOST}/v2/template/123/version/1"
     rmock.request("GET", endpoint, json={"status": "success"}, status_code=200)
