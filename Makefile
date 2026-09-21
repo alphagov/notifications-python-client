@@ -27,6 +27,7 @@ bump-utils:  # Bump notifications-utils package to latest version
 lint: ## Run static analysis
 	ruff check .
 	ruff format --check .
+	mypy
 
 .PHONY: test
 test: lint ## Run tests

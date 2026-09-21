@@ -1,3 +1,4 @@
 -r requirements_for_test_common.in
 
 jsonschema>=2.5.1
+mypy

@@ -74,8 +74,10 @@ class NotificationsAPIClient(BaseAPIClient):
         while received_texts:
             yield from received_texts
             next_link = result["links"].get("next")
-            received_text_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
-            result = self.get_received_texts(older_than=received_text_id)
+            received_text_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I)
+            if not received_text_id:
+                break
+            result = self.get_received_texts(older_than=received_text_id.group(0))
             received_texts = result.get("received_text_messages")
 
     def get_notification_by_id(self, id):
@@ -112,8 +114,10 @@ class NotificationsAPIClient(BaseAPIClient):
         while notifications:
             yield from notifications
             next_link = result["links"].get("next")
-            notification_id = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I).group(0)
-            result = self.get_all_notifications(status, template_type, reference, notification_id)
+            notification_id_match = re.search("[0-F]{8}-[0-F]{4}-[0-F]{4}-[0-F]{4}-[0-F]{12}", next_link, re.I)
+            if not notification_id_match:
+                break
+            result = self.get_all_notifications(status, template_type, reference, notification_id_match.group(0))
             notifications = result.get("notifications")
 
     def post_template_preview(self, template_id, personalisation):
