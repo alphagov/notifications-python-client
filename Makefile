@@ -23,15 +23,11 @@ build: bootstrap ## Build project (dummy task for CI)
 bump-utils:  # Bump notifications-utils package to latest version
 	python -c "from notifications_utils.version_tools import upgrade_version; upgrade_version()"
 
-.PHONY: check-types
-check-types: ## Run static type checking
-# This should be moved into the lint task once it’s passing
-	mypy
-
 .PHONY: lint
 lint: ## Run static analysis
 	ruff check .
 	ruff format --check .
+	mypy
 
 .PHONY: test
 test: lint ## Run tests
