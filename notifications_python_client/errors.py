@@ -40,7 +40,7 @@ class TokenIssuedAtError(TokenDecodeError):
 
 
 class APIError(Exception):
-    def __init__(self, response: Response = None, message: str = None):
+    def __init__(self, response: Union[Response, None] = None, message: Union[str, None] = None):  # noqa: UP007 – Python <3.10 compatibility
         self.response = response
         self._message = message
 
