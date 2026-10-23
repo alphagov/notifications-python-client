@@ -1,3 +1,8 @@
+## 13.0.0
+
+* Drop support for end-of-life Python 3.10
+* Add support for Python 3.15
+
 ## 12.2.0
 
 * Document `personalisation` on template responses from `get_template`, `get_template_version` and `get_all_templates`. This is an object of placeholder names, for example `{"name": {"required": True}}`.
